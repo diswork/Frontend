@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content scroll = true>
 
 
   <ion-slides class="mainSlide" #slidePrincipal>
@@ -59,7 +59,6 @@
     </ion-slide>
 
     <ion-slide>
-
       
       <ion-grid fixed>
 
@@ -93,6 +92,7 @@
                             <ion-input name="email" 
                                         type="email"
                                         required
+                                        [(ngModel)]="user.email"
                                         clearInput></ion-input>
                             </ion-item>
 
@@ -101,6 +101,7 @@
                             <ion-input name="nombre"
                                         type="text"
                                         required
+                                        [(ngModel)]="user.nickName"
                                         clearInput></ion-input>
                             </ion-item>
 
@@ -109,6 +110,7 @@
                             <ion-input name="password"
                                         type="password"
                                         required
+                                        [(ngModel)]="user.password"
                                         clearInput></ion-input>
                             </ion-item>
 
@@ -118,7 +120,35 @@
                                         type="number"
                                         required
                                         clearInput
+                                        [(ngModel)]="user.telefono"
                                         maxlength = "8"></ion-input>
+                            </ion-item>
+
+                            <ion-list>
+                              <ion-radio-group>
+                                <ion-list-header>
+                                  <ion-label>Tipo de usuario:</ion-label>
+                                </ion-list-header>
+                            
+                                <ion-item>
+                                  <ion-label>User</ion-label>
+                                  <ion-radio (click)="desabilitar()" slot="start" value="biff" checked></ion-radio>
+                                </ion-item>
+                            
+                                <ion-item>
+                                  <ion-label>Empresa</ion-label>
+                                  <ion-radio  (click)="habilitar()" slot="start" value="griff"></ion-radio>
+                                </ion-item>
+                              </ion-radio-group>
+                            </ion-list>
+
+                            <ion-item *ngIf='!habilitarDireccion'>
+                              <ion-label>Dirección</ion-label>
+                              <ion-input name="direccion"
+                                          type="text"
+                                          required
+                                          [(ngModel)]="empresa.direccion"
+                                          clearInput></ion-input>
                             </ion-item>
 
                         </ion-list>
@@ -138,8 +168,8 @@
             </form>
         </ion-grid>
   
-  
       </ion-slide>
+    
 
 
   </ion-slides>
@@ -171,7 +201,7 @@
                     size="small"
                     fill="outline"
                     color="blue"
-                    (click)="mostrarRegistro()">
+                    (click)="mostrarRegistro()">                    
           Registrarme
         </ion-button>
       </ion-col>
