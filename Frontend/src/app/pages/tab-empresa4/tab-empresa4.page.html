@@ -1,9 +1,16 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tabEmpresa4</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+    <form #formAddPropuesta="ngForm" (ngSubmit)="crearPropuesta(crear)">
 
+        <ion-row>
+            <ion-col>
+                <ion-list>
+                    <ion-item>
+                        <ion-label position="floating">Ingrese su titulo:</ion-label>
+                        <ion-input></ion-input>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+
+    </form>
 </ion-content>
