@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides, NavController } from '@ionic/angular'
+import { IonSlides, NavController, MenuController } from '@ionic/angular'
 import { UsuarioService } from '../../services/usuario.service'
 import { UiServiceService } from '../../services/ui-service.service'
 import { Login } from '../../models/login.model';
@@ -62,8 +62,9 @@ export class LoginPage implements OnInit {
 
 
   constructor(private usuarioService: UsuarioService,
-    private navCtrl: NavController,
-    private uiService: UiServiceService) {
+              private navCtrl: NavController,
+              private uiService: UiServiceService,
+              private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
     this.user = new User("", "", "", "user", "", "", [], [])
     this.empresa = new Empresa("", "", "", "empresa", "", "", "")
@@ -72,6 +73,7 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.slides.lockSwipes(true);
+    this.menuCtrl.enable(false);
   }
 
   seleccionarAvatar(avatar) {
@@ -107,10 +109,12 @@ export class LoginPage implements OnInit {
         if (response.empresa) {
           console.log(response.token);
           console.log(response.empresa);
+          this.menuCtrl.enable(true);
           this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
         } else if (response.user) {
           console.log(response.token);
           console.log(response.user);
+          this.menuCtrl.enable(true);
           this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
         }
 
