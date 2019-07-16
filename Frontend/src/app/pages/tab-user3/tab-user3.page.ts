@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from 'src/app/models/user.model';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-tab-user3',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabUser3Page implements OnInit {
 
-  constructor() { }
+  usuario : User;
+
+  
+
+  constructor(private usuarioService : UsuarioService) { }
 
   ngOnInit() {
+    this.usuario = this.usuarioService.getUserLog();
+    console.log(this.usuario)
   }
 
 }

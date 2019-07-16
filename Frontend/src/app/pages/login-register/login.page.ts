@@ -66,8 +66,8 @@ export class LoginPage implements OnInit {
               private uiService: UiServiceService,
               private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
-    this.user = new User("", "", "", "user", "", "", [], [])
-    this.empresa = new Empresa("", "", "", "empresa", "", "", "")
+    this.user = new User("","", "", "", "user", "", "", [], [])
+    this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
     this.rol = "user"
   }
 
@@ -105,7 +105,10 @@ export class LoginPage implements OnInit {
     this.usuarioService.login(this.loginUser).subscribe(
       response => {
         this.status = 'Ok';
-
+        if (response.token) {
+          this.usuarioService.guardarToken(response.token);
+          this.usuarioService.guardarUser(response.user)
+        }
         if (response.empresa) {
           console.log(response.token);
           console.log(response.empresa);
@@ -118,9 +121,7 @@ export class LoginPage implements OnInit {
           this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
         }
 
-        if (response.token) {
-          this.usuarioService.guardarToken(response.token);
-        }
+        
       },
       error => {
         if (error) {
@@ -155,7 +156,7 @@ export class LoginPage implements OnInit {
         this.usuarioService.registrarUser(this.user).subscribe(
           response => {
             console.log(response.user);
-            this.user = new User("", "", "", "user", "", "", [], [])
+            this.user = new User("","", "", "", "user", "", "", [], [])
             this.mostrarLogin();
           },
           error => {
@@ -176,8 +177,8 @@ export class LoginPage implements OnInit {
         console.log(this.empresa)
         this.usuarioService.registrarEmpresa(this.empresa).subscribe(
           response => {
-            this.user = new User("", "", "", "user", "", "", [], [])
-            this.empresa = new Empresa("", "", "", "empresa", "", "", "")
+            this.user = new User("","", "", "", "user", "", "", [], [])
+            this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
             console.log(response.empresa);
             this.mostrarLogin();
           },

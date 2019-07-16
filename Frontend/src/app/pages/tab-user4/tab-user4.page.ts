@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonList } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-user4',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TabUser4Page implements OnInit {
 
+  @ViewChild('lista') lista: IonList;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  cerrar(){
+    this.lista.closeSlidingItems();
   }
 
 }
