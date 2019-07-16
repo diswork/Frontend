@@ -7,7 +7,13 @@ export class User{
         public rol: String,
         public image: String,
         public telefono: String,
+        public ciudad: String,
+        public colegio: String,
+        public fechaNacimiento: String,
         public ofertas: [],
-        public empresas: []
+        public cv: [],
+        public empresas: [],
+        public nivelAcademico: String,        
+        public categoria: String       
     ){}
 }

@@ -14,8 +14,5 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {}
 
-  menu(){
-    this.menuCtrl.toggle();
-  }
-
+  
 }

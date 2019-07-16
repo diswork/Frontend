@@ -10,6 +10,8 @@ const routes: Routes = [
     loadChildren: './pages/tabs-user/tabs-user.module#TabsUserPageModule',
     canLoad : [UsuarioGuard]
   },
+  { path: 'tabs-user/tabs-user/tab-user3', loadChildren: '../tab-user3/tab-user3.module#TabUser3PageModule' },
+
   { path: 'tabs-empresa', loadChildren: './pages/tabs-empresa/tabs-empresa.module#TabsEmpresaPageModule' },
   { path: 'tabs-admin', loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule' },
 

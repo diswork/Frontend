@@ -15,7 +15,6 @@ import { NavController } from '@ionic/angular';
 export class UsuarioService {
 
   token: string = null;
-  private user: User;
   private usuario: User;
   public url: String;
 
@@ -57,7 +56,7 @@ export class UsuarioService {
       this._http.get(this.url + 'verificaToken', { headers }).subscribe(
         resp => {
           if (resp['ok']) {
-            this.usuario = resp['usuario'];
+            this.guardarUser(resp['usuario']);
             resolve(true);
           }else{
             this.navCtrl.navigateRoot('/login', {animated : true})
@@ -71,7 +70,7 @@ export class UsuarioService {
   }
 
   async guardarUser(user: User) {
-    this.user = user;
+    this.usuario = user;
     await this.storage.set('user', user);
   }
 
@@ -86,7 +85,9 @@ export class UsuarioService {
 
   limpiarStorage() {
     this.token = null;
+    this.usuario = null;
     this.storage.clear();
+    this.validaToken();
   }
 
   registrarUser(user: User): Observable<any> {
@@ -102,6 +103,13 @@ export class UsuarioService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._http.post(this.url + 'registrar', params, { headers: headers });
+  }
+
+  editarUsuario(user : User) : Observable<any>{
+    this.cargarToken();
+    let params = JSON.stringify(user);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    return this._http.put(this.url + `/editar-usuario/${user.sub}`,params,{headers:headers  });
   }
 
 }

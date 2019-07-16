@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -7,8 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private usuarioService : UsuarioService,
+              private menuCtrl : MenuController) { }
 
   ngOnInit() {}
+
+  cerrarCesion(){
+    this.usuarioService.limpiarStorage();
+  }
+
+  cerrarMenu(){
+    this.menuCtrl.toggle();
+  }
 
 }
