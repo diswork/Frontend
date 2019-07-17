@@ -6,7 +6,7 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item (click)="cerrarMenu()" routerLink="/tabs-user/tabs-user/tab-user3">
+      <ion-item  (click)="cerrarMenu()" routerLink="/tabs-user/tabs-user/tab-user3">
         <ion-thumbnail slot="start">
           <ion-img src="/assets/avatars/av-1.png"></ion-img>
         </ion-thumbnail>
@@ -27,3 +27,30 @@
     </ion-list>
   </ion-content>
 </ion-menu>
+
+<ion-menu side="end" menuId="segundoMenu" contentId="principal">
+    <ion-header>
+      <ion-toolbar color="primary">            
+        <ion-title>Diswork</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item  (click)="cerrarMenu()" routerLink="/tabs-empresa/tabs-empresa/tab-empresa3">
+          <ion-thumbnail slot="start">
+            <ion-img src="/assets/avatars/av-1.png"></ion-img>
+          </ion-thumbnail>
+          <ion-label>Name Empresa</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="calendar" slot="start"></ion-icon>Eventos
+        </ion-item>
+        <ion-item>
+          <ion-icon name="settings" slot="start"></ion-icon>Settings
+        </ion-item>
+        <ion-item (click)="cerrarCesion()">
+          <ion-icon  name="book" slot="start"></ion-icon>Log Out
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>

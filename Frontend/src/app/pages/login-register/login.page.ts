@@ -66,14 +66,16 @@ export class LoginPage implements OnInit {
               private uiService: UiServiceService,
               private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
-    this.user = new User("","","","","user","","","","","",[],[],[],"","")
+    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
     this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
     this.rol = "user"
   }
 
   ngOnInit() {
     this.slides.lockSwipes(true);
-    this.menuCtrl.enable(false);
+    this.menuCtrl.enable(false, "primerMenu");
+    this.menuCtrl.enable(false, "segundoMenu");
+
   }
 
   seleccionarAvatar(avatar) {
@@ -107,17 +109,17 @@ export class LoginPage implements OnInit {
         this.status = 'Ok';
         if (response.token) {
           this.usuarioService.guardarToken(response.token);
-          this.usuarioService.guardarUser(response.user)
         }
         if (response.empresa) {
-          console.log(response.token);
-          console.log(response.empresa);
-          this.menuCtrl.enable(true);
+          this.usuarioService.guardarEmpresa(response.empresa)
+          this.menuCtrl.enable(true, "segundoMenu");
+          this.menuCtrl.enable(false, "primerMenu");
+
           this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
         } else if (response.user) {
-          console.log(response.token);
-          console.log(response.user);
-          this.menuCtrl.enable(true);
+          this.usuarioService.guardarUser(response.user)
+          this.menuCtrl.enable(true, "primerMenu");
+          this.menuCtrl.enable(false, "segundoMenu");
           this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
         }
 
@@ -145,7 +147,7 @@ export class LoginPage implements OnInit {
   }
 
   registro(fRegistro: NgForm) {
-
+    console.log(new Date())
     console.log(fRegistro.valid);
     if (fRegistro.invalid) {
       this.uiService.alertarInformativa('Ingrese todos los campos.')
@@ -155,9 +157,12 @@ export class LoginPage implements OnInit {
 
         this.usuarioService.registrarUser(this.user).subscribe(
           response => {
-            console.log(response.user);
-            this.user = new User("","","","","user","","","","","",[],[],[],"","")
-            this.mostrarLogin();
+           
+              console.log(response.user);
+              this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+              this.mostrarLogin();
+     
+           
           },
           error => {
             if (error) {
@@ -177,7 +182,7 @@ export class LoginPage implements OnInit {
         console.log(this.empresa)
         this.usuarioService.registrarEmpresa(this.empresa).subscribe(
           response => {
-            this.user = new User("","","","","user","","","","","",[],[],[],"","")
+            this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
             this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
             console.log(response.empresa);
             this.mostrarLogin();

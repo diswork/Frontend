@@ -3,6 +3,7 @@ import { User } from 'src/app/models/user.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgForm } from '@angular/forms';
 import { UiServiceService } from 'src/app/services/ui-service.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-user3',
@@ -16,12 +17,15 @@ export class TabUser3Page implements OnInit {
   public status;  
 
   constructor(private usuarioService : UsuarioService,
-              private uiService: UiServiceService) { }
+              private uiService: UiServiceService,
+              private menuCtrl : MenuController) { }
 
   ngOnInit() {
     this.usuario = this.usuarioService.getUserLog();
-    console.log(this.usuario)
+    this.menuCtrl.enable(true, "primerMenu");
+    this.menuCtrl.enable(false, "segundoMenu");
   }
+  
 
   habilito(){
     this.habilitarEdicion = true;
