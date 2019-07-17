@@ -18,7 +18,7 @@ export class EmpresaService {
     this.url = GLOBAL.url;
   }
 
-  async guardarToken(token: string){
+  async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
   }
@@ -32,14 +32,14 @@ export class EmpresaService {
     let params = JSON.stringify(oferta);
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this._http.post(this.url + 'oferta', params, {headers:headers});
+    return this._http.post(this.url + '/oferta', params, {headers:headers});
   }
 
   editPropuesta(oferta: Oferta): Observable<any> {
     let params = JSON.stringify(oferta);
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this._http.put(this.url + 'ofertasPorEmpresa', params, {headers:headers});
+    return this._http.put(this.url + '/ofertasPorEmpresa', params, {headers:headers});
   }
 
   // deletePropuesta(codigo): Observable<any> {
@@ -51,10 +51,10 @@ export class EmpresaService {
   readOfertaEmpresa(codigoEmpresa): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-    return this._http.get(this.url + `ofertasPorEmpresa?codigo=${codigoEmpresa}`, {headers:headers});
+    return this._http.get(this.url + '/ofertasPorEmpresa/' + codigoEmpresa, {headers:headers});
   }
 
-  async alertarInformativa(message : string) {
+  async alertarInformativa(message: string) {
     const alert = await this.alertController.create({
       message,
       buttons: ['OK']

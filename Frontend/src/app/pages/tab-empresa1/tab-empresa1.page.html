@@ -1,9 +1,10 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tabEmpresa1</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header titulo="Diswork"></app-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let proempresas of oferta">
+    <ion-card-header>
+        <ion-card-title>{{proempresas.titulo}}</ion-card-title>
+    </ion-card-header>
+</ion-card>  
+ 
 </ion-content>
