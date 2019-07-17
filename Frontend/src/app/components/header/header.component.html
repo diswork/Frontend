@@ -1,7 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="end">
-      <ion-menu-button menu="primerMenu"></ion-menu-button>
+    <ion-buttons  slot="end">
+     <ion-menu-button *ngIf="menuUser === 'true'"  menu="primerMenu"></ion-menu-button>
+     <ion-menu-button *ngIf="menuEmpresa === 'true'"  menu="segundoMenu"></ion-menu-button>
     </ion-buttons>
     <ion-title text-capitalize slot="start">{{titulo}}</ion-title>
   </ion-toolbar>

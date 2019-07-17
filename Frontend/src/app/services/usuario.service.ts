@@ -16,6 +16,7 @@ export class UsuarioService {
 
   token: string = null;
   private usuario: User;
+  private empresa: Empresa;
   public url: String;
 
   constructor(public _http: HttpClient, 
@@ -56,8 +57,15 @@ export class UsuarioService {
       this._http.get(this.url + 'verificaToken', { headers }).subscribe(
         resp => {
           if (resp['ok']) {
-            this.guardarUser(resp['usuario']);
-            resolve(true);
+            if(resp['usuario']){
+              this.guardarUser(resp['usuario']);
+              resolve(true);
+            }else{
+              this.guardarEmpresa(resp['empresa']);
+              resolve(true);
+
+            }
+           
           }else{
             this.navCtrl.navigateRoot('/login', {animated : true})
             resolve(false)
@@ -72,6 +80,11 @@ export class UsuarioService {
   async guardarUser(user: User) {
     this.usuario = user;
     await this.storage.set('user', user);
+  }
+
+  async guardarEmpresa(empresas: Empresa) {
+    this.empresa = empresas;
+    await this.storage.set('empresa', empresas);
   }
 
   getUserLog() {
@@ -106,10 +119,9 @@ export class UsuarioService {
   }
 
   editarUsuario(user : User) : Observable<any>{
-    this.cargarToken();
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-    return this._http.put(this.url + `/editar-usuario/${user.sub}`,params,{headers:headers  });
+    return this._http.put(this.url + `/editar-usuario/${user.sub}`,params,{headers:headers});
   }
 
 }
