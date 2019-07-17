@@ -10,7 +10,6 @@ import { User } from 'src/app/models/user.model';
 })
 export class MenuComponent implements OnInit {
 
-  public identity
 
   constructor(private usuarioService : UsuarioService,
               private menuCtrl : MenuController) { 
@@ -25,11 +24,8 @@ export class MenuComponent implements OnInit {
 
   cerrarMenu(){
     this.menuCtrl.toggle();
-    console.log(this.identity)
   }
 
-  obtenerDatos(user : User){
-    console.log(user)
-  }
+
 
 }
