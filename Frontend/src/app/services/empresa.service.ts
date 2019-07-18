@@ -13,6 +13,7 @@ import { AlertController } from '@ionic/angular';
 export class EmpresaService {
   token: string;
   public url;
+  public empresa;
 
   constructor(public _http: HttpClient, private storage: Storage, public alertController: AlertController) {
     this.url = GLOBAL.url;
@@ -52,6 +53,10 @@ export class EmpresaService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._http.get(this.url + '/ofertasPorEmpresa/' + codigoEmpresa, {headers:headers});
+  }
+
+  cargarEmpresa() {
+    this.empresa = await this.storage.get('empresa') || null;
   }
 
   async alertarInformativa(message: string) {

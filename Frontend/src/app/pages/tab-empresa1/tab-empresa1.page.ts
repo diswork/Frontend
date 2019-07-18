@@ -16,6 +16,7 @@ export class TabEmpresa1Page implements OnInit {
 
   public empresa: Empresa;
   public oferta: Oferta;
+  public idEmpresa;
 
   constructor(public _empresaService: EmpresaService) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
@@ -23,11 +24,11 @@ export class TabEmpresa1Page implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.readOfertasEmpresa(this._empresaService.cargarEmpresa());
   }
 
   readOfertasEmpresa(codigo) {
-    this._empresaService.readOfertaEmpresa(codigo).subscribe(
+    this._empresaService.readOfertaEmpresa(this.idEmpresa.sub).subscribe(
       response => {
         this.status = 'ok';
         console.log(response);
