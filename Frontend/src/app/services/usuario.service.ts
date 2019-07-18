@@ -61,6 +61,7 @@ export class UsuarioService {
               this.guardarUser(resp['usuario']);
               resolve(true);
             }else{
+              this.empresa = resp['empresa']
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
 
@@ -89,11 +90,20 @@ export class UsuarioService {
 
   getUserLog() {
 
-    if(!this.usuario.sub){
+    if(!this.usuario._id){
       this.validaToken()
     }
 
     return { ...this.usuario }
+  }
+
+  getEmpresaLog() {
+
+    if(!this.empresa._id){
+      this.validaToken()
+    }
+
+    return { ...this.empresa }
   }
 
   limpiarStorage() {
@@ -121,7 +131,15 @@ export class UsuarioService {
   editarUsuario(user : User) : Observable<any>{
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-    return this._http.put(this.url + `/editar-usuario/${user.sub}`,params,{headers:headers});
+    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
   }
+
+  readOfertaEmpresa(id): Observable<any> {
+    console.log(id)
+     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+ 
+     return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, {headers:headers});
+   }
+ 
 
 }

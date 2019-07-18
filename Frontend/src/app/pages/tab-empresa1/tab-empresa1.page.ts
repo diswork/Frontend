@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { EmpresaService } from '../../services/empresa.service';
 import { Empresa } from '../../models/empresa.model';
 import { Oferta } from '../../models/oferta.model';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-tab-empresa1',
   templateUrl: './tab-empresa1.page.html',
   styleUrls: ['./tab-empresa1.page.scss'],
-  providers: [EmpresaService]
 })
 export class TabEmpresa1Page implements OnInit {
 
@@ -17,21 +16,25 @@ export class TabEmpresa1Page implements OnInit {
   public empresa: Empresa;
   public oferta: Oferta;
 
-  constructor(public _empresaService: EmpresaService) {
+  public ofertas : [];
+
+  constructor(private _usuarioService : UsuarioService) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', '', '', '', '', [], '', true);
   }
 
   ngOnInit() {
-    
+   
+      this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+     
   }
 
-  readOfertasEmpresa(codigo) {
-    this._empresaService.readOfertaEmpresa(codigo).subscribe(
+  readOfertasEmpresa(id) {
+    this._usuarioService.readOfertaEmpresa(id).subscribe(
       response => {
         this.status = 'ok';
-        console.log(response);
-        this.oferta = response.json();
+        this.ofertas = response.ofertas;
+        console.log(this.ofertas);
       },
       error => {
         // tslint:disable-next-line:prefer-const

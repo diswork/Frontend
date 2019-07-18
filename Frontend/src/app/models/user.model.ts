@@ -1,6 +1,6 @@
 export class User{
     constructor(
-        public sub: String,
+        public _id: String,
         public nickName: String,
         public email: String,
         public password: String,
