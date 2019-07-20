@@ -10,7 +10,7 @@ export class TabUser1Page implements OnInit {
 
   constructor(private menuCtrl : MenuController) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
   }

@@ -10,6 +10,7 @@ export class TabsUserPage implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

@@ -25,7 +25,7 @@ export class UsuarioService {
     this.url = GLOBAL.url;
   }
 
-
+  
   login(login: Login): Observable<any> {
     let params = JSON.stringify(login);
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -78,14 +78,19 @@ export class UsuarioService {
 
   }
 
+  
+  limpiarStorage() {
+    this.token = null;
+    this.usuario = null;
+    this.storage.clear();
+    this.validaToken();
+  }
+
+  //SERVICIOS PARA USUARIO DE TIPO USER
+
   async guardarUser(user: User) {
     this.usuario = user;
     await this.storage.set('user', user);
-  }
-
-  async guardarEmpresa(empresas: Empresa) {
-    this.empresa = empresas;
-    await this.storage.set('empresa', empresas);
   }
 
   getUserLog() {
@@ -97,32 +102,8 @@ export class UsuarioService {
     return { ...this.usuario }
   }
 
-  getEmpresaLog() {
-
-    if(!this.empresa._id){
-      this.validaToken()
-    }
-
-    return { ...this.empresa }
-  }
-
-  limpiarStorage() {
-    this.token = null;
-    this.usuario = null;
-    this.storage.clear();
-    this.validaToken();
-  }
-
   registrarUser(user: User): Observable<any> {
     let params = JSON.stringify(user);
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this._http.post(this.url + 'registrar', params, { headers: headers });
-
-  }
-
-  registrarEmpresa(empresa: Empresa): Observable<any> {
-    let params = JSON.stringify(empresa);
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
     return this._http.post(this.url + 'registrar', params, { headers: headers });
@@ -134,12 +115,55 @@ export class UsuarioService {
     return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
   }
 
+
+  //SERVICIOS PARA USUARIO DE TIPO EMPRESA
+
+  async guardarEmpresa(empresas: Empresa) {
+    this.empresa = empresas;
+    await this.storage.set('empresa', empresas);
+  }
+
+  getEmpresaLog() {
+
+    if(!this.empresa._id){
+      this.validaToken()
+    }
+
+    return { ...this.empresa }
+  }
+
+  registrarEmpresa(empresa: Empresa): Observable<any> {
+    let params = JSON.stringify(empresa);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.post(this.url + 'registrar', params, { headers: headers });
+  }
+
   readOfertaEmpresa(id): Observable<any> {
     console.log(id)
      let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
  
      return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, {headers:headers});
    }
+
+   getEmpresas(): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+     return this._http.get(this.url + 'empresas', {headers});
+   }
+
+  //SERVICIOS PARA CATEGORIAS
+  getCategorias():Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'categorias', {headers})
+  }
+
+  getNiveles():Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'niveles-academicos', {headers})
+  }
  
 
 }

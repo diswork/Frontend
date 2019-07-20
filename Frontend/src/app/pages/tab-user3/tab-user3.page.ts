@@ -15,15 +15,19 @@ export class TabUser3Page implements OnInit {
   usuario : User;
   public habilitarEdicion : boolean;
   public status;  
-
-  constructor(private usuarioService : UsuarioService,
+  public categorias : [];
+  public nivelesAcademicos : [];
+  
+  constructor(private _usuarioService : UsuarioService,
               private uiService: UiServiceService,
               private menuCtrl : MenuController) { }
 
-  ngOnInit() {
-    this.usuario = this.usuarioService.getUserLog();
+  ngOnInit() {    
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
+    this.usuario = this._usuarioService.getUserLog();
+    this.getCategorias();
+    this.getNivelesAcademicos();
   }
   
 
@@ -36,15 +40,43 @@ export class TabUser3Page implements OnInit {
   }
 
   editarUser(fActualizar : NgForm){
-    this.usuarioService.editarUsuario(this.usuario).subscribe(
+    this._usuarioService.editarUsuario(this.usuario).subscribe(
       response => {
         this.status = 'Ok';
         if(response.user){
           console.log('Usuario editado')
-          this.usuarioService.guardarUser(response.user);
-          this.usuarioService.guardarToken(response.token);
+          this._usuarioService.guardarUser(response.user);
+          this._usuarioService.guardarToken(response.token);
           this.usuario = response.user;
         }
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
+
+  getCategorias(){
+    this._usuarioService.getCategorias().subscribe(
+      response => {
+        this.categorias = response.categorias;
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
+
+  getNivelesAcademicos(){
+    this._usuarioService.getNiveles().subscribe(
+      response => {
+        this.nivelesAcademicos = response.nivelAcademico;
       },
       error => {
         if(error){
