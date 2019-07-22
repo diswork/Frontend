@@ -19,28 +19,30 @@ export class TabEmpresa4Page implements OnInit {
   public empresas: Empresa;
 
   constructor(public _usuarioService: UsuarioService) {
-    this.ofertas = new Oferta('', '', '', '', '', '', [], '', true);
+    this.ofertas = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
     this.empresas = new Empresa('', '', '', '', 'empresa', '', '', '');
   }
 
   ngOnInit() {
   }
 
-  addOferta(idEmpresa) {
-    this._usuarioService.addPropuesta(this.ofertas, idEmpresa).subscribe(
-      response => {
-          this.status = 'Ok';
-          console.log(response.oferta);
-          this.formValueAddPropuesta.resetForm();
-      },
-      error => {
-        var errorMessage = <any>error
-        console.log(errorMessage);
-        if (errorMessage != null) {
-          this.status = 'Error';
-        }
-      }
-    )
+  addOferta(idEmpresa: any) {
+    idEmpresa = this._usuarioService.getEmpresaLog()._id;
+    console.log(idEmpresa)
+    // this._usuarioService.addPropuesta(this.ofertas, idEmpresa).subscribe(
+    //   response => {
+    //     this.status = 'Ok';
+    //     console.log(response.oferta);
+    //     this.formValueAddPropuesta.resetForm();
+    //   },
+    //   error => {
+    //     var errorMessage = <any>error
+    //     console.log(errorMessage);
+    //     if (errorMessage != null) {
+    //       this.status = 'Error';
+    //     }
+    //   }
+    // )
   }
 
 }

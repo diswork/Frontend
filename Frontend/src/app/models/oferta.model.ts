@@ -2,6 +2,7 @@ export class Oferta {
     constructor(
         public titulo: string,
         public descripcion: string,
+        public fechaPublicacion: Date,
         public categoria: string,
         public nivelAcademico: string,
         public tarjeta: string,

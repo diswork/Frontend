@@ -151,9 +151,9 @@ export class UsuarioService {
 
   readOfertaEmpresa(id): Observable<any> {
     console.log(id)
-     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
  
-     return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, {headers:headers});
+    return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, {headers:headers});
    }
 
    getEmpresas(): Observable<any>{

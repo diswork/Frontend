@@ -21,7 +21,7 @@ export class TabEmpresa1Page implements OnInit {
 
   constructor(private _usuarioService : UsuarioService) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
-    this.oferta = new Oferta('', '', '', '', '', '', [], '', true);
+    this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
   }
 
   ngOnInit() {
