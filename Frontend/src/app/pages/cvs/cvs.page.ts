@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+
+declare var window : any;
 
 @Component({
   selector: 'app-cvs',
@@ -7,9 +10,81 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CVsPage implements OnInit {
 
-  constructor() { }
+  public cvs : [];
+  public tempImages : string[] = [];
+  public camara : boolean = false;
+  public archivo : boolean = false;
+  public redactar : boolean = false;
+  public noHayData : boolean = true;
+  public principal : boolean = true;
+
+  constructor(private camera : Camera) { }
 
   ngOnInit() {
+  }
+
+  crear(){
+    this.redactar = true;
+    this.noHayData = false;
+    this.principal = false;
+    console.log("crear()")
+  }
+
+  cancelarCrear(){
+    this.redactar = false;
+    this.noHayData = true;
+    this.principal = true;
+    console.log("cancelarCrear()")
+  }
+
+  subirFoto(){
+    this.camara = true;
+    this.noHayData = false;
+    this.principal = false;
+    console.log("subirFoto()")   
+  }
+
+  cancelarFoto(){
+    this.camara = false;
+    this.noHayData = true;
+    this.principal = true;
+    console.log("cancelarFoto()") 
+  }
+
+  subirFotoTel(){
+    const options: CameraOptions = {
+      quality: 60,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation : true,
+      sourceType : this.camera.PictureSourceType.CAMERA
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64 (DATA_URL):
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
+      console.log(img)
+      this.tempImages.push(img)
+    }, (err) => {
+     // Handle error
+    });
+  }
+
+  subirArchivo(){
+    this.archivo = true;
+    this.noHayData = false;
+    this.principal = false;
+    console.log("subirArchivo()")
+  }
+
+  cancelarArchivo(){
+    this.archivo = false;
+    this.noHayData = true;
+    this.principal = true;
+    console.log("cancelarArchivo()")
+
   }
 
 }
