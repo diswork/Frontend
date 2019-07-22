@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'tabs-empresa/tabs-empresa/tab-empresa3', loadChildren: './pages/tab-empresa3/tab-empresa3.module#TabEmpresa3PageModule' },
 
   
-  { path: 'tabs-admin', loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule' },
+  { path: 'tabs-admin', loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule' },  { path: 'cvs', loadChildren: './pages/cvs/cvs.module#CVsPageModule' },
+
 
 ];
 

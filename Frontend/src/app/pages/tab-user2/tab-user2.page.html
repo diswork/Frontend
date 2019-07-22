@@ -2,13 +2,24 @@
 
 <ion-content>
     <ion-list>
-        <ion-item>
+        <ion-searchbar animated mode="ios" placeholder="Searh"
+                       (ionChange)="buscar($event)"></ion-searchbar>
+        <ion-item *ngFor="let dt of empresas | filtro:textoBuscar:'nombre'">
             <ion-thumbnail slot="start">
                 <ion-img src="/assets/avatars/av-2.png"></ion-img>
             </ion-thumbnail>
-            <ion-label>Olmeca</ion-label>
-            <ion-button color="danger">Seguir</ion-button>
+            <ion-label>{{dt.nombre}}</ion-label>
+            <ion-button color="danger" (click)="seguirEmpresa(dt._id)" >Seguir</ion-button>
         </ion-item>
     </ion-list>
+    <ion-list *ngIf="!empresas">
+            <ion-item  *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+                    <ion-thumbnail slot="start">
+                        <ion-img></ion-img>
+                    </ion-thumbnail>
+                    <ion-label><ion-skeleton-text width="65%"></ion-skeleton-text></ion-label>
+                    <ion-skeleton-text width="25%"></ion-skeleton-text>
+            </ion-item>
+        </ion-list>
 
 </ion-content>
