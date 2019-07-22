@@ -8,6 +8,7 @@ import { User } from '../models/user.model';
 import { Empresa } from '../models/empresa.model';
 import { NavController } from '@ionic/angular';
 
+import {delay} from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -112,7 +113,15 @@ export class UsuarioService {
   editarUsuario(user : User) : Observable<any>{
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
     return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
+  }
+
+  seguirEmpresa(id) : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+     console.log(headers); 
+     
+    return this._http.put(this.url + `seguir-empresa/${id}`,{headers:headers});
   }
 
 
@@ -149,7 +158,7 @@ export class UsuarioService {
    getEmpresas(): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-     return this._http.get(this.url + 'empresas', {headers});
+     return this._http.get(this.url + 'empresas', {headers}).pipe(delay(2000));
    }
 
   //SERVICIOS PARA CATEGORIAS
