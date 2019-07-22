@@ -25,42 +25,6 @@ export class LoginPage implements OnInit {
 
   @ViewChild('slidePrincipal') slides: IonSlides;
 
-  avatars = [
-    {
-      img: 'av-1.png',
-      seleccionado: true
-    },
-    {
-      img: 'av-2.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-3.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-4.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-5.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-6.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-7.png',
-      seleccionado: false
-    },
-    {
-      img: 'av-8.png',
-      seleccionado: false
-    },
-  ];
-
-
   constructor(private usuarioService: UsuarioService,
               private navCtrl: NavController,
               private uiService: UiServiceService,
@@ -78,18 +42,13 @@ export class LoginPage implements OnInit {
 
   }
 
-  seleccionarAvatar(avatar) {
-
-    this.avatars.forEach(element => element.seleccionado = false);
-
-    avatar.seleccionado = true;
-
-  }
-
   mostrarLogin() {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
+    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+    this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
+    this.loginUser = new Login("", "", true)
   }
 
   mostrarRegistro() {
@@ -101,8 +60,6 @@ export class LoginPage implements OnInit {
   login(fLogin: NgForm) {
 
     console.log(fLogin.valid);
-
-    //if(fLogin.invalid) return;
 
     this.usuarioService.login(this.loginUser).subscribe(
       response => {
@@ -147,7 +104,6 @@ export class LoginPage implements OnInit {
   }
 
   registro(fRegistro: NgForm) {
-    console.log(new Date())
     console.log(fRegistro.valid);
     if (fRegistro.invalid) {
       this.uiService.alertarInformativa('Ingrese todos los campos.')
