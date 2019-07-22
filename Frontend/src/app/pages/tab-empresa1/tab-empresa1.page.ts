@@ -38,7 +38,6 @@ export class TabEmpresa1Page implements OnInit {
         console.log(this.ofertas);
       },
       error => {
-        // tslint:disable-next-line:prefer-const
         var errorMessage = <any>error;
         console.log(errorMessage);
         if (errorMessage != null) {

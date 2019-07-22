@@ -1,4 +1,4 @@
-export class User{
+export class User {
     constructor(
         public _id: String,
         public nickName: String,
@@ -13,7 +13,7 @@ export class User{
         public ofertas: [],
         public cv: [],
         public empresas: [],
-        public nivelAcademico: String,        
-        public categoria: String       
-    ){}
+        public nivelAcademico: String,
+        public categoria: String
+    ) { }
 }

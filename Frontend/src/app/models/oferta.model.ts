@@ -1,4 +1,4 @@
-export class Oferta{
+export class Oferta {
     constructor(
         public titulo: string,
         public descripcion: string,
@@ -9,5 +9,5 @@ export class Oferta{
         public curriculum: [],
         public imagen: string,
         public disponible: Boolean
-    ){}
+    ) {}
 }

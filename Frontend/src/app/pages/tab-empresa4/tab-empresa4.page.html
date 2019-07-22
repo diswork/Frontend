@@ -1,18 +1,7 @@
 <app-header titulo="diswork" menuEmpresa="true" menuUser="false"></app-header>
 
 <ion-content>
-    <form #formAddPropuesta="ngForm" (ngSubmit)="crearPropuesta(crear)">
-
-        <ion-row>
-            <ion-col>
-                <ion-list>
-                    <ion-item>
-                        <ion-label position="floating">Ingrese su titulo:</ion-label>
-                        <ion-input></ion-input>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-
+    <form (ngSubmit)="addOferta()" #formAddPropuesta="ngForm">
+        
     </form>
 </ion-content>

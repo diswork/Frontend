@@ -7,6 +7,7 @@ import { GLOBAL } from './global.service';
 import { User } from '../models/user.model';
 import { Empresa } from '../models/empresa.model';
 import { NavController } from '@ionic/angular';
+import { Oferta } from '../models/oferta.model';
 
 
 @Injectable({
@@ -116,7 +117,7 @@ export class UsuarioService {
   }
 
 
-  //SERVICIOS PARA USUARIO DE TIPO EMPRESA
+  // SERVICIOS PARA USUARIO DE TIPO EMPRESA
 
   async guardarEmpresa(empresas: Empresa) {
     this.empresa = empresas;
@@ -152,6 +153,13 @@ export class UsuarioService {
      return this._http.get(this.url + 'empresas', {headers});
    }
 
+   addPropuesta(oferta: Oferta, idEmpresa): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+    let params = JSON.stringify(oferta);
+
+    return this._http.post(this.url + `oferta/${idEmpresa}`, params, {headers:headers});
+   }
+
   //SERVICIOS PARA CATEGORIAS
   getCategorias():Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
@@ -165,5 +173,4 @@ export class UsuarioService {
     return this._http.get(this.url + 'niveles-academicos', {headers})
   }
  
-
 }
