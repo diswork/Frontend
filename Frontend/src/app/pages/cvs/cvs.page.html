@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header *ngIf="!camara && !archivo && !redactar" no-border>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs-user"></ion-back-button>
@@ -20,9 +20,10 @@
   </div>
 
   <!-- Tomar una foto al CV -->
+  <br>
   <div *ngIf="camara">
     <ion-row>
-      <ion-col size="20px">
+      <ion-col size="50px">
         <ion-list>
           <ion-label>
             <h1 style="margin-left: 8px">Título</h1>
@@ -33,25 +34,32 @@
     </ion-row>
     <ion-row>
           <ion-col size="5">
-              <ion-button expand="full" shape="round">
-                <ion-icon slot="start" name="camera"></ion-icon>CÁMARA
-              </ion-button>
-            </ion-col>
-            <ion-col size="5">
-              <ion-button expand="full" shape="round">
-                <ion-icon slot="start" name="images"></ion-icon>GALERÍA
-              </ion-button>
-            </ion-col>  
+            <ion-button (click)="tomarFoto()" expand="full" shape="round">
+              <ion-icon slot="start" name="camera"></ion-icon>CÁMARA
+            </ion-button>
+          </ion-col>
+          <ion-col size="5">
+            <ion-button (click)="escogerFoto()" expand="full" shape="round">
+              <ion-icon slot="start" name="images"></ion-icon>GALERÍA
+            </ion-button>
+          </ion-col>  
     </ion-row>
     <ion-row>
       <ion-col size="3" *ngFor="let image of tempImages">
         <ion-card>
-          <img [src]="image">
+          <ion-img [src]="image | imageSanitizer"></ion-img>
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-fab vertical="bottom" horizontal="center" >
-        <ion-button (click)="cancelarFoto()" expand="full" color="danger" shape="round"></ion-button>
+    <ion-fab vertical="bottom" horizontal="start" >
+      <ion-row>
+        <ion-col size="5">
+          <ion-button (click)="cancelarFoto()" expand="full" color="danger" shape="round">Cancelar</ion-button>
+        </ion-col>
+        <ion-col size="5">
+          <ion-button  expand="full" shape="round">Guardar</ion-button>
+        </ion-col>
+      </ion-row>
     </ion-fab>
     
   </div>
@@ -61,7 +69,7 @@
   <!-- Subir un archivo de CV -->
   <div *ngIf="archivo">
       <ion-row>
-        <ion-col size="20px">
+        <ion-col size="50px">
           <ion-list>
             <ion-label>
               <h1 style="margin-left: 8px">Título</h1>
@@ -84,8 +92,15 @@
           </ion-card>
         </ion-col>
       </ion-row>
-      <ion-fab vertical="bottom" horizontal="center" >
-          <ion-button (click)="cancelarArchivo()" expand="full" color="danger" shape="round"></ion-button>
+      <ion-fab vertical="bottom" horizontal="start" >
+        <ion-row>
+          <ion-col size="5">
+              <ion-button (click)="cancelarArchivo()" expand="full" color="danger" shape="round">Cancelar</ion-button>
+            </ion-col>
+          <ion-col size="5">
+            <ion-button  expand="full" shape="round">Guardar</ion-button>
+          </ion-col>
+        </ion-row>
       </ion-fab>
       
     </div>
@@ -95,7 +110,7 @@
     <!-- Redactar el CV -->
   <div *ngIf="redactar">
       <ion-row>
-        <ion-col size="20px">
+        <ion-col size="50px">
           <ion-list>
             <ion-label>
               <h1 style="margin-left: 8px">Título</h1>
@@ -121,12 +136,49 @@
               </ion-label>
               <ion-input placeholder="Ingrese su correo" name="correo" type="text" required clearInput></ion-input>
             </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2 style="margin-left: 8px">Telefono</h2>
+              </ion-label>
+              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2 style="margin-left: 8px">Estudios</h2>
+              </ion-label>
+              <ion-textarea placeholder="Ingrese información de sus estudios" name="estudio" rows="8" required clearOnEdit="true"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2 style="margin-left: 8px">Habilidades</h2>
+              </ion-label>
+              <ion-textarea placeholder="Ingrese información de sus habilidades" name="habilidad" rows="8" required clearOnEdit="true"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2 style="margin-left: 8px">Referencias P</h2>
+              </ion-label>
+              <ion-textarea placeholder="Ingrese sus referencias personales" name="referenciasP" rows="8" required clearOnEdit="true"></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h2 style="margin-left: 8px">Referencias E</h2>
+              </ion-label>
+              <ion-textarea placeholder="Ingrese sus referencias empresariales" name="referenciasE" rows="8" required clearOnEdit="true"></ion-textarea>
+            </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
-      <ion-fab vertical="bottom" horizontal="center" >
-          <ion-button (click)="cancelarCrear()" expand="full" color="danger" shape="round"></ion-button>
-      </ion-fab>
+      <div vertical="bottom" horizontal="start" >
+        <ion-row>
+          <ion-col size="5">
+              <ion-button (click)="cancelarCrear()" expand="full" color="danger" shape="round">Cancelar</ion-button>
+            </ion-col>
+          <ion-col size="5">
+            <ion-button  expand="full" shape="round">Guardar</ion-button>
+          </ion-col>
+        </ion-row>
+      </div><br>
       
     </div>
   

@@ -102,6 +102,10 @@ export class UsuarioService {
 
     return { ...this.usuario }
   }
+  getToken(){
+    return this.token;
+  }
+
 
   registrarUser(user: User): Observable<any> {
     let params = JSON.stringify(user);
