@@ -8,5 +8,5 @@ export class Empresa{
         public image: String,
         public direccion: String,
         public telefono: String
-    ){}
+    ) {}
 }

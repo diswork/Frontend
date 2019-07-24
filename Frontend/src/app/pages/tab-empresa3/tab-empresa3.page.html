@@ -4,95 +4,77 @@
 
     <ion-row class="top-20">
         <ion-col size="12" text-center>
-            <img (click)="pruebaImg()" src="assets/avatars/av-1.png" class="img-avatar">
+            <img src="assets/avatars/av-1.png" class="img-avatar">
         </ion-col>
     </ion-row>
     <ion-row class="top-20">
         <ion-col size="12" text-center>
             <ion-label>
-                <h1 autocapitalize>{{usuario.nickName}}</h1>
+                <h1 autocapitalize>{{empresa.nombre}}</h1>
             </ion-label>
         </ion-col>
     </ion-row>
 
-    <form (ngSubmit)="editarEmpresa()" #fEditarEmpresa="ngForm">
+    <form (ngSubmit)="editarEmpresa(); desabilito()" #fEditarEmpresa="ngForm">
         <ion-row>
             <ion-col>
                 <ion-list>
 
                     <ion-item>
                         <ion-label>Informacion</ion-label>
-                        <ion-button shape="round">
+                        <ion-button *ngIf="!habilitarEdicion" (click)="habilito()" shape="round">
                             <ion-icon slot="icon-only" name="create"></ion-icon>
                         </ion-button>
                     </ion-item>
 
                     <!-- Los que son solo para ver datos -->
-                    <ion-item>
-                        <ion-label position="stacked">Titulo</ion-label>
+                    <ion-item *ngIf="!habilitarEdicion">
+                        <ion-label>Email: {{empresa.email}}</ion-label>
+                    </ion-item>
+
+                    <ion-item *ngIf="!habilitarEdicion">
+                        <ion-label >Rol: {{empresa.rol}}</ion-label>
+                    </ion-item>
+
+                    <ion-item *ngIf="!habilitarEdicion">
+                        <ion-label >direccion: {{empresa.direccion}}</ion-label>
                     </ion-item>
 
                     <ion-item>
-                        <ion-label position="stacked">Descripcion</ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Fecha Publicacion</ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Categoria</ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Nivel Academico</ion-label>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Tarjeta</ion-label>
+                        <ion-label >Telefono: {{empresa.telefono}}</ion-label>
                     </ion-item>
 
                     <!-- Los que se van a editar -->
-                    <ion-item>
-                        <ion-label position="stacked">Titulo</ion-label>
-                        <ion-input name="titulo" type="text" placeholder="Ingrese un titulo" clearInput></ion-input>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label>Nombre:</ion-label>
+                        <ion-input name="nombre" type="text" [(ngModel)]="empresa.nombre" clearInput></ion-input>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label position="stacked">Descripcion</ion-label>
-                        <ion-input name="descripcion" type="text" placeholder="Ingrese una descripcion" clearInput></ion-input>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label >Email</ion-label>
+                        <ion-input name="email" type="text" [(ngModel)]="empresa.email" clearInput></ion-input>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label position="stacked">Fecha Publicacion</ion-label>
-                        <ion-input name="fecha" placeholder="Select" display-format="DD/MM/YYYY" pickerFormat="DD MMM YYYY" clearInput></ion-input>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label >Direccion</ion-label>
+                        <ion-input name="direccion" type="text" [(ngModel)]="empresa.direccion" clearInput></ion-input>
                     </ion-item>
 
-                    <ion-item>
-                        <ion-label position="stacked">Categoria</ion-label>
-                        <ion-input name="categoria" type="text" placeholder="Ingrese una categoria" clearInput></ion-input>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Nivel Academico</ion-label>
-                        <ion-input name="nivel" type="text" placeholder="Ingrese un nivel academico" clearInput></ion-input>
-                    </ion-item>
-
-                    <ion-item>
-                        <ion-label position="stacked">Tarjeta</ion-label>
-                        <ion-input name="tarjeta" type="text" placeholder="Ingrese su # de tarjeta" clearInput></ion-input>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label >Telefono</ion-label>
+                        <ion-input name="telefono" [(ngModel)]="empresa.telefono" clearInput></ion-input>
                     </ion-item>
 
                 </ion-list>
             </ion-col>
         </ion-row>
 
-        <ion-row>
+        <ion-row *ngIf="habilitarEdicion">
             <ion-col text-center>
                 <ion-button type="submit" color="primary" shape="round">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
-                <ion-button color="danger" shape="round">
+                <ion-button (click)="desabilito()" color="danger" shape="round">
                     <ion-icon name="close"></ion-icon>
                 </ion-button>
             </ion-col>

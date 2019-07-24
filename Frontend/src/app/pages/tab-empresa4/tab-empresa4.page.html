@@ -1,45 +1,82 @@
 <app-header titulo="diswork" menuEmpresa="true" menuUser="false"></app-header>
 
 <ion-content>
-    <form (ngSubmit)="addOferta()" #formAddPropuesta="ngForm">
+  <form (ngSubmit)="addOferta()" #formAddPropuesta="ngForm">
+    <ion-row>
+      <ion-col>
+
         <ion-list>
-            <ion-item>
-                <ion-label position="stacked">Titulo</ion-label>
-                <ion-input name="titulo" type="text" placeholder="Ingrese un titulo" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Titulo</ion-label>
+            <ion-input
+              name="titulo"
+              type="text"
+              placeholder="Ingrese un titulo"
+              clearInput
+            ></ion-input>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked">Descripcion</ion-label>
-                <ion-input name="descripcion" type="text" placeholder="Ingrese una descripcion" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Descripcion</ion-label>
+            <ion-input
+              name="descripcion"
+              type="text"
+              placeholder="Ingrese una descripcion"
+              clearInput
+            ></ion-input>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked">Fecha Publicacion</ion-label>
-                <ion-input name="fecha" placeholder="Select" display-format="DD/MM/YYYY" pickerFormat="DD MMM YYYY" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Fecha Publicacion</ion-label>
+            <ion-input
+              name="fecha"
+              placeholder="Select"
+              display-format="DD/MM/YYYY"
+              pickerFormat="DD MMM YYYY"
+              clearInput
+            ></ion-input>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked">Categoria</ion-label>
-                <ion-input name="categoria" type="text" placeholder="Ingrese una categoria" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Categoria</ion-label>
+            <ion-input
+              name="categoria"
+              type="text"
+              placeholder="Ingrese una categoria"
+              clearInput
+            ></ion-input>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked">Nivel Academico</ion-label>
-                <ion-input name="nivel" type="text" placeholder="Ingrese un nivel academico" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Nivel Academico</ion-label>
+            <ion-input
+              name="nivel"
+              type="text"
+              placeholder="Ingrese un nivel academico"
+              clearInput
+            ></ion-input>
+          </ion-item>
 
-            <ion-item>
-                <ion-label position="stacked">Tarjeta</ion-label>
-                <ion-input name="tarjeta" type="text" placeholder="Ingrese su # de tarjeta" clearInput></ion-input>
-            </ion-item>
+          <ion-item>
+            <ion-label position="stacked">Tarjeta</ion-label>
+            <ion-input
+              name="tarjeta"
+              type="text"
+              placeholder="Ingrese su # de tarjeta"
+              clearInput
+            ></ion-input>
+          </ion-item>
+          
         </ion-list>
+      </ion-col>
+    </ion-row>
 
-        <ion-row>
-            <ion-col>
-                <ion-button type="submit" color="primary" shape="round">
-                    Crear oferta de trabajo
-                </ion-button>
-            </ion-col>
-        </ion-row>
-    </form>
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" shape="round">
+          Crear oferta de trabajo
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

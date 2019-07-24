@@ -24,11 +24,12 @@ export class TabEmpresa4Page implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this._usuarioService.getEmpresaLog());
   }
 
-  addOferta(idEmpresa: any) {
-    idEmpresa = this._usuarioService.getEmpresaLog()._id;
-    console.log(idEmpresa)
+  addOferta() {
+    var idEmpresa = this._usuarioService.getEmpresaLog();
+    console.log(idEmpresa);
     // this._usuarioService.addPropuesta(this.ofertas, idEmpresa).subscribe(
     //   response => {
     //     this.status = 'Ok';
