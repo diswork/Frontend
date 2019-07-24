@@ -63,8 +63,8 @@ export class UsuarioService {
             if(resp['usuario']){
               this.guardarUser(resp['usuario']);
               resolve(true);
-            }else{
-              this.empresa = resp['empresa']
+            }else if(resp['empresa']){
+              console.log(resp['empresa'])
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
 
@@ -149,6 +149,7 @@ export class UsuarioService {
 
   getEmpresaLog() {
 
+    
     if(!this.empresa._id){
       this.validaToken()
     }
