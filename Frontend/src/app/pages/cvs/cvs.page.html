@@ -19,6 +19,21 @@
     </ion-label>
   </div>
 
+  <!-- CONTENIDO DE CVS -->
+  <div *ngIf="siHayData">
+    <ion-list *ngFor="let dt of cvs">
+      <ion-card mode="ios">
+        <ion-card-header>
+          <ion-card-title>Titulo</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-content>
+          <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
   <!-- Tomar una foto al CV -->
   <br>
   <div *ngIf="camara">
@@ -32,18 +47,20 @@
         </ion-list>
       </ion-col>
     </ion-row>
+    
     <ion-row>
-          <ion-col size="5">
-            <ion-button (click)="tomarFoto()" expand="full" shape="round">
-              <ion-icon slot="start" name="camera"></ion-icon>CÁMARA
-            </ion-button>
-          </ion-col>
-          <ion-col size="5">
-            <ion-button (click)="escogerFoto()" expand="full" shape="round">
-              <ion-icon slot="start" name="images"></ion-icon>GALERÍA
-            </ion-button>
-          </ion-col>  
+      <ion-col size="5">
+        <ion-button disabled="{{btnCamara}}" (click)="tomarFoto()" expand="full" shape="round">
+          <ion-icon  slot="start" name="camera"></ion-icon>CÁMARA
+        </ion-button>
+      </ion-col>
+      <ion-col size="5">
+        <ion-button disabled="{{btnCamara}}" (click)="escogerFoto()" expand="full" shape="round">
+          <ion-icon  slot="start" name="images"></ion-icon>GALERÍA
+        </ion-button>
+      </ion-col>  
     </ion-row>
+
     <ion-row>
       <ion-col size="3" *ngFor="let image of tempImages">
         <ion-card>
@@ -51,13 +68,14 @@
         </ion-card>
       </ion-col>
     </ion-row>
+    
     <ion-fab vertical="bottom" horizontal="start" >
       <ion-row>
         <ion-col size="5">
           <ion-button (click)="cancelarFoto()" expand="full" color="danger" shape="round">Cancelar</ion-button>
         </ion-col>
         <ion-col size="5">
-          <ion-button  expand="full" shape="round">Guardar</ion-button>
+          <ion-button (click)="guardarFoto()" expand="full" shape="round">Guardar</ion-button>
         </ion-col>
       </ion-row>
     </ion-fab>
@@ -79,11 +97,9 @@
         </ion-col>
       </ion-row>
       <ion-row>
-            <ion-col size="5">
-                <ion-button expand="full" shape="round">
-                  <ion-icon slot="start" name="camera"></ion-icon>Seleccionar
-                </ion-button>
-              </ion-col>
+          <ion-item>
+              <ion-input name="image" type="file" value="none" (change)="fileChangeEvent($event)"></ion-input>
+          </ion-item>
       </ion-row>
       <ion-row>
         <ion-col size="3" *ngFor="let image of tempImages">
@@ -98,7 +114,7 @@
               <ion-button (click)="cancelarArchivo()" expand="full" color="danger" shape="round">Cancelar</ion-button>
             </ion-col>
           <ion-col size="5">
-            <ion-button  expand="full" shape="round">Guardar</ion-button>
+            <ion-button (click)="guardarArchivo()" expand="full" shape="round">Guardar</ion-button>
           </ion-col>
         </ion-row>
       </ion-fab>
@@ -190,9 +206,9 @@
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
       <ion-fab-list side="start">
-        <ion-fab-button><ion-icon (click)="crear()" color="dark" name="create"></ion-icon></ion-fab-button>
-        <ion-fab-button><ion-icon (click)="subirFoto()" color="dark" name="camera"></ion-icon></ion-fab-button>
-        <ion-fab-button><ion-icon  (click)="subirArchivo()" color="dark" name="attach"></ion-icon></ion-fab-button>
+        <ion-fab-button color="dark"><ion-icon (click)="crear()" color="light" name="create"></ion-icon></ion-fab-button>
+        <ion-fab-button color="dark"><ion-icon (click)="subirFoto()" color="light" name="camera"></ion-icon></ion-fab-button>
+        <ion-fab-button color="dark"><ion-icon  (click)="subirArchivo()" color="light" name="attach"></ion-icon></ion-fab-button>
       </ion-fab-list>    
     </ion-fab>
   </div>

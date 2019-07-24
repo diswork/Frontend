@@ -106,7 +106,6 @@ export class UsuarioService {
     return this.token;
   }
 
-
   registrarUser(user: User): Observable<any> {
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
@@ -122,10 +121,19 @@ export class UsuarioService {
   }
 
   seguirEmpresa(id) : Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-     console.log(headers); 
-     
+    // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    ; 
+     const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+    console.log(headers)
     return this._http.put(this.url + `seguir-empresa/${id}`,{headers:headers});
+  }
+
+  getUser(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + `usuario/${id}`,{headers:headers});
   }
 
 
