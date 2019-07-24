@@ -9,6 +9,7 @@ import { Empresa } from '../models/empresa.model';
 import { NavController } from '@ionic/angular';
 
 import {delay} from 'rxjs/operators'
+import { Admin } from '../models/admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,7 @@ export class UsuarioService {
   token: string = null;
   private usuario: User;
   private empresa: Empresa;
+  private admin: Admin
   public url: String;
 
   constructor(public _http: HttpClient, 
@@ -83,6 +85,7 @@ export class UsuarioService {
   limpiarStorage() {
     this.token = null;
     this.usuario = null;
+    this.admin = null;
     this.storage.clear();
     this.validaToken();
   }
@@ -186,5 +189,11 @@ export class UsuarioService {
     return this._http.get(this.url + 'niveles-academicos', {headers})
   }
  
+  //SERVICIOS PARA ADMIN
+
+  async guardarAdmin(admins: Admin) {
+    this.admin = admins;
+    await this.storage.set('admin', admins);
+  }
 
 }

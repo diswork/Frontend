@@ -200,8 +200,7 @@
   
     <!---->
 
-  <div *ngIf="principal">
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab *ngIf="principal" vertical="bottom" horizontal="end" slot="fixed">
       <ion-fab-button>
         <ion-icon name="add"></ion-icon>
       </ion-fab-button>
@@ -211,7 +210,6 @@
         <ion-fab-button color="dark"><ion-icon  (click)="subirArchivo()" color="light" name="attach"></ion-icon></ion-fab-button>
       </ion-fab-list>    
     </ion-fab>
-  </div>
 
 
 </ion-content>

@@ -20,6 +20,7 @@ export class TabUser2Page implements OnInit {
   ngOnInit() {
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
     this.getEmpresas();
     this.dataUser = this._usuarioService.getUserLog();
   }

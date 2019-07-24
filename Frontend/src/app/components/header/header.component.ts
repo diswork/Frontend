@@ -10,6 +10,7 @@ export class HeaderComponent implements OnInit {
   @Input() titulo : string;
   @Input() menuUser : string;
   @Input() menuEmpresa : string;
+  @Input() menuAdmin : string;
 
 
   constructor() {}

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Empresa } from "src/app/models/empresa.model";
 import { Oferta } from 'src/app/models/oferta.model';
 import { NgForm } from '@angular/forms';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-empresa4',
@@ -17,12 +18,17 @@ export class TabEmpresa4Page implements OnInit {
   public ofertas: Oferta;
   public oferta: Oferta;
 
-  constructor() {
+  constructor(private menuCtrl : MenuController) {
     this.ofertas = new Oferta("", "", "", "", "", "", [], "", false);
     this.oferta = new Oferta("", "", "", "", "", "", [], "", false);
   }
 
+  
   ngOnInit() {
+    this.menuCtrl.enable(false, "primerMenu");
+    this.menuCtrl.enable(true, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
   }
+
 
 }

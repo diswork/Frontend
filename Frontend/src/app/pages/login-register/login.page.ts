@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(true);
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
-
+    this.menuCtrl.enable(false, "tercerMenu");
   }
 
   mostrarLogin() {
@@ -68,16 +68,26 @@ export class LoginPage implements OnInit {
           this.usuarioService.guardarToken(response.token);
         }
         if (response.empresa) {
-          this.usuarioService.guardarEmpresa(response.empresa)
+          this.usuarioService.guardarEmpresa(response.empresa);
           this.menuCtrl.enable(true, "segundoMenu");
           this.menuCtrl.enable(false, "primerMenu");
+          this.menuCtrl.enable(false, "tercerMenu");
 
           this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
         } else if (response.user) {
-          this.usuarioService.guardarUser(response.user)
+          this.usuarioService.guardarUser(response.user);
           this.menuCtrl.enable(true, "primerMenu");
           this.menuCtrl.enable(false, "segundoMenu");
+          this.menuCtrl.enable(false, "tercerMenu");
+
           this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
+        } else if (response.admin){
+          this.usuarioService.guardarAdmin(response.admin);
+          this.menuCtrl.enable(false, "primerMenu");
+          this.menuCtrl.enable(false, "segundoMenu");
+          this.menuCtrl.enable(true, "tercerMenu");
+
+          this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
         }
 
         

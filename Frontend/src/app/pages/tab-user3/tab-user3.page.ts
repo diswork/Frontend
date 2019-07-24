@@ -37,6 +37,7 @@ export class TabUser3Page implements OnInit {
   ngOnInit() {    
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
     this.usuario = this._usuarioService.getUserLog();
     this.getCategorias();
     this.getNivelesAcademicos();

@@ -15,6 +15,7 @@ export class TabUser4Page implements OnInit {
   ngOnInit() {    
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
   }
   
   cerrar(){
