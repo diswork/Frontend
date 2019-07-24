@@ -40,7 +40,7 @@ export class TabEmpresa4Page implements OnInit {
     //     var errorMessage = <any>error
     //     console.log(errorMessage);
     //     if (errorMessage != null) {
-    //       this.status = 'Error';
+    //       this.status =  'Error';
     //     }
     //   }
     // )
