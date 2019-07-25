@@ -49,7 +49,7 @@ export class UploadService {
       })
   }
 
-  subirImagen(img : string){
+  async subirImagen(img : string){
     const options: FileUploadOptions = {
         fileKey : 'cv',
         headers : {
@@ -60,12 +60,11 @@ export class UploadService {
     const fileTransfer : FileTransferObject = this.fileTransfer.create();
 
     fileTransfer.upload(img, this.url + '/subir-cv', options)
-      .then( data => {
+      .then( async data => {
         let dt = JSON.stringify(data.response);
         let token = dt.split('\\\"')
         console.log('token: ' + token[3])
-        this._usuarioService.guardarToken(token[3]);
-        this._usuarioService.validaToken();
+        await this._usuarioService.guardarToken(token[3]);
       }).catch(err => {
         console.log('Error en carga', err);
       });

@@ -34,19 +34,39 @@ export class CVsPage implements OnInit {
     private menuCtrl : MenuController,
     private _uploadService : UploadService,
     private _usuarioService : UsuarioService) { 
-      this.usuario = this._usuarioService.getUserLog();
-      console.log(this.usuario)
+      this._usuarioService.validaToken();    
       this.url = GLOBAL.url;
     }
 
   ngOnInit() {
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
+    this.usuario = this._usuarioService.getUserLog();
+    console.log(this.usuario)
     if(this.usuario.cvs.length > 0){
       this.noHayData = false;
       this.siHayData = true;
       this.cvs = this.usuario.cvs;
     }
+  }
+
+  doRefresh(event){
+    setTimeout(() => {
+      this._usuarioService.getUser(this.usuario._id).subscribe(
+        response => {
+          this.usuario = response.user;
+          console.log(this.usuario)
+          this.cvs = this.usuario.cvs;
+          event.target.complete();
+        },
+        error => {
+          if(error){
+            console.log(<any>error)
+          }
+        }
+      )   
+    }, 2500);
   }
 
   crear(){
@@ -135,26 +155,15 @@ export class CVsPage implements OnInit {
   async guardarFoto(){
     await this._uploadService.subirImagen( this.imageData );
     this.camara = false;
-    this.noHayData = true;
     this.principal = true;
     this.btnCamara = false;
-    this.tempImages = [];
-    console.log("guardarFoto()") 
-    this._usuarioService.getUser(this.usuario._id).subscribe(
-      response => {
-        if(response.user){
-          this.usuario = response.user;
-        }
-      },
-      err => {
-
-      }
-    );
+    this.tempImages = [];  
     this.noHayData = false;
     this.siHayData = true;
     console.log(this.usuario)
     console.log(this.usuario.cvs)
     this.cvs = this.usuario.cvs;
+    console.log("guardarFoto()") 
   }
 
   subirArchivo(){
