@@ -26,7 +26,6 @@ export class TabEmpresa1Page implements OnInit {
   }
 
   ngOnInit() {
-   
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
 
     this.menuCtrl.enable(false, "primerMenu");
@@ -50,6 +49,29 @@ export class TabEmpresa1Page implements OnInit {
         }
       }
     )
+  }
+
+  doRefresh(event) {
+    // setTimeout(() => {
+
+    let empresaId = this.empresa._id;
+    this._usuarioService.getEmpresa(empresaId);
+    console.log(empresaId);
+
+      // .subscribe(
+      //   response => {
+      //     this.empresa = response.empresa;
+      //     console.log(this.empresa);
+      //     this.ofertas = response.ofertas;
+      //     event.target.complete();
+      //   },
+      //   error => {
+      //     if (error) {
+      //       console.log(<any>error);
+      //     }
+      //   }
+      // )
+    // }, 2000);
   }
 
 }

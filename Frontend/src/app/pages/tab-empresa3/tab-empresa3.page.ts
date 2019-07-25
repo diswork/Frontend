@@ -44,22 +44,21 @@ export class TabEmpresa3Page implements OnInit {
     this.habilitarEdicion = false;
   }
 
-  editarEmpresa() {
-    this._usuarioService.editEmpresa(this.empresa).subscribe(
-      response => {
-        this.status = 'Ok'
-        if (response.empresa) {
-          console.log(response.empresa);
-          this.empresa = response.user;
-        }
-      },
-      error => {
-        if(error) {
-          console.log(<any>error);
-          this.status = 'Error';
-        }
-      }
-    )
-  }
-
+  // editarEmpresa(){
+  //   this._usuarioService.editEmpresa(this.empresa).subscribe(
+  //     response => {
+  //       this.status = 'Ok'
+  //       if (response.empresa) {
+  //         console.log(response.empresa);
+  //         this.empresa = response.user;
+  //       }
+  //     },
+  //     error => {
+  //       if(error) {
+  //         console.log(<any> error);
+  //         this.status = 'Error';
+  //       }
+  //     }
+  //   )
+  // }
 }

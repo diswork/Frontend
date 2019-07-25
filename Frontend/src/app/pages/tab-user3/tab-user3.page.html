@@ -68,13 +68,13 @@
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Nivel Academico:</ion-label>
                         <ion-select *ngFor="let dt of nivelesAcademicos" name="level" [(ngModel)]="usuario.nivelAcademico" placeholder="Select One" interface="popover">
-                            <ion-select-option value="{{dt.descripcion}}">{{dt.descripcion}}</ion-select-option>
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Categoría de empleos:</ion-label>
                         <ion-select *ngFor="let dt of categorias" name="categoria" [(ngModel)]="usuario.categoria" placeholder="Select One" interface="popover">
-                            <ion-select-option value="{{dt.descripcion}}">{{dt.descripcion}}</ion-select-option>
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item *ngIf="habilitarEdicion">
