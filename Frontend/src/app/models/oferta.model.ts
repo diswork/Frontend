@@ -1,13 +1,14 @@
-export class Oferta{
+export class Oferta {
     constructor(
-        public titulo: string,
-        public descripcion: string,
-        public categoria: string,
-        public nivelAcademico: string,
-        public tarjeta: string,
-        public empresa: string,
+        public titulo: String,
+        public descripcion: String,
+        public fechaPublicacion: Date,
+        public categoria: String,
+        public nivelAcademico: String,
+        public tarjeta: String,
+        public empresa: String,
         public curriculum: [],
-        public imagen: string,
+        public imagen: String,
         public disponible: Boolean
-    ){}
+    ) {}
 }

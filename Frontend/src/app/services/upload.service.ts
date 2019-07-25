@@ -71,5 +71,24 @@ export class UploadService {
       });
   }
 
+  subirImagenOferta(img : string, id){
+    const options: FileUploadOptions = {
+        fileKey : 'imagen',
+        headers : {
+          'Authorization': this._usuarioService.getToken()
+        }
+    };
+
+    const fileTransfer : FileTransferObject = this.fileTransfer.create();
+
+    fileTransfer.upload(img, this.url + `subir-imagen-oferta/${id}`, options)
+      .then( data => {
+        console.log(data)
+      }).catch(err => {
+        console.log('Error en carga', err);
+      });
+  }
+
+
 }
 

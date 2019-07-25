@@ -16,12 +16,13 @@ export class TabEmpresa1Page implements OnInit {
 
   public empresa: Empresa;
   public oferta: Oferta;
+  public idEmpresa;
 
   public ofertas : [];
 
   constructor(private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
-    this.oferta = new Oferta('', '', '', '', '', '', [], '', true);
+    this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
   }
 
   ngOnInit() {
@@ -39,7 +40,6 @@ export class TabEmpresa1Page implements OnInit {
         console.log(this.ofertas);
       },
       error => {
-        // tslint:disable-next-line:prefer-const
         var errorMessage = <any>error;
         console.log(errorMessage);
         if (errorMessage != null) {

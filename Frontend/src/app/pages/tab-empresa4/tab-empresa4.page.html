@@ -1,18 +1,87 @@
 <app-header titulo="diswork" menuEmpresa="true" menuAdmin="false" menuUser="false"></app-header>
 
 <ion-content>
-    <form #formAddPropuesta="ngForm" (ngSubmit)="crearPropuesta(crear)">
+  <form (ngSubmit)="addOferta()" #formAddPropuesta="ngForm">
+    <ion-row>
+      <ion-col>
 
-        <ion-row>
-            <ion-col>
-                <ion-list>
-                    <ion-item>
-                        <ion-label position="floating">Ingrese su titulo:</ion-label>
-                        <ion-input></ion-input>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-        </ion-row>
+        <ion-list>
+          <ion-item>
+            <ion-label position="stacked">Titulo</ion-label>
+            <ion-input
+              name="titulo"
+              type="text"
+              placeholder="Ingrese un titulo"
+              clearInput
+              [(ngModel)]="oferta.titulo"
+            ></ion-input>
+          </ion-item>
 
-    </form>
+          <ion-item>
+              <ion-label position="stacked">Descripcion</ion-label>
+              <ion-textarea                  
+                  name="descripcion"
+                  [(ngModel)]="oferta.descripcion"
+                  rows="6" 
+                  placeholder="Describa el empleo">
+              </ion-textarea>
+            </ion-item>
+
+          <ion-item>
+              <ion-label>Categoría de empleos:</ion-label>
+              <ion-select *ngFor="let dt of categorias" name="categoria" [(ngModel)]="oferta.categoria" placeholder="Select One" interface="popover">
+                  <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+              </ion-select>
+          </ion-item>
+          <ion-item>
+              <ion-label>Nivel Academico:</ion-label>
+              <ion-select *ngFor="let dt of nivelesAcademicos" name="level" [(ngModel)]="oferta.nivelAcademico" placeholder="Select One" interface="popover">
+                  <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+              </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Tarjeta</ion-label>
+            <ion-input
+              name="tarjeta"
+              type="text"
+              placeholder="Ingrese su # de tarjeta"
+              clearInput
+              [(ngModel)]="oferta.tarjeta"
+
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-row>
+              <ion-label position="stacked">Imagen</ion-label>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-button disabled="{{btnCamara}}" (click)="escogerFoto()" expand="full" shape="round">
+                  <ion-icon slot="start" name="images"></ion-icon>GALERÍA
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          
+            <ion-row>
+              <ion-col *ngFor="let image of tempImages">
+                <ion-card>
+                  <ion-img [src]="image | imageSanitizer"></ion-img>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button type="submit" color="primary" shape="round">
+          Crear oferta de trabajo
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
 </ion-content>

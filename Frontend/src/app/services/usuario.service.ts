@@ -10,6 +10,7 @@ import { NavController } from '@ionic/angular';
 
 import {delay} from 'rxjs/operators'
 import { Admin } from '../models/admin.model';
+import { Oferta } from '../models/oferta.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,9 @@ import { Admin } from '../models/admin.model';
 export class UsuarioService {
 
   token: string = null;
-  private usuario: User;
-  private empresa: Empresa;
-  private admin: Admin
+  public usuario: User;
+  public empresa: Empresa;
+  public admin: Admin
   public url: String;
 
   constructor(public _http: HttpClient, 
@@ -64,7 +65,6 @@ export class UsuarioService {
               this.guardarUser(resp['usuario']);
               resolve(true);
             }else if(resp['empresa']){
-              console.log(resp['empresa'])
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
 
@@ -144,12 +144,12 @@ export class UsuarioService {
 
   async guardarEmpresa(empresas: Empresa) {
     this.empresa = empresas;
+
     await this.storage.set('empresa', empresas);
   }
 
-  getEmpresaLog() {
+   getEmpresaLog() {
 
-    
     if(!this.empresa._id){
       this.validaToken()
     }
@@ -177,6 +177,13 @@ export class UsuarioService {
      return this._http.get(this.url + 'empresas', {headers}).pipe(delay(2000));
    }
 
+   addPropuesta(oferta : Oferta) : Observable<any>{
+     let params = JSON.stringify(oferta);
+     let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);
+
+     return this._http.post(this.url + 'oferta', params, {headers});   
+   }
+
   //SERVICIOS PARA CATEGORIAS
   getCategorias():Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
@@ -185,6 +192,8 @@ export class UsuarioService {
   }
 
   getNiveles():Observable<any>{
+    this.cargarToken()
+
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
     return this._http.get(this.url + 'niveles-academicos', {headers})

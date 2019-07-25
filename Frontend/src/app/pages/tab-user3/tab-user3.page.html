@@ -2,7 +2,7 @@
 
 <ion-content>
 
-    <ion-row class="top-20">              
+    <ion-row class="top-20">
         <ion-col size="12" text-center>
             <img *ngIf="!usuario.image" style="border-radius: 100%" (click)="opcionesDeImagen()"  src="assets/icon/diswork-logo.png" class="img-avatar" >            
             <img *ngIf="usuario.image" style="border-radius: 100%" (click)="opcionesDeImagen()"  src="{{url + 'obtener-imagen-usuario/'+usuario.image}}" class="img-avatar" >            
@@ -24,7 +24,7 @@
                     <ion-item>
                         <ion-label>Información</ion-label>
                         <ion-button *ngIf="!habilitarEdicion" (click)="habilito()" shape="round">
-                            <ion-icon slot="icon-only"  name="create"></ion-icon>
+                            <ion-icon slot="icon-only" name="create"></ion-icon>
                         </ion-button>
                     </ion-item>
 
@@ -52,68 +52,44 @@
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Nombre:</ion-label>
-                        <ion-input name="nickName" 
-                                    type="text"                                    
-                                    [(ngModel)]="usuario.nickName"
-                                    required
-                                    clearInput></ion-input>
+                        <ion-input name="nickName" type="text" [(ngModel)]="usuario.nickName" required clearInput></ion-input>
                     </ion-item>
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Email:</ion-label>
-                        <ion-input name="email" 
-                                   type="email"                                    
-                                   [(ngModel)]="usuario.email"
-                                   required
-                                   clearInput></ion-input>
+                        <ion-input name="email" type="email" [(ngModel)]="usuario.email" required clearInput></ion-input>
                     </ion-item>
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Telefono:</ion-label>
-                        <ion-input name="telefono" 
-                                   type="text"
-                                   [(ngModel)]="usuario.telefono"
-                                   required
-                                   clearInput></ion-input>
+                        <ion-input name="telefono" type="text" [(ngModel)]="usuario.telefono" required clearInput></ion-input>
                     </ion-item>
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Nivel Academico:</ion-label>
-                        <ion-select *ngFor="let dt of nivelesAcademicos"  name="level" [(ngModel)]="usuario.nivelAcademico" placeholder="Select One" interface="popover">
-                            <ion-select-option  value="{{dt.descripcion}}">{{dt.descripcion}}</ion-select-option>
+                        <ion-select *ngFor="let dt of nivelesAcademicos" name="level" [(ngModel)]="usuario.nivelAcademico" placeholder="Select One" interface="popover">
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Categoría de empleos:</ion-label>
                         <ion-select *ngFor="let dt of categorias" name="categoria" [(ngModel)]="usuario.categoria" placeholder="Select One" interface="popover">
-                            <ion-select-option value="{{dt.descripcion}}">{{dt.descripcion}}</ion-select-option>
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
                         </ion-select>
                     </ion-item>
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Departamento:</ion-label>
-                        <ion-input name="departamento" 
-                                    type="text"                                    
-                                    [(ngModel)]="usuario.departamento"
-                                    required
-                                    clearInput></ion-input>
+                        <ion-input name="departamento" type="text" [(ngModel)]="usuario.departamento" required clearInput></ion-input>
                     </ion-item>
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Lugar de estudio:</ion-label>
-                        <ion-input name="colegio" 
-                                   type="email"                                    
-                                   [(ngModel)]="usuario.institucion"
-                                   required
-                                   clearInput></ion-input>
+                        <ion-input name="colegio" type="email" [(ngModel)]="usuario.institucion" required clearInput></ion-input>
                     </ion-item>
 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Fecha de Nacimiento:</ion-label>
-                        <ion-datetime placeholder="Select"
-                                      display-format="DD/MM/YYYY"
-                                      pickerFormat="DD MMM  YYYY"
-                                      [(ngModel)]="usuario.fechaNacimiento"
-                                      name="fechaNacimiento">
+                        <ion-datetime placeholder="Select" display-format="DD/MM/YYYY" pickerFormat="DD MMM  YYYY" [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento">
                         </ion-datetime>
                     </ion-item>
                 </ion-list>
@@ -123,10 +99,10 @@
         <ion-row *ngIf="habilitarEdicion">
             <ion-col text-center>
                 <ion-button type="submit" color="primary" shape="round">
-                        <ion-icon name="checkmark"></ion-icon>
+                    <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
                 <ion-button (click)="desabilito()" color="danger" shape="round">
-                        <ion-icon name="close"></ion-icon>
+                    <ion-icon name="close"></ion-icon>
                 </ion-button>
             </ion-col>
         </ion-row>
