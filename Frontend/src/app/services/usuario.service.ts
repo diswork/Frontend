@@ -10,6 +10,7 @@ import { NavController } from '@ionic/angular';
 import { Oferta } from '../models/oferta.model';
 
 import {delay} from 'rxjs/operators'
+import { Admin } from '../models/admin.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class UsuarioService {
   token: string = null;
   private usuario: User;
   private empresa: Empresa;
+  private admin: Admin
   public url: String;
 
   constructor(public _http: HttpClient, 
@@ -62,14 +64,14 @@ export class UsuarioService {
             if(resp['usuario']){
               this.guardarUser(resp['usuario']);
               resolve(true);
-            }else{
-              this.empresa = resp['empresa']
+            }else if(resp['empresa']) {
+              console.log(resp['empresa']);
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
 
             }
           } else {
-            this.navCtrl.navigateRoot('/login', {animated : true})
+            this.navCtrl.navigateRoot('/login', {animated : true});
             resolve(false)
           }
         }
@@ -80,6 +82,7 @@ export class UsuarioService {
   limpiarStorage() {
     this.token = null;
     this.usuario = null;
+    this.admin = null;
     this.storage.clear();
     this.validaToken();
   }
@@ -99,6 +102,9 @@ export class UsuarioService {
 
     return { ...this.usuario }
   }
+  getToken(){
+    return this.token;
+  }
 
   registrarUser(user: User): Observable<any> {
     let params = JSON.stringify(user);
@@ -115,10 +121,19 @@ export class UsuarioService {
   }
 
   seguirEmpresa(id) : Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-     console.log(headers); 
-     
+    // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    ; 
+     const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+    console.log(headers)
     return this._http.put(this.url + `seguir-empresa/${id}`,{headers:headers});
+  }
+
+  getUser(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + `usuario/${id}`,{headers:headers});
   }
 
 
@@ -186,4 +201,11 @@ export class UsuarioService {
     return this._http.get(this.url + 'niveles-academicos', {headers})
   }
  
+  //SERVICIOS PARA ADMIN
+
+  async guardarAdmin(admins: Admin) {
+    this.admin = admins;
+    await this.storage.set('admin', admins);
+  }
+
 }

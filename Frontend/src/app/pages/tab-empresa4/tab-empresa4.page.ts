@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Oferta } from '../../models/oferta.model';
-import { Empresa } from '../../models/empresa.model';
 import { UsuarioService } from '../../services/usuario.service';
-
+import { Empresa } from "src/app/models/empresa.model";
+import { NgForm } from '@angular/forms';
+import { MenuController } from '@ionic/angular';
+import { Oferta } from 'src/app/models/oferta.model';
 
 @Component({
-  selector: 'app-tab-empresa4',
   templateUrl: './tab-empresa4.page.html',
   styleUrls: ['./tab-empresa4.page.scss'],
   providers: [UsuarioService]
@@ -18,32 +18,19 @@ export class TabEmpresa4Page implements OnInit {
   public ofertas: Oferta;
   public empresas: Empresa;
 
-  constructor(public _usuarioService: UsuarioService) {
+  constructor(public _usuarioService: UsuarioService, private menuCtrl : MenuController) {
     this.ofertas = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
     this.empresas = new Empresa('', '', '', '', 'empresa', '', '', '');
   }
 
   ngOnInit() {
-    console.log(this._usuarioService.getEmpresaLog());
+    this.menuCtrl.enable(false, "primerMenu");
+    this.menuCtrl.enable(true, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
   }
 
   addOferta() {
-    var idEmpresa = this._usuarioService.getEmpresaLog();
-    console.log(idEmpresa);
-    // this._usuarioService.addPropuesta(this.ofertas, idEmpresa).subscribe(
-    //   response => {
-    //     this.status = 'Ok';
-    //     console.log(response.oferta);
-    //     this.formValueAddPropuesta.resetForm();
-    //   },
-    //   error => {
-    //     var errorMessage = <any>error
-    //     console.log(errorMessage);
-    //     if (errorMessage != null) {
-    //       this.status =  'Error';
-    //     }
-    //   }
-    // )
+    console.log(this._usuarioService.getEmpresaLog());
   }
 
 }

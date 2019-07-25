@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../models/empresa.model';
 import { Oferta } from '../../models/oferta.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -19,7 +20,7 @@ export class TabEmpresa1Page implements OnInit {
 
   public ofertas : [];
 
-  constructor(private _usuarioService : UsuarioService) {
+  constructor(private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
   }
@@ -27,7 +28,11 @@ export class TabEmpresa1Page implements OnInit {
   ngOnInit() {
    
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
-     
+
+    this.menuCtrl.enable(false, "primerMenu");
+    this.menuCtrl.enable(true, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
   }
 
   readOfertasEmpresa(id) {

@@ -31,6 +31,9 @@ export class TabEmpresa3Page implements OnInit {
   }
 
   ngOnInit() {
+    this.menuCtrl.enable(false, "primerMenu");
+    this.menuCtrl.enable(true, "segundoMenu");
+    this.menuCtrl.enable(false, "tercerMenu");
   }
 
   habilito() {

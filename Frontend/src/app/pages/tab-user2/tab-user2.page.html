@@ -1,4 +1,4 @@
-<app-header titulo="diswork" menuEmpresa="false" menuUser="true"></app-header>
+<app-header titulo="diswork" menuAdmin="false" menuEmpresa="false" menuUser="true"></app-header>
 
 <ion-content>
     <ion-list>
@@ -15,10 +15,10 @@
     <ion-list *ngIf="!empresas">
             <ion-item  *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
                     <ion-thumbnail slot="start">
-                        <ion-img></ion-img>
+                        <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
                     </ion-thumbnail>
                     <ion-label><ion-skeleton-text width="65%"></ion-skeleton-text></ion-label>
-                    <ion-skeleton-text width="25%"></ion-skeleton-text>
+                    <ion-skeleton-text width="25%" ></ion-skeleton-text>
             </ion-item>
         </ion-list>
 
