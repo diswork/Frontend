@@ -15,13 +15,13 @@ export class TabUser2Page implements OnInit {
   public dataUser;
 
   constructor(private menuCtrl : MenuController,
-              private _usuarioService : UsuarioService) { }
+              private _usuarioService : UsuarioService) {    this.getEmpresas();   }
 
   ngOnInit() {
     this.menuCtrl.enable(true, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
-    this.getEmpresas();
+
     this.dataUser = this._usuarioService.getUserLog();
   }
 

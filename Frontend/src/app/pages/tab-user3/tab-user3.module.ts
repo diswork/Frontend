@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabUser3Page } from './tab-user3.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalUserPage } from '../modal-user/modal-user.page';
+import { ModalUserPageModule } from '../modal-user/modal-user.module';
 
 const routes: Routes = [
   {
@@ -21,7 +23,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalUserPageModule
+  ],
+  entryComponents: [
+    ModalUserPage
   ],
   declarations: [TabUser3Page]
 })

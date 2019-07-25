@@ -4,7 +4,7 @@
 
     <ion-row class="top-20">
         <ion-col size="12" text-center>
-            <img *ngIf="!usuario.image" style="border-radius: 100%" (click)="opcionesDeImagen()"  src="assets/icon/diswork-logo.png" class="img-avatar" >            
+            <img *ngIf="!usuario.image" style="border-radius: 100%" (click)="opcionesDeImagen()"  src="assets/avatars/av-6.png" class="img-avatar" >            
             <img *ngIf="usuario.image" style="border-radius: 100%" (click)="opcionesDeImagen()"  src="{{url + 'obtener-imagen-usuario/'+usuario.image}}" class="img-avatar" >            
         </ion-col>
     </ion-row>
@@ -35,12 +35,6 @@
                         <ion-label>Telefono: {{usuario.telefono}}</ion-label>
                     </ion-item>
                     <ion-item *ngIf="!habilitarEdicion">
-                        <ion-label>Nivel Académico: {{usuario.nivelAcademico}}</ion-label>
-                    </ion-item>
-                    <ion-item *ngIf="!habilitarEdicion">
-                        <ion-label>Categoría de empleos: {{usuario.categoria}}</ion-label>
-                    </ion-item>
-                    <ion-item *ngIf="!habilitarEdicion">
                         <ion-label>Departamento: {{usuario.departamento}}</ion-label>
                     </ion-item>
                     <ion-item *ngIf="!habilitarEdicion">
@@ -63,20 +57,7 @@
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Telefono:</ion-label>
                         <ion-input name="telefono" type="text" [(ngModel)]="usuario.telefono" required clearInput></ion-input>
-                    </ion-item>
-
-                    <ion-item *ngIf="habilitarEdicion">
-                        <ion-label>Nivel Academico:</ion-label>
-                        <ion-select *ngFor="let dt of nivelesAcademicos" name="level" [(ngModel)]="usuario.nivelAcademico" placeholder="Select One" interface="popover">
-                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
-                    <ion-item *ngIf="habilitarEdicion">
-                        <ion-label>Categoría de empleos:</ion-label>
-                        <ion-select *ngFor="let dt of categorias" name="categoria" [(ngModel)]="usuario.categoria" placeholder="Select One" interface="popover">
-                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
-                        </ion-select>
-                    </ion-item>
+                    </ion-item>                 
                     <ion-item *ngIf="habilitarEdicion">
                         <ion-label>Departamento:</ion-label>
                         <ion-input name="departamento" type="text" [(ngModel)]="usuario.departamento" required clearInput></ion-input>
@@ -91,6 +72,18 @@
                         <ion-label>Fecha de Nacimiento:</ion-label>
                         <ion-datetime placeholder="Select" display-format="DD/MM/YYYY" pickerFormat="DD MMM  YYYY" [(ngModel)]="usuario.fechaNacimiento" name="fechaNacimiento">
                         </ion-datetime>
+                    </ion-item>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label>Nivel Academico:</ion-label>
+                        <ion-select *ngFor="let dt of nivelesAcademicos" name="level" [(ngModel)]="usuario.nivelAcademico" placeholder="Select One" interface="popover">
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    <ion-item *ngIf="habilitarEdicion">
+                        <ion-label>Categoría de empleos:</ion-label>
+                        <ion-select *ngFor="let dt of categorias" name="categoria" [(ngModel)]="usuario.categoria" placeholder="Select One" interface="popover">
+                            <ion-select-option value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+                        </ion-select>
                     </ion-item>
                 </ion-list>
             </ion-col>

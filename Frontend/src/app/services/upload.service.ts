@@ -88,6 +88,27 @@ export class UploadService {
       });
   }
 
+  async subirImagenUsuario(img : string,id){
+    const options: FileUploadOptions = {
+        fileKey : 'image',
+        headers : {
+          'Authorization': this._usuarioService.getToken()
+        }
+    };
+
+    const fileTransfer : FileTransferObject = this.fileTransfer.create();
+
+    fileTransfer.upload(img, this.url + `/subir-imagen-usuario/${id}`, options)
+      .then( async data => {
+        let dt = JSON.stringify(data.response);
+        let token = dt.split('\\\"')
+        console.log('token: ' + token[3])
+        await this._usuarioService.guardarToken(token[3]);
+      }).catch(err => {
+        console.log('Error en carga', err);
+      });
+  }
+
 
 }
 
