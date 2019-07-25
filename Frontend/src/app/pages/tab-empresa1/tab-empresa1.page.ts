@@ -54,10 +54,8 @@ export class TabEmpresa1Page implements OnInit {
   doRefresh(event) {
     setTimeout(() => {
     let empresaId = this.empresa._id;
-    this._usuarioService.getEmpresa(empresaId).subscribe(
+    this._usuarioService.readOfertaEmpresa(empresaId).subscribe(
         response => {
-          this.empresa = response.empresa;
-          console.log(this.empresa);
           this.ofertas = response.ofertas;
           event.target.complete();
         },
