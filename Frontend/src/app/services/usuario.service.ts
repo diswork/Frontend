@@ -122,7 +122,7 @@ export class UsuarioService {
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
+    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(2000));
   }
 
   seguirEmpresa(id) : Observable<any>{

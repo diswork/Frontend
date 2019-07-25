@@ -24,6 +24,7 @@ export class TabUser3Page implements OnInit {
   public nivelesAcademicos : [];
   public url;
   public token;
+  public usuarioActualizado = false;
   
   constructor(
     private _usuarioService : UsuarioService,
@@ -57,11 +58,13 @@ export class TabUser3Page implements OnInit {
   }
 
   editarUser(fActualizar : NgForm){
+    this.usuarioActualizado = true;
     this._usuarioService.editarUsuario(this.usuario).subscribe(
       response => {
         this.status = 'Ok';
         if(response.user){
           console.log('Usuario editado')
+          this.usuarioActualizado = false;
           this._usuarioService.guardarUser(response.user);
           this._usuarioService.guardarToken(response.token);
           this.usuario = response.user;
@@ -171,13 +174,17 @@ export class TabUser3Page implements OnInit {
     await modal.present();
 
     const {data} = await modal.onDidDismiss();
-    
-    this.presentLoading('espere...')
+    console.log(data)
+    if(data.actualizar){
+      this.presentLoading('espere...')
 
-    setTimeout(()=>{
-      this.loading.dismiss();
-      this.usuario.image = this._usuarioService.getUserLog().image;
-    }, 2000)
+      setTimeout(()=>{
+        this.loading.dismiss();
+        this.usuario.image = this._usuarioService.getUserLog().image;
+      }, 2000)
+    }
+
+    
   }
 
   async presentLoading(message : string) {
