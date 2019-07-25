@@ -208,4 +208,34 @@ export class UsuarioService {
     await this.storage.set('admin', admins);
   }
 
+  getAdminLog() {
+
+    if(!this.admin._id){
+      this.validaToken()
+    }
+
+    return { ...this.admin }
+  }
+
+  crearAdmin(admin: Admin): Observable<any> {
+    let params = JSON.stringify(admin);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.post(this.url + 'crear-admin', params, { headers: headers });
+  }
+
+  editarAdmin(admin: Admin) : Observable<any>{
+    let params = JSON.stringify(admin);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.put(this.url + `/editar-Admin/${admin._id}`,params,{headers:headers});
+  }
+
+  getAdmin(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + `getAdmin/${id}`,{headers:headers});
+  }
+
+
 }
