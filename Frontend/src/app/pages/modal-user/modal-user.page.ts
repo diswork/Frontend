@@ -31,7 +31,9 @@ export class ModalUserPage implements OnInit {
   }
 
   salir(){
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+      actualizar : false
+    });
   }
 
   tomarFoto(){
@@ -76,8 +78,13 @@ export class ModalUserPage implements OnInit {
   }
 
   async guardarCambios(){
-    await this._uploadService.subirImagenUsuario(this.imageData, this._usuarioService.getUserLog()._id);
-    this.modalCtrl.dismiss();
+    await this._uploadService.subirImagenUsuario(this.imageData, this._usuarioService.getUserLog()._id)
+
+      this.modalCtrl.dismiss({
+        actualizar : true
+      });
+    
+   
   }
   
 

@@ -24,6 +24,8 @@ export class TabUser3Page implements OnInit {
   public nivelesAcademicos : [];
   public url;
   public token;
+  public usuarioActualizado = false;
+  public listo = true;
   
   constructor(
     private _usuarioService : UsuarioService,
@@ -57,11 +59,13 @@ export class TabUser3Page implements OnInit {
   }
 
   editarUser(fActualizar : NgForm){
+    this.usuarioActualizado = true;
     this._usuarioService.editarUsuario(this.usuario).subscribe(
       response => {
         this.status = 'Ok';
         if(response.user){
           console.log('Usuario editado')
+          this.usuarioActualizado = false;
           this._usuarioService.guardarUser(response.user);
           this._usuarioService.guardarToken(response.token);
           this.usuario = response.user;
@@ -158,33 +162,39 @@ export class TabUser3Page implements OnInit {
   }
   
   loading : any;
-  async editarFoto(){
+  async editarFoto() {
     const modal = await this.modalCtrl.create({
-      component : ModalUserPage,
-      componentProps : {
-        nombre : this.usuario.nickName,
-        image : this.usuario.image,
-        editar : true
+      component: ModalUserPage,
+      componentProps: {
+        nombre: this.usuario.nickName,
+        image: this.usuario.image,
+        editar: true
       },
-      animated : true
+      animated: true
     });
     await modal.present();
 
-    const {data} = await modal.onDidDismiss();
-    
-    this.presentLoading('espere...')
-
-    setTimeout(()=>{
-      this.loading.dismiss();
-      this.usuario.image = this._usuarioService.getUserLog().image;
-    }, 2000)
-  }
-
-  async presentLoading(message : string) {
-     this.loading = await this.loadingController.create({
-      message
-    });
-    return this.loading.present();
+    const { data } = await modal.onDidDismiss();
+    console.log(data)
+    if (data.actualizar) {
+      this.listo = false;
+      this._usuarioService.getUser(this.usuario._id).subscribe(
+        response => {
+          if (response.user) {
+            this.status = 'Ok';
+            console.log('Listo')
+            this.listo = true;
+            this.usuario.image = response.user.image;
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = 'error';
+          }   
+        }
+      )
+    }
   }
 
 

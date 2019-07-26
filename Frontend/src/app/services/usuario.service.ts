@@ -69,7 +69,9 @@ export class UsuarioService {
             }else if(resp['empresa']){
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
-
+            }else if(resp['admin']){
+              this.guardarAdmin(resp['admin']);
+              resolve(true);
             }
            
           }else{
@@ -122,7 +124,7 @@ export class UsuarioService {
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
+    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(500));
   }
 
   seguirEmpresa(id) : Observable<any>{
@@ -139,6 +141,19 @@ export class UsuarioService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
     return this._http.get(this.url + `usuario/${id}`,{headers:headers});
+  }
+
+  getUsers(): Observable<any>{
+    console.log(this.token)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'usuarios',{headers:headers});
+  }
+
+  deleteUser(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.delete(this.url + `usuario/${id}`,{headers:headers});
   }
 
 
@@ -234,7 +249,7 @@ export class UsuarioService {
   getAdmin(id): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.get(this.url + `getAdmin/${id}`,{headers:headers});
+    return this._http.get(this.url + `admin/${id}`,{headers:headers});
   }
 
 

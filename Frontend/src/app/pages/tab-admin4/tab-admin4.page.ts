@@ -23,6 +23,8 @@ export class TabAdmin4Page implements OnInit {
   public nivelesAcademicos : [];
   public url;
   public token;
+  public adminActualizado = false;
+  public listo = true;
   
   constructor(
     private _adminService : UsuarioService,
@@ -54,9 +56,63 @@ export class TabAdmin4Page implements OnInit {
     this.habilitarEdicion = false;
   }
 
+  editarAdmin(fActualizar : NgForm){
+    this.adminActualizado = true;
+    this._adminService.editarAdmin(this.admin).subscribe(
+      response => {
+        this.status = 'Ok';
+        if(response.admin){
+          console.log('Admin editado')
+          this.adminActualizado = false;
+          this._adminService.guardarAdmin(response.admin);
+          this._adminService.guardarToken(response.token);
+          this.admin = response.admin;
+        }
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
+  
+  public filesToUpload : Array<File>
+  fileChangeEvent(fileInput : any){
+    this.filesToUpload = <Array<File>>fileInput.target.files;
+  }
+
+  getCategorias(){
+    this._adminService.getCategorias().subscribe(
+      response => {
+        this.categorias = response.categorias;
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
+
+  getNivelesAcademicos(){
+    this._adminService.getNiveles().subscribe(
+      response => {
+        this.nivelesAcademicos = response.nivelAcademico;
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
 
   //opciones de imagen
-  /*async opcionesDeImagen() {
+  async opcionesDeImagen() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
       buttons: [{
@@ -67,8 +123,8 @@ export class TabAdmin4Page implements OnInit {
           const modal = await this.modalCtrl.create({
             component : ModalUserPage,
             componentProps : {
-              nombre : this.usuario.nickName,
-              image : this.usuario.image,
+              nombre : this.admin.nickName,
+              image : this.admin.image,
               editar : false
             },
             animated : true
@@ -102,33 +158,39 @@ export class TabAdmin4Page implements OnInit {
   }
   
   loading : any;
-  async editarFoto(){
+  async editarFoto() {
     const modal = await this.modalCtrl.create({
-      component : ModalUserPage,
-      componentProps : {
-        nombre : this.usuario.nickName,
-        image : this.usuario.image,
-        editar : true
+      component: ModalUserPage,
+      componentProps: {
+        nombre: this.admin.nickName,
+        image: this.admin.image,
+        editar: true
       },
-      animated : true
+      animated: true
     });
     await modal.present();
 
-    const {data} = await modal.onDidDismiss();
-    
-    this.presentLoading('espere...')
-
-    setTimeout(()=>{
-      this.loading.dismiss();
-      this.usuario.image = this._usuarioService.getUserLog().image;
-    }, 2000)
+    const { data } = await modal.onDidDismiss();
+    console.log(data)
+    if (data.actualizar) {
+      this.listo = false;
+      this._adminService.getUser(this.admin._id).subscribe(
+        response => {
+          if (response.user) {
+            this.status = 'Ok';
+            console.log('Listo')
+            this.listo = true;
+            this.admin.image = response.user.image;
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = 'error';
+          }   
+        }
+      )
+    }
   }
-
-  async presentLoading(message : string) {
-     this.loading = await this.loadingController.create({
-      message
-    });
-    return this.loading.present();
-  }*/
 
 }
