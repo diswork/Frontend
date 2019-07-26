@@ -3,4 +3,20 @@
 
 <ion-content>
 
+
+            <ion-list>
+                    <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
+
+                    <ion-item *ngFor="let usuario of usuarios | filtro:textoBuscar:'nickName'" no-border>
+                        <ion-thumbnail style="margin-right: 10px">
+                            <ion-img src="/assets/avatars/av-1.png"></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{usuario.nickName}}</h2>
+                            <p>{{usuario.email}}</p>
+                        </ion-label>
+                        <ion-button color="danger" slot="end" (click)="deleteUser(usuario._id)">Eliminar</ion-button>
+                    </ion-item>
+                </ion-list>
+
 </ion-content>
