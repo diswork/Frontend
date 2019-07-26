@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
               private uiService: UiServiceService,
               private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
-    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+    this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
     this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
     this.rol = "user"
   }
@@ -46,7 +46,7 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
-    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+    this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
     this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
     this.loginUser = new Login("", "", true)
   }
@@ -125,7 +125,7 @@ export class LoginPage implements OnInit {
           response => {
            
               console.log(response.user);
-              this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+              this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
               this.mostrarLogin();
      
            
@@ -148,7 +148,7 @@ export class LoginPage implements OnInit {
         console.log(this.empresa)
         this.usuarioService.registrarEmpresa(this.empresa).subscribe(
           response => {
-            this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
+            this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
             this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
             console.log(response.empresa);
             this.mostrarLogin();

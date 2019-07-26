@@ -11,6 +11,7 @@ import { NavController } from '@ionic/angular';
 import {delay} from 'rxjs/operators'
 import { Admin } from '../models/admin.model';
 import { Oferta } from '../models/oferta.model';
+import { CvRedactado } from '../models/cvRedactado.model';
 
 @Injectable({
   providedIn: 'root'
@@ -127,14 +128,15 @@ export class UsuarioService {
     return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(500));
   }
 
-  seguirEmpresa(id) : Observable<any>{
+  seguirEmpresa(id, empresa: Empresa) : Observable<any>{
     // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
     ; 
+    let params = JSON.stringify(empresa)
      const headers = new HttpHeaders({
       'Authorization': this.token
     });
     console.log(headers)
-    return this._http.put(this.url + `seguir-empresa/${id}`,{headers:headers});
+    return this._http.put(this.url + `seguir-empresa/${id}`,params,{headers:headers});
   }
 
   getUser(id): Observable<any>{
@@ -156,6 +158,12 @@ export class UsuarioService {
     return this._http.delete(this.url + `usuario/${id}`,{headers:headers});
   }
 
+  redactarCv(cv : CvRedactado) : Observable<any>{
+    let params = JSON.stringify(cv);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.put(this.url + 'cvRedactado',params,{headers:headers});
+  }
 
   //SERVICIOS PARA USUARIO DE TIPO EMPRESA
 

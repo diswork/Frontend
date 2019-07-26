@@ -24,13 +24,38 @@
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
+  <div *ngIf="siHayData">    
+    <ion-card-header>
+      <ion-card-title>Archivos</ion-card-title>
+    </ion-card-header>
+    <ion-list *ngFor="let dt of cvsPdf">
+      <ion-card mode="ios">      
+        <ion-card-content>
+          <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
   <div *ngIf="siHayData">
-    <ion-list *ngFor="let dt of cvs">
-      <ion-card mode="ios">
-        <ion-card-header>
-          <ion-card-title>Titulo</ion-card-title>
-        </ion-card-header>
-      
+    <ion-card-header>
+      <ion-card-title>Imagenes</ion-card-title>
+    </ion-card-header>
+    <ion-list *ngFor="let dt of cvsImg">
+      <ion-card mode="ios">  
+        <ion-card-content>
+          <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="siHayData">
+    <ion-card-header>
+      <ion-card-title>Redactados</ion-card-title>
+    </ion-card-header>
+    <ion-list *ngFor="let dt of cvsRedactado">
+      <ion-card mode="ios">    
         <ion-card-content>
           <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
         </ion-card-content>
@@ -135,56 +160,56 @@
             <ion-label>
               <h1 style="margin-left: 8px">Título</h1>
             </ion-label>
-            <ion-input placeholder="Ingrese un título" name="titulo" type="text" required clearInput></ion-input>
+            <ion-input placeholder="Ingrese un título" name="titulo" type="text" required clearInput [(ngModel)]="cvRedactado.titulo"></ion-input>
           </ion-list>
           <ion-list>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Nombre</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su nombre" name="nombre" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su nombre" name="nombre" type="text" required clearInput [(ngModel)]="cvRedactado.nombre"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Edad</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su edad" name="edad" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su edad" name="edad" type="text" required clearInput [(ngModel)]="cvRedactado.edad"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Correo</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su correo" name="correo" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su correo" name="correo" type="text" required clearInput [(ngModel)]="cvRedactado.correo"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Telefono</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput [(ngModel)]="cvRedactado.telefono"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Estudios</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese información de sus estudios" name="estudio" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese información de sus estudios" name="estudio" rows="8" required clearOnEdit="true" [(ngModel)]="cvRedactado.estudio"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Habilidades</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese información de sus habilidades" name="habilidad" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese información de sus habilidades" name="habilidad" rows="8" required clearOnEdit="true" [(ngModel)]="cvRedactado.habilidad"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Referencias P</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese sus referencias personales" name="referenciasP" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese sus referencias personales" name="referenciasP" rows="8" required clearOnEdit="true" [(ngModel)]="cvRedactado.referenciasP"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Referencias E</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese sus referencias empresariales" name="referenciasE" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese sus referencias empresariales" name="referenciasE" rows="8" required clearOnEdit="true" [(ngModel)]="cvRedactado.referenciasE"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Empresa } from 'src/app/models/empresa.model';
 
 @Component({
   selector: 'app-tab-user2',
@@ -13,6 +14,7 @@ export class TabUser2Page implements OnInit {
   public status;
   public textoBuscar = '';
   public dataUser;
+  public empresaSeguir: Empresa;
 
   constructor(private menuCtrl : MenuController,
               private _usuarioService : UsuarioService) {    this.getEmpresas();   }
@@ -44,7 +46,7 @@ export class TabUser2Page implements OnInit {
   }
 
   seguirEmpresa(id){
-    this._usuarioService.seguirEmpresa(id).subscribe(
+    this._usuarioService.seguirEmpresa(id, this.empresaSeguir).subscribe(
       response => {
         this._usuarioService.registrarUser(response.usuario);
         console.log(response.usuario)

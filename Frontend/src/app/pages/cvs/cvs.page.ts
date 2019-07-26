@@ -5,6 +5,7 @@ import { UploadService } from 'src/app/services/upload.service';
 import { User } from 'src/app/models/user.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from 'src/app/services/global.service';
+import { CvRedactado } from 'src/app/models/cvRedactado.model';
 
 declare var window : any;
 
@@ -15,7 +16,9 @@ declare var window : any;
 })
 export class CVsPage implements OnInit {
 
-  public cvs : [];
+  public cvsRedactado : [];
+  public cvsPdf : [];
+  public cvsImg : [];
   public tempImages : string[] = [];
   public camara : boolean = false;
   public btnCamara : boolean = false;
@@ -27,6 +30,7 @@ export class CVsPage implements OnInit {
   public noHayData : boolean = true;
   public siHayData : boolean = false;
   public url;
+  public cvRedactado : CvRedactado;
 
 
   constructor(
@@ -44,10 +48,18 @@ export class CVsPage implements OnInit {
     this.menuCtrl.enable(false, "tercerMenu");
     this.usuario = this._usuarioService.getUserLog();
     console.log(this.usuario)
-    if(this.usuario.cvs.length > 0){
+    if(this.usuario.cvsRedactado.length > 0){
       this.noHayData = false;
       this.siHayData = true;
-      this.cvs = this.usuario.cvs;
+      this.cvsRedactado = this.usuario.cvsRedactado;
+    }else if(this.usuario.cvsImg.length > 0){
+      this.noHayData = false;
+      this.siHayData = true;
+      this.cvsImg = this.usuario.cvsImg;
+    }else if(this.usuario.cvsPdf.length > 0){
+      this.noHayData = false;
+      this.siHayData = true;
+      this.cvsPdf = this.usuario.cvsPdf;
     }
   }
 
@@ -57,8 +69,15 @@ export class CVsPage implements OnInit {
         response => {
           this.usuario = response.user;
           console.log(this.usuario)
-          this.cvs = this.usuario.cvs;
+          this.cvsRedactado = this.usuario.cvsRedactado;
+          this.cvsImg = this.usuario.cvsImg;
+          this.cvsPdf = this.usuario.cvsPdf;
           event.target.complete();
+          if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
+            this.siHayData = true;
+          }else{
+            this.noHayData = true;
+          }
         },
         error => {
           if(error){
@@ -81,11 +100,26 @@ export class CVsPage implements OnInit {
     this.redactar = false;
     this.principal = true;
     console.log("cancelarCrear()")
-    if(this.usuario.cvs.length > 0){
+    if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
       this.siHayData = true;
     }else{
       this.noHayData = true;
     }
+  }
+
+  guardarRedactado(){
+    this._usuarioService.redactarCv(this.cvRedactado).subscribe(
+      response => {
+          if(response.token){
+            this._usuarioService.guardarToken(response.token);
+          }
+      },
+      error => {
+        if(error){
+          console.log(<any>error)
+        }
+      }
+    )
   }
 
   subirFoto(){
@@ -103,7 +137,7 @@ export class CVsPage implements OnInit {
     this.btnCamara = false;
     this.tempImages = [];
     console.log("cancelarFoto()") 
-    if(this.usuario.cvs.length > 0){
+    if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
       this.siHayData = true;
     }else{
       this.noHayData = true;
@@ -161,8 +195,8 @@ export class CVsPage implements OnInit {
     this.noHayData = false;
     this.siHayData = true;
     console.log(this.usuario)
-    console.log(this.usuario.cvs)
-    this.cvs = this.usuario.cvs;
+    console.log(this.usuario.cvsImg)
+    this.cvsImg = this.usuario.cvsImg;
     console.log("guardarFoto()") 
   }
 
@@ -178,7 +212,7 @@ export class CVsPage implements OnInit {
     this.archivo = false;
     this.principal = true;
     console.log("cancelarArchivo()")
-    if(this.usuario.cvs.length > 0){
+    if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
       this.siHayData = true;
     }else{
       this.noHayData = true;
@@ -186,7 +220,7 @@ export class CVsPage implements OnInit {
   }
 
   guardarArchivo(){
-    this._uploadService.makeFileRequest(this.url + "subir-cv",[],this.fileToUpload,'cv',this._usuarioService.getToken())
+    this._uploadService.makeFileRequest(this.url + "subir-cv",['Titulo'],this.fileToUpload,'cv',this._usuarioService.getToken())
       .then((result: any)=>{
         console.log(result);
         this._usuarioService.guardarToken(result.token);
@@ -194,8 +228,7 @@ export class CVsPage implements OnInit {
     )
     this.archivo = false;
     this.principal = true;
-    console.log("cancelarArchivo()")
-    if(this.usuario.cvs.length > 0){
+    if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
       this.siHayData = true;
     }else{
       this.noHayData = true;

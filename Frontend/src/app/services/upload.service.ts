@@ -42,10 +42,11 @@ export class UploadService {
           }
         }
         console.log(token)
+
+
         xhr.open('POST', url, true); //tipo, url, asincrono
         xhr.setRequestHeader('Authorization', token);//
         xhr.send(formData);//enviamos los datos ya parseados
-
       })
   }
 
@@ -59,7 +60,7 @@ export class UploadService {
 
     const fileTransfer : FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, this.url + '/subir-cv', options)
+    fileTransfer.upload(img, this.url + '/subir-cv',options)
       .then( async data => {
         let dt = JSON.stringify(data.response);
         let token = dt.split('\\\"')
