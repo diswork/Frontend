@@ -25,6 +25,7 @@ export class TabUser3Page implements OnInit {
   public url;
   public token;
   public usuarioActualizado = false;
+  public listo = true;
   
   constructor(
     private _usuarioService : UsuarioService,
@@ -161,37 +162,39 @@ export class TabUser3Page implements OnInit {
   }
   
   loading : any;
-  async editarFoto(){
+  async editarFoto() {
     const modal = await this.modalCtrl.create({
-      component : ModalUserPage,
-      componentProps : {
-        nombre : this.usuario.nickName,
-        image : this.usuario.image,
-        editar : true
+      component: ModalUserPage,
+      componentProps: {
+        nombre: this.usuario.nickName,
+        image: this.usuario.image,
+        editar: true
       },
-      animated : true
+      animated: true
     });
     await modal.present();
 
-    const {data} = await modal.onDidDismiss();
+    const { data } = await modal.onDidDismiss();
     console.log(data)
-    if(data.actualizar){
-      this.presentLoading('espere...')
-
-      setTimeout(()=>{
-        this.loading.dismiss();
-        this.usuario.image = this._usuarioService.getUserLog().image;
-      }, 2000)
+    if (data.actualizar) {
+      this.listo = false;
+      this._usuarioService.getUser(this.usuario._id).subscribe(
+        response => {
+          if (response.user) {
+            this.status = 'Ok';
+            console.log('Listo')
+            this.listo = true;
+            this.usuario.image = response.user.image;
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = 'error';
+          }
+        }
+      )
     }
-
-    
-  }
-
-  async presentLoading(message : string) {
-     this.loading = await this.loadingController.create({
-      message
-    });
-    return this.loading.present();
   }
 
 

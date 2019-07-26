@@ -69,7 +69,9 @@ export class UsuarioService {
             }else if(resp['empresa']){
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
-
+            }else if(resp['admin']){
+              this.guardarAdmin(resp['admin']);
+              resolve(true);
             }
            
           }else{
@@ -122,7 +124,7 @@ export class UsuarioService {
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(2000));
+    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(500));
   }
 
   seguirEmpresa(id) : Observable<any>{

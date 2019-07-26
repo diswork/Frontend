@@ -78,10 +78,13 @@ export class ModalUserPage implements OnInit {
   }
 
   async guardarCambios(){
-    await this._uploadService.subirImagenUsuario(this.imageData, this._usuarioService.getUserLog()._id);
-    this.modalCtrl.dismiss({
-      actualizar : true
-    });
+    await this._uploadService.subirImagenUsuario(this.imageData, this._usuarioService.getUserLog()._id)
+
+      this.modalCtrl.dismiss({
+        actualizar : true
+      });
+    
+   
   }
   
 

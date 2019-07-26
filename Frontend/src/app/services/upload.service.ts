@@ -88,7 +88,7 @@ export class UploadService {
       });
   }
 
-  async subirImagenUsuario(img : string,id){
+  subirImagenUsuario(img : string,id) : boolean{
     const options: FileUploadOptions = {
         fileKey : 'image',
         headers : {
@@ -96,6 +96,7 @@ export class UploadService {
         }
     };
 
+    let editada = false;
     const fileTransfer : FileTransferObject = this.fileTransfer.create();
 
     fileTransfer.upload(img, this.url + `/subir-imagen-usuario/${id}`, options)
@@ -104,9 +105,14 @@ export class UploadService {
         let token = dt.split('\\\"')
         console.log('token: ' + token[3])
         await this._usuarioService.guardarToken(token[3]);
+        editada = true;
       }).catch(err => {
         console.log('Error en carga', err);
       });
+      if(editada){
+        return true
+      }
+
   }
 
 
