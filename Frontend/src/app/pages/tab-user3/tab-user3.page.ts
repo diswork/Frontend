@@ -191,7 +191,7 @@ export class TabUser3Page implements OnInit {
           if (error) {
             console.log(<any>error);
             this.status = 'error';
-          }
+          }   
         }
       )
     }
