@@ -1,5 +1,22 @@
 <app-header titulo="diswork" menuEmpresa="false" menuAdmin="true" menuUser="false"></app-header>
 
+
 <ion-content>
+
+
+            <ion-list>
+                    <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
+
+                    <ion-item *ngFor="let empresa of empresas | filtro:textoBuscar:'nombre'" no-border>
+                        <ion-thumbnail style="margin-right: 10px">
+                            <ion-img src="/assets/avatars/av-1.png"></ion-img>
+                        </ion-thumbnail>
+                        <ion-label>
+                            <h2>{{empresa.nombre}}</h2>
+                            <p>{{empresa.email}}</p>
+                        </ion-label>
+                        <ion-button color="danger" slot="end">Eliminar</ion-button>
+                    </ion-item>
+                </ion-list>
 
 </ion-content>
