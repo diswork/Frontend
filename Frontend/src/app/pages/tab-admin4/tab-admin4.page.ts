@@ -26,7 +26,7 @@ export class TabAdmin4Page implements OnInit {
   public adminActualizado = false;
   public listo = true;
   
-  constructor(
+  constructor( 
     private _adminService : UsuarioService,
     private uiService: UiServiceService,
     private menuCtrl : MenuController,
