@@ -6,6 +6,8 @@ import { User } from 'src/app/models/user.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from 'src/app/services/global.service';
 import { CvRedactado } from 'src/app/models/cvRedactado.model';
+import { NgForm } from '@angular/forms';
+import { UiServiceService } from 'src/app/services/ui-service.service';
 
 declare var window : any;
 
@@ -32,14 +34,15 @@ export class CVsPage implements OnInit {
   public url;
   public cvRedactado : CvRedactado;
 
-
   constructor(
     private camera : Camera, 
     private menuCtrl : MenuController,
     private _uploadService : UploadService,
-    private _usuarioService : UsuarioService) { 
+    private _usuarioService : UsuarioService,
+    private _uiService : UiServiceService) { 
       this._usuarioService.validaToken();    
       this.url = GLOBAL.url;
+      this.cvRedactado = new CvRedactado("","","","","","","","","")
     }
 
   ngOnInit() {
@@ -47,16 +50,18 @@ export class CVsPage implements OnInit {
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     this.usuario = this._usuarioService.getUserLog();
-    console.log(this.usuario)
+    
     if(this.usuario.cvsRedactado.length > 0){
       this.noHayData = false;
       this.siHayData = true;
       this.cvsRedactado = this.usuario.cvsRedactado;
-    }else if(this.usuario.cvsImg.length > 0){
+    }
+    if(this.usuario.cvsImg.length > 0){
       this.noHayData = false;
       this.siHayData = true;
       this.cvsImg = this.usuario.cvsImg;
-    }else if(this.usuario.cvsPdf.length > 0){
+    }
+    if(this.usuario.cvsPdf.length > 0){
       this.noHayData = false;
       this.siHayData = true;
       this.cvsPdf = this.usuario.cvsPdf;
@@ -75,6 +80,7 @@ export class CVsPage implements OnInit {
           event.target.complete();
           if(this.usuario.cvsImg.length > 0 || this.usuario.cvsPdf.length > 0 || this.usuario.cvsRedactado.length > 0){
             this.siHayData = true;
+            this.noHayData = false;
           }else{
             this.noHayData = true;
           }
@@ -107,19 +113,29 @@ export class CVsPage implements OnInit {
     }
   }
 
-  guardarRedactado(){
-    this._usuarioService.redactarCv(this.cvRedactado).subscribe(
-      response => {
-          if(response.token){
-            this._usuarioService.guardarToken(response.token);
+  guardarRedactado(fCvRedactado : NgForm){
+
+    if(fCvRedactado.invalid){
+      this._uiService.alertarInformativa('Ingrese todo los campos');
+    }else{
+      this._usuarioService.redactarCv(this.cvRedactado).subscribe(
+        response => {
+            if(response.token){
+              this._usuarioService.guardarToken(response.token);
+              fCvRedactado.reset();
+            }
+            this.redactar = false;
+            this.principal = true;
+            this.noHayData = false;
+            this.siHayData = true;
+        },
+        error => {
+          if(error){
+            console.log(<any>error)
           }
-      },
-      error => {
-        if(error){
-          console.log(<any>error)
         }
-      }
-    )
+      )
+    } 
   }
 
   subirFoto(){

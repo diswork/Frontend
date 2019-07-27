@@ -5,9 +5,9 @@ export class CvRedactado {
         public edad: String,
         public correo: String,
         public telefono: String,
-        public estudios: String,
-        public habilidades: String,
-        public referenciasP: String,
-        public referenciasE: String
+        public estudio: String,
+        public habilidad: String,
+        public refPersonal: String,
+        public refEmpresarial: String
     ) {}
 }

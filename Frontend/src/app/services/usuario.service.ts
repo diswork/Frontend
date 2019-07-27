@@ -139,6 +139,17 @@ export class UsuarioService {
     return this._http.put(this.url + `seguir-empresa/${id}`,params,{headers:headers});
   }
 
+  dejarSeguirEmpresa(id, empresa: Empresa) : Observable<any>{
+    // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    ; 
+    let params = JSON.stringify(empresa)
+     const headers = new HttpHeaders({
+      'Authorization': this.token
+    });
+    console.log(headers)
+    return this._http.put(this.url + `dejar-de-seguir-empresa/${id}`,params,{headers:headers});
+  }
+
   getUser(id): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 

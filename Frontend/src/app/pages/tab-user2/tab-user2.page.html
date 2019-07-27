@@ -6,10 +6,15 @@
                        (ionChange)="buscar($event)"></ion-searchbar>
         <ion-item *ngFor="let dt of empresas | filtro:textoBuscar:'nombre'">
             <ion-thumbnail slot="start">
-                <ion-img src="/assets/avatars/av-2.png"></ion-img>
+                <ion-img *ngIf="!empresas.image" src="/assets/avatars/av-2.png"></ion-img>
+                <ion-img *ngIf="empresas.image" src="{{url + 'obtener-imagen-empresa/'+empresas.image}}"></ion-img>
             </ion-thumbnail>
-            <ion-label>{{dt.nombre}}</ion-label>
-            <ion-button color="danger" (click)="seguirEmpresa(dt._id)" >Seguir</ion-button>
+            <ion-label>
+                <h2>{{dt.nombre}}</h2>
+                <p>{{dt.direccion}}</p>
+            </ion-label>
+            <ion-button *ngIf="!coincidencia(dt._id)" color="danger" (click)="seguirEmpresa(dt._id)" >Seguir</ion-button>
+            <ion-button *ngIf="coincidencia(dt._id)" color="danger" (click)="dejarSeguirEmpresa(dt._id)" >Siguiendo</ion-button>
         </ion-item>
     </ion-list>
     <ion-list *ngIf="!empresas">
@@ -17,7 +22,10 @@
                     <ion-thumbnail slot="start">
                         <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
                     </ion-thumbnail>
-                    <ion-label><ion-skeleton-text width="65%"></ion-skeleton-text></ion-label>
+                    <ion-col>
+                        <ion-label><ion-skeleton-text width="65%"></ion-skeleton-text></ion-label>
+                        <ion-label><ion-skeleton-text width="35%"></ion-skeleton-text></ion-label>
+                    </ion-col>
                     <ion-skeleton-text width="25%" ></ion-skeleton-text>
             </ion-item>
         </ion-list>
