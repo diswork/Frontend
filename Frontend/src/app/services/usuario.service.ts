@@ -135,7 +135,6 @@ export class UsuarioService {
      const headers = new HttpHeaders({
       'Authorization': this.token
     });
-    console.log(headers)
     return this._http.put(this.url + `seguir-empresa/${id}`,params,{headers:headers});
   }
 
@@ -146,7 +145,6 @@ export class UsuarioService {
      const headers = new HttpHeaders({
       'Authorization': this.token
     });
-    console.log(headers)
     return this._http.put(this.url + `dejar-de-seguir-empresa/${id}`,params,{headers:headers});
   }
 

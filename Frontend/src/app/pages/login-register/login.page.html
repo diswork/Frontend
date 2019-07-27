@@ -3,7 +3,17 @@
   <ion-slides class="mainSlide" #slidePrincipal>
 
     <ion-slide>
-
+      <ion-list *ngIf="carga">
+        <ion-row>
+          <ion-col text-center>
+            <img src="/assets/diswork-logo2.png"  class="animated flash slow2 infinite">
+          </ion-col>
+        </ion-row>
+      </ion-list>
+      <ion-col *ngIf="cargaLista" text-center>
+        <img src="/assets/diswork-logo2.png"  class="animated bounceOutUp">
+      </ion-col>
+      <div *ngIf="formulario">
       <form (ngSubmit)="login(fLogin)" #fLogin="ngForm">
         <ion-grid fixed>
 
@@ -52,7 +62,7 @@
 
         </ion-grid>
       </form>
-
+      </div>
 
 
     </ion-slide>
