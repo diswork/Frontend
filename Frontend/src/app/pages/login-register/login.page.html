@@ -44,7 +44,7 @@
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-button color="danger" shape="round" (click)="mostrarRegistro()">
+              <ion-button color="danger" shape="round" (click)="mostrarRegistro(fLogin)">
                 Register
               </ion-button>
             </ion-col>
@@ -65,7 +65,7 @@
               <ion-header no-border>
                 <ion-toolbar>
                   <ion-buttons slot="start">
-                    <ion-back-button defaultHref="/login" (click)="mostrarLogin()"></ion-back-button>
+                    <ion-back-button defaultHref="/login" (click)="mostrarLogin(fRegistro)"></ion-back-button>
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>

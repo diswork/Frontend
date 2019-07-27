@@ -42,16 +42,15 @@ export class LoginPage implements OnInit {
     this.menuCtrl.enable(false, "tercerMenu");
   }
 
-  mostrarLogin() {
+  mostrarLogin(fRegistro : NgForm) {
+    fRegistro.reset()
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
-    this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
-    this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
-    this.loginUser = new Login("", "", true)
   }
 
-  mostrarRegistro() {
+  mostrarRegistro(fLogin : NgForm) {
+    fLogin.reset()
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
@@ -122,13 +121,9 @@ export class LoginPage implements OnInit {
         console.log(this.user)
 
         this.usuarioService.registrarUser(this.user).subscribe(
-          response => {
-           
-              console.log(response.user);
-              this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
-              this.mostrarLogin();
-     
-           
+          response => {           
+              console.log('Usuario guardado');
+              this.mostrarLogin(fRegistro);          
           },
           error => {
             if (error) {
@@ -148,10 +143,8 @@ export class LoginPage implements OnInit {
         console.log(this.empresa)
         this.usuarioService.registrarEmpresa(this.empresa).subscribe(
           response => {
-            this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
-            this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
-            console.log(response.empresa);
-            this.mostrarLogin();
+            console.log('Empresa guardada')
+            this.mostrarLogin(fRegistro);
           },
           error => {
             if (error) {
