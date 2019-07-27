@@ -202,6 +202,12 @@ export class UsuarioService {
      return this._http.get(this.url + 'empresas', {headers}).pipe(delay(2000));
    }
 
+   getEmpresa(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+     return this._http.get(this.url + `empresa/${id}`, {headers});
+   }
+
    addPropuesta(oferta : Oferta) : Observable<any>{
      let params = JSON.stringify(oferta);
      let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);
