@@ -3,10 +3,11 @@ import { User } from 'src/app/models/user.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { NgForm } from '@angular/forms';
 import { UiServiceService } from 'src/app/services/ui-service.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController, LoadingController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { GLOBAL } from 'src/app/services/global.service';
 import { UploadService } from 'src/app/services/upload.service';
+import { ModalUserPage } from '../modal-user/modal-user.page';
 
 
 @Component({
@@ -23,13 +24,18 @@ export class TabUser3Page implements OnInit {
   public nivelesAcademicos : [];
   public url;
   public token;
+  public usuarioActualizado = false;
+  public listo = true;
   
   constructor(
     private _usuarioService : UsuarioService,
     private uiService: UiServiceService,
     private menuCtrl : MenuController,
     private actionSheetController: ActionSheetController,
-    private _uploadService : UploadService, )
+    private _uploadService : UploadService, 
+    private modalCtrl : ModalController,
+    public loadingController: LoadingController
+  )
   { 
     this.url = GLOBAL.url;
   }
@@ -53,32 +59,25 @@ export class TabUser3Page implements OnInit {
   }
 
   editarUser(fActualizar : NgForm){
-    this.token = this._usuarioService.getToken();
-    // this._usuarioService.editarUsuario(this.usuario).subscribe(
-    //   response => {
-    //     this.status = 'Ok';
-    //     if(response.user){
-    //       console.log('Usuario editado')
-    //       this._usuarioService.guardarUser(response.user);
-    //       this._usuarioService.guardarToken(response.token);
-    //       this.usuario = response.user;
-
-    //       this._uploadService.makeFileRequest(this.url+'subir-imagen-usuario/'+this.usuario._id,[],this.filesToUpload,this.token,'image')
-    //       .then((result : any)=> {
-    //         console.log(result);
-    //         this.usuario.image = result.usuario.image;
-    //         this._usuarioService.guardarUser(result.usuario);
-    //         this._usuarioService.guardarToken(result.token);
-    //       })
-    //     }
-    //   },
-    //   error => {
-    //     if(error){
-    //       console.log(<any>error);
-    //       this.status = 'error';
-    //     }
-    //   }
-    // )
+    this.usuarioActualizado = true;
+    this._usuarioService.editarUsuario(this.usuario).subscribe(
+      response => {
+        this.status = 'Ok';
+        if(response.user){
+          console.log('Usuario editado')
+          this.usuarioActualizado = false;
+          this._usuarioService.guardarUser(response.user);
+          this._usuarioService.guardarToken(response.token);
+          this.usuario = response.user;
+        }
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
   }
   
   public filesToUpload : Array<File>
@@ -114,27 +113,41 @@ export class TabUser3Page implements OnInit {
     )
   }
 
+  // { path: 'modal-user', loadChildren: './pages/modal-user/modal-user.module#ModalUserPageModule' },
+
+
   async opcionesDeImagen() {
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
       buttons: [{
         text: 'Ver',
         icon: 'contact',
-        handler: () => {
-          console.log('Ver clicked');
+        handler: async () => {
+          console.log('Ver foto');
+          const modal = await this.modalCtrl.create({
+            component : ModalUserPage,
+            componentProps : {
+              nombre : this.usuario.nickName,
+              image : this.usuario.image,
+              editar : false
+            },
+            animated : true
+          });
+          await modal.present();
         }
       }, {
         text: 'Actualizar',
         icon: 'create',
         handler: () => {
-          console.log('Actualizar clicked');
+          console.log('Actualizar foto');
+          this.editarFoto();
         }
       }, {
         text: 'Eliminar',
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          console.log('Delete clicked');
+          console.log('Eliminar foto');
         }
       }, {
         text: 'Cancelar',
@@ -148,5 +161,41 @@ export class TabUser3Page implements OnInit {
     await actionSheet.present();
   }
   
+  loading : any;
+  async editarFoto() {
+    const modal = await this.modalCtrl.create({
+      component: ModalUserPage,
+      componentProps: {
+        nombre: this.usuario.nickName,
+        image: this.usuario.image,
+        editar: true
+      },
+      animated: true
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+    console.log(data)
+    if (data.actualizar) {
+      this.listo = false;
+      this._usuarioService.getUser(this.usuario._id).subscribe(
+        response => {
+          if (response.user) {
+            this.status = 'Ok';
+            console.log('Listo')
+            this.listo = true;
+            this.usuario.image = response.user.image;
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = 'error';
+          }   
+        }
+      )
+    }
+  }
+
 
 }

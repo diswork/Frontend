@@ -13,18 +13,23 @@ const routes: Routes = [
   { path: 'tabs-user/tabs-user/tab-user3', loadChildren: './pages/tab-user3/tab-user3.module#TabUser3PageModule' },
   { path: 'cvs', loadChildren: './pages/cvs/cvs.module#CVsPageModule' },
 
-  { 
-    path: 'tabs-empresa', 
+  {
+    path: 'tabs-empresa',
     loadChildren: './pages/tabs-empresa/tabs-empresa.module#TabsEmpresaPageModule',
     canLoad : [UsuarioGuard]
   },
   { path: 'tabs-empresa/tabs-empresa/tab-empresa3', loadChildren: './pages/tab-empresa3/tab-empresa3.module#TabEmpresa3PageModule' },
 
-  
-  { 
+
+  {
     path: 'tabs-admin',
-    loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule' },
+    loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule',
+    canLoad : [UsuarioGuard]
+  },
   { path: 'tabs-admin/tabs-admin/tab-admin4', loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule' },
+  { path: 'modal-empresa', loadChildren: './pages/modal-empresa/modal-empresa.module#ModalEmpresaPageModule' },
+
+
 
 
 

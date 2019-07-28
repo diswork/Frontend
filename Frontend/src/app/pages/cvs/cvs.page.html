@@ -20,6 +20,10 @@
   </div>
 
   <!-- CONTENIDO DE CVS -->
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
   <div *ngIf="siHayData">
     <ion-list *ngFor="let dt of cvs">
       <ion-card mode="ios">

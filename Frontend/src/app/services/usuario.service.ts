@@ -40,6 +40,8 @@ export class UsuarioService {
   async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
+
+    await this.validaToken();
   }
 
   async cargarToken(){
@@ -67,7 +69,9 @@ export class UsuarioService {
             }else if(resp['empresa']){
               this.guardarEmpresa(resp['empresa']);
               resolve(true);
-
+            }else if(resp['admin']){
+              this.guardarAdmin(resp['admin']);
+              resolve(true);
             }
            
           }else{
@@ -120,7 +124,7 @@ export class UsuarioService {
     let params = JSON.stringify(user);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers});
+    return this._http.put(this.url + `/editar-usuario/${user._id}`,params,{headers:headers}).pipe(delay(500));
   }
 
   seguirEmpresa(id) : Observable<any>{
@@ -137,6 +141,19 @@ export class UsuarioService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
     return this._http.get(this.url + `usuario/${id}`,{headers:headers});
+  }
+
+  getUsers(): Observable<any>{
+    console.log(this.token)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'usuarios',{headers:headers});
+  }
+
+  deleteUser(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.delete(this.url + `usuario/${id}`,{headers:headers});
   }
 
 
@@ -182,6 +199,14 @@ export class UsuarioService {
 
      return this._http.get(this.url + `empresa/${id}`, {headers});
    }
+
+   editarEmpresa(empresa : Empresa) : Observable<any>{
+    let params = JSON.stringify(empresa);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.put(this.url + `/editar-empresa/${empresa._id}`,params,{headers:headers}).pipe(delay(500));
+  }
+
 
   //  Servicios para Ofertas
 

@@ -26,12 +26,12 @@ export class LoginPage implements OnInit {
   @ViewChild('slidePrincipal') slides: IonSlides;
 
   constructor(private usuarioService: UsuarioService,
-              private navCtrl: NavController,
-              private uiService: UiServiceService,
-              private menuCtrl: MenuController) {
+    private navCtrl: NavController,
+    private uiService: UiServiceService,
+    private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
-    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
-    this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
+    this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
+    this.empresa = new Empresa("", "", "", "", "empresa", "", "", "")
     this.rol = "user"
   }
 
@@ -46,8 +46,8 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
-    this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
-    this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
+    this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
+    this.empresa = new Empresa("", "", "", "", "empresa", "", "", "")
     this.loginUser = new Login("", "", true)
   }
 
@@ -81,7 +81,7 @@ export class LoginPage implements OnInit {
           this.menuCtrl.enable(false, "tercerMenu");
 
           this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
-        } else if (response.admin){
+        } else if (response.admin) {
           this.usuarioService.guardarAdmin(response.admin);
           this.menuCtrl.enable(false, "primerMenu");
           this.menuCtrl.enable(false, "segundoMenu");
@@ -90,7 +90,7 @@ export class LoginPage implements OnInit {
           this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
         }
 
-        
+
       },
       error => {
         if (error) {
@@ -123,12 +123,12 @@ export class LoginPage implements OnInit {
 
         this.usuarioService.registrarUser(this.user).subscribe(
           response => {
-           
-              console.log(response.user);
-              this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
-              this.mostrarLogin();
-     
-           
+
+            console.log(response.user);
+            this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
+            this.mostrarLogin();
+
+
           },
           error => {
             if (error) {
@@ -148,8 +148,8 @@ export class LoginPage implements OnInit {
         console.log(this.empresa)
         this.usuarioService.registrarEmpresa(this.empresa).subscribe(
           response => {
-            this.user = new User("","","","","user","","","","",new Date(),[],[],[],"","")
-            this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
+            this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
+            this.empresa = new Empresa("", "", "", "", "empresa", "", "", "")
             console.log(response.empresa);
             this.mostrarLogin();
           },

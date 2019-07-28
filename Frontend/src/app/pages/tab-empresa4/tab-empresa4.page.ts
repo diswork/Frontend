@@ -15,24 +15,23 @@ declare var window : any;
   styleUrls: ['./tab-empresa4.page.scss'],
 })
 export class TabEmpresa4Page implements OnInit {
-  @ViewChild('formAddPropuesta') formValueAddPropuesta;
 
   public url: string;
   public status: string;
   public oferta: Oferta;
   public empresa: Empresa;
-  public categorias : [];
+  public categorias: [];
   public nivelesAcademicos : [];
-  public imageData : any;
-  public btnCamara : boolean = false;
-  public tempImages : string[] = [];
+  public imageData: any;
+  public btnCamara: boolean = false;
+  public tempImages: string[] = [];
 
   constructor(
       public _usuarioService: UsuarioService,
       public uiService: UiServiceService,
-      private menuCtrl : MenuController,  
-      private camera : Camera,
-      private _uploadService : UploadService) {
+      private menuCtrl: MenuController,
+      private camera: Camera,
+      private _uploadService: UploadService) {
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
   }
@@ -54,9 +53,10 @@ export class TabEmpresa4Page implements OnInit {
 
       this._usuarioService.addPropuesta(this.oferta).subscribe(
         response => {
-          if(response.oferta){
+          if (response.oferta){
             console.log(response.oferta._id)
-            this._uploadService.subirImagenOferta(this.imageData,response.oferta._id)
+            this._uploadService.subirImagenOferta(this.imageData,response.oferta._id);
+            formAddPropuesta.reset();
           }
         },
       error => {
@@ -115,10 +115,10 @@ export class TabEmpresa4Page implements OnInit {
   procesarImagen(options : CameraOptions){
     this.camera.getPicture(options).then( ( imageData ) => {
       // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):      
+      // If it's base64 (DATA_URL):
 
       const img = window.Ionic.WebView.convertFileSrc( imageData );
-      
+
       this.imageData = imageData;
       this.tempImages.push( img );
       console.log(this.tempImages);
