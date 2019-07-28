@@ -11,7 +11,11 @@ const routes: Routes = [
     canLoad : [UsuarioGuard]
   },
   { path: 'tabs-user/tabs-user/tab-user3', loadChildren: './pages/tab-user3/tab-user3.module#TabUser3PageModule' },
-  { path: 'cvs', loadChildren: './pages/cvs/cvs.module#CVsPageModule' },
+  { 
+    path: 'cvs', 
+    loadChildren: './pages/cvs/cvs.module#CVsPageModule',
+    canLoad : [UsuarioGuard]
+   },
 
   { 
     path: 'tabs-empresa', 

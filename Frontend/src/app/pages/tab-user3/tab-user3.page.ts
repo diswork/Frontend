@@ -183,8 +183,8 @@ export class TabUser3Page implements OnInit {
           if (response.user) {
             this.status = 'Ok';
             console.log('Listo')
-            this.listo = true;
             this.usuario.image = response.user.image;
+            this.listo = true;
           }
         },
         error => {

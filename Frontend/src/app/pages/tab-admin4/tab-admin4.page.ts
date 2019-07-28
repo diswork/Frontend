@@ -7,7 +7,7 @@ import { MenuController, ModalController, LoadingController } from '@ionic/angul
 import { ActionSheetController } from '@ionic/angular';
 import { GLOBAL } from 'src/app/services/global.service';
 import { UploadService } from 'src/app/services/upload.service';
-import { ModalUserPage } from '../modal-user/modal-user.page';
+import { ModalAdminPage } from '../modal-admin/modal-admin.page';
 
 @Component({
   selector: 'app-tab-admin4',
@@ -44,15 +44,13 @@ export class TabAdmin4Page implements OnInit {
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(true, "tercerMenu");
     this.admin = this._adminService.getAdminLog();
-    this.getCategorias();
-    this.getNivelesAcademicos();
   }
 
   habilito(){
     this.habilitarEdicion = true;
   }
 
-  desHabilito(){
+  desabilito(){
     this.habilitarEdicion = false;
   }
 
@@ -83,34 +81,6 @@ export class TabAdmin4Page implements OnInit {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
 
-  getCategorias(){
-    this._adminService.getCategorias().subscribe(
-      response => {
-        this.categorias = response.categorias;
-      },
-      error => {
-        if(error){
-          console.log(<any>error);
-          this.status = 'error';
-        }
-      }
-    )
-  }
-
-  getNivelesAcademicos(){
-    this._adminService.getNiveles().subscribe(
-      response => {
-        this.nivelesAcademicos = response.nivelAcademico;
-      },
-      error => {
-        if(error){
-          console.log(<any>error);
-          this.status = 'error';
-        }
-      }
-    )
-  }
-
   //opciones de imagen
   async opcionesDeImagen() {
     const actionSheet = await this.actionSheetController.create({
@@ -121,7 +91,7 @@ export class TabAdmin4Page implements OnInit {
         handler: async () => {
           console.log('Ver foto');
           const modal = await this.modalCtrl.create({
-            component : ModalUserPage,
+            component : ModalAdminPage,
             componentProps : {
               nombre : this.admin.nickName,
               image : this.admin.image,
@@ -160,7 +130,7 @@ export class TabAdmin4Page implements OnInit {
   loading : any;
   async editarFoto() {
     const modal = await this.modalCtrl.create({
-      component: ModalUserPage,
+      component: ModalAdminPage,
       componentProps: {
         nombre: this.admin.nickName,
         image: this.admin.image,
@@ -174,13 +144,13 @@ export class TabAdmin4Page implements OnInit {
     console.log(data)
     if (data.actualizar) {
       this.listo = false;
-      this._adminService.getUser(this.admin._id).subscribe(
+      this._adminService.getAdmin(this.admin._id).subscribe(
         response => {
-          if (response.user) {
+          if (response.admin) {
             this.status = 'Ok';
             console.log('Listo')
             this.listo = true;
-            this.admin.image = response.user.image;
+            this.admin.image = response.admin.image;
           }
         },
         error => {

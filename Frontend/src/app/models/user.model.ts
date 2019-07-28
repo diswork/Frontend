@@ -11,7 +11,9 @@ export class User {
         public institucion: String,
         public fechaNacimiento: Date,
         public ofertas: [],
-        public cvs: [],
+        public cvsRedactado: [],
+        public cvsPdf: [],
+        public cvsImg: [],
         public empresas: [],
         public nivelAcademico: String,
         public categoria: String
