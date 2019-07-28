@@ -40,13 +40,13 @@ export class UploadService {
             reject(xhr.response);
           }
         }
-      }
-      console.log(token)
-      xhr.open('POST', url, true); //tipo, url, asincrono
-      xhr.setRequestHeader('Authorization', token);//
-      xhr.send(formData);//enviamos los datos ya parseados
+        console.log(token)
 
-    })
+
+        xhr.open('POST', url, true); //tipo, url, asincrono
+        xhr.setRequestHeader('Authorization', token);//
+        xhr.send(formData);//enviamos los datos ya parseados
+      })
   }
 
   async subirImagen(img: string) {
@@ -59,8 +59,8 @@ export class UploadService {
 
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, this.url + '/subir-cv', options)
-      .then(async data => {
+    fileTransfer.upload(img, this.url + '/subir-cv',options)
+      .then( async data => {
         let dt = JSON.stringify(data.response);
         let token = dt.split('\\\"')
         console.log('token: ' + token[3])

@@ -20,19 +20,69 @@
   </div>
 
   <!-- CONTENIDO DE CVS -->
-    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher *ngIf="!camara && !redactar && !archivo" slot="fixed" (ionRefresh)="doRefresh($event)">
       <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
 
-  <div *ngIf="siHayData">
-    <ion-list *ngFor="let dt of cvs">
-      <ion-card mode="ios">
-        <ion-card-header>
-          <ion-card-title>Titulo</ion-card-title>
-        </ion-card-header>
-      
+  <div *ngIf="siHayData">    
+    <ion-list>
+      <ion-card mode="md"  *ngFor="let dt of cvsPdf">     
+        <ion-card-header  color="danger">
+            <ion-card-title>PDF</ion-card-title>
+        </ion-card-header>  
         <ion-card-content>
           <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="siHayData">
+    <ion-list>
+      <ion-card mode="md" *ngFor="let dt of cvsImg">  
+        <ion-card-header  color="danger">
+            <ion-card-title>Imagen</ion-card-title>
+        </ion-card-header> 
+        <ion-card-content>
+          <ion-img src="{{url + 'obtener-cv/' + dt.archivo}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+  <!-- style="font-weight:bold;" -->
+  <div *ngIf="siHayData">
+    <ion-list>
+      <ion-card mode="md" *ngFor="let dt of cvsRedactado">   
+        <ion-card-header  color="danger">
+            <ion-card-title>Redactado</ion-card-title>  
+        </ion-card-header> 
+        <ion-card-content>          
+            <ion-list>
+              <ion-item>
+                <ion-label>Nombre: {{dt.nombre}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Edad: {{dt.edad}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Correo: {{dt.correo}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Telefono: {{dt.telefono}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Estudio: {{dt.estudio}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Habilidades: {{dt.habilidad}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Referencias Personales: {{dt.refPersonal}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Referencias Empresariales: {{dt.refEmpresarial}}</ion-textarea>
+              </ion-item>
+            </ion-list>
         </ion-card-content>
       </ion-card>
     </ion-list>
@@ -45,9 +95,8 @@
       <ion-col size="50px">
         <ion-list>
           <ion-label>
-            <h1 style="margin-left: 8px">Título</h1>
+            <h1 style="margin-left: 8px">Escoge una imagen</h1>
           </ion-label>
-          <ion-input placeholder="Ingrese un título" name="titulo" type="text" required clearInput></ion-input>
         </ion-list>
       </ion-col>
     </ion-row>
@@ -94,9 +143,8 @@
         <ion-col size="50px">
           <ion-list>
             <ion-label>
-              <h1 style="margin-left: 8px">Título</h1>
+              <h1 style="margin-left: 8px">Escoge un archivo</h1>
             </ion-label>
-            <ion-input placeholder="Ingrese un título" name="titulo" type="text" required clearInput></ion-input>
           </ion-list>
         </ion-col>
       </ion-row>
@@ -129,78 +177,94 @@
 
     <!-- Redactar el CV -->
   <div *ngIf="redactar">
+    <form (ngSubmit)="guardarRedactado(fCvRedactado)" #fCvRedactado="ngForm">
       <ion-row>
         <ion-col size="50px">
           <ion-list>
             <ion-label>
-              <h1 style="margin-left: 8px">Título</h1>
+              <h1 style="margin-left: 8px">Redacta tu Cv</h1>
             </ion-label>
-            <ion-input placeholder="Ingrese un título" name="titulo" type="text" required clearInput></ion-input>
           </ion-list>
+        </ion-col>
+      </ion-row>
+      <ion-thumbnail style="margin-left: 30px; width: 80px; height: 80px">  
+        <img *ngIf="!usuario.image" style="border-radius: 100%" src="assets/avatars/av-6.png" class="img-avatar" >            
+        <img *ngIf="usuario.image" style="border-radius: 100%"  src="{{url + 'obtener-imagen-usuario/'+usuario.image}}" class="img-avatar" >            
+      </ion-thumbnail>
+      <ion-row>
+        <ion-col>            
           <ion-list>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Nombre</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su nombre" name="nombre" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su nombre" name="nombre" type="text" required clearInput
+                [(ngModel)]="cvRedactado.nombre"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Edad</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su edad" name="edad" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su edad" name="edad" type="text" required clearInput
+                [(ngModel)]="cvRedactado.edad"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Correo</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su correo" name="correo" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su correo" name="correo" type="text" required clearInput
+                [(ngModel)]="cvRedactado.correo"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Telefono</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput></ion-input>
+              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput
+                [(ngModel)]="cvRedactado.telefono"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Estudios</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese información de sus estudios" name="estudio" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese información de sus estudios" name="estudio" rows="8" required
+                clearOnEdit="true" [(ngModel)]="cvRedactado.estudio"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Habilidades</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese información de sus habilidades" name="habilidad" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese información de sus habilidades" name="habilidad" rows="8" required
+                clearOnEdit="true" [(ngModel)]="cvRedactado.habilidad"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Referencias P</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese sus referencias personales" name="referenciasP" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese sus referencias personales" name="refPersonal" rows="8" required
+                clearOnEdit="true" [(ngModel)]="cvRedactado.refPersonal"></ion-textarea>
             </ion-item>
             <ion-item>
               <ion-label>
                 <h2 style="margin-left: 8px">Referencias E</h2>
               </ion-label>
-              <ion-textarea placeholder="Ingrese sus referencias empresariales" name="referenciasE" rows="8" required clearOnEdit="true"></ion-textarea>
+              <ion-textarea placeholder="Ingrese sus referencias empresariales" name="refEmpresarial" rows="8" required
+                clearOnEdit="true" [(ngModel)]="cvRedactado.refEmpresarial"></ion-textarea>
             </ion-item>
           </ion-list>
         </ion-col>
       </ion-row>
-      <div vertical="bottom" horizontal="start" >
+      <div vertical="bottom" horizontal="start">
         <ion-row>
           <ion-col size="5">
-              <ion-button (click)="cancelarCrear()" expand="full" color="danger" shape="round">Cancelar</ion-button>
-            </ion-col>
+            <ion-button (click)="cancelarCrear()" expand="full" color="danger" shape="round">Cancelar</ion-button>
+          </ion-col>
           <ion-col size="5">
-            <ion-button  expand="full" shape="round">Guardar</ion-button>
+            <ion-button type="submit" expand="full" shape="round">Guardar</ion-button>
           </ion-col>
         </ion-row>
       </div><br>
-      
-    </div>
+    </form>
+  </div>
   
     <!---->
 
