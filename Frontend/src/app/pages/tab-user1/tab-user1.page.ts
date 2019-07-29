@@ -8,6 +8,8 @@ import { MenuController } from '@ionic/angular';
 })
 export class TabUser1Page implements OnInit {
 
+public publicaciones : [];
+
   constructor(private menuCtrl : MenuController) { }
 
   ngOnInit() {    

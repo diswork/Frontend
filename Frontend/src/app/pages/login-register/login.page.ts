@@ -22,6 +22,9 @@ export class LoginPage implements OnInit {
   public user: User;
   public empresa: Empresa;
   public rol: string;
+  public carga: boolean = false;
+  public cargaLista: boolean = false;
+  public formulario: boolean = true;
 
   @ViewChild('slidePrincipal') slides: IonSlides;
 
@@ -33,6 +36,9 @@ export class LoginPage implements OnInit {
     this.user = new User("","","","","user","","","","",new Date(),[],[],[],[],[],"","")
     this.empresa = new Empresa("","", "", "", "empresa", "", "", "")
     this.rol = "user"
+    this.carga = false;
+    this.cargaLista = false;
+    this.formulario = true;
   }
 
   ngOnInit() {
@@ -60,46 +66,67 @@ export class LoginPage implements OnInit {
 
     console.log(fLogin.valid);
 
-    this.usuarioService.login(this.loginUser).subscribe(
-      response => {
-        this.status = 'Ok';
-        if (response.token) {
-          this.usuarioService.guardarToken(response.token);
-        }
-        if (response.empresa) {
-          this.usuarioService.guardarEmpresa(response.empresa);
-          this.menuCtrl.enable(true, "segundoMenu");
-          this.menuCtrl.enable(false, "primerMenu");
-          this.menuCtrl.enable(false, "tercerMenu");
-
-          this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
-        } else if (response.user) {
-          this.usuarioService.guardarUser(response.user);
-          this.menuCtrl.enable(true, "primerMenu");
-          this.menuCtrl.enable(false, "segundoMenu");
-          this.menuCtrl.enable(false, "tercerMenu");
-
-          this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
-        } else if (response.admin){
-          this.usuarioService.guardarAdmin(response.admin);
-          this.menuCtrl.enable(false, "primerMenu");
-          this.menuCtrl.enable(false, "segundoMenu");
-          this.menuCtrl.enable(true, "tercerMenu");
-
-          this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
-        }
-
-        
-      },
-      error => {
-        if (error) {
-          console.log(<any>error);
-          this.status = 'error';
-          this.usuarioService.limpiarStorage();
-          this.uiService.alertarInformativa('El correo y la contraseña no son correctos.')
-        }
-      }
-    )
+    if (fLogin.valid) {
+      setTimeout(()=>{
+        this.formulario = false;
+        this.carga = true;
+        this.usuarioService.login(this.loginUser).subscribe(
+          response => {
+            this.status = 'Ok';
+              if (response.token) {
+                this.usuarioService.guardarToken(response.token);
+              }
+              if (response.empresa) {
+                this.usuarioService.guardarEmpresa(response.empresa);
+                this.menuCtrl.enable(true, "segundoMenu");
+                this.menuCtrl.enable(false, "primerMenu");
+                this.menuCtrl.enable(false, "tercerMenu");                       
+                setTimeout(()=>{ 
+                  this.carga = false;
+                  this.cargaLista = true;   
+                  this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
+                },1000);
+              } else if (response.user) {
+                this.usuarioService.guardarUser(response.user);
+                this.menuCtrl.enable(true, "primerMenu");
+                this.menuCtrl.enable(false, "segundoMenu");
+                this.menuCtrl.enable(false, "tercerMenu");
+                setTimeout(()=>{ 
+                  this.carga = false;
+                  this.cargaLista = true;
+                  this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
+                },1000);
+              } else if (response.admin) {
+                this.usuarioService.guardarAdmin(response.admin);
+                this.menuCtrl.enable(false, "primerMenu");
+                this.menuCtrl.enable(false, "segundoMenu");
+                this.menuCtrl.enable(true, "tercerMenu");                
+                setTimeout(()=>{ 
+                  this.carga = false;
+                  this.cargaLista = true;
+                  this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
+                },1000);
+              }        
+          },
+          error => {
+            this.formulario = true;
+            this.carga = false;
+            if (error) {
+              console.log(<any>error);
+              this.status = 'error';
+              this.usuarioService.limpiarStorage();
+              if(error.error.message === "El usuario no existe"){
+                this.uiService.alertarInformativa('El usuario no existe.<br>Cree una cuenta.');
+              }else if(error.error.message === 'El email o la contraseña son incorrectos'){
+                this.uiService.alertarInformativa('El correo y la contraseña no son correctos.');
+              }
+            }
+          }
+        )
+      },1000)      
+    }else if(fLogin.invalid){
+      this.uiService.alertarInformativa('Ingrese todos los campos.')
+    }
   }
 
   desabilitar() {
