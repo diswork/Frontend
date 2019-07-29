@@ -158,7 +158,7 @@ export class UsuarioService {
     console.log(this.token)
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
-    return this._http.get(this.url + 'usuarios',{headers:headers});
+    return this._http.get(this.url + 'usuarios', {headers}).pipe(delay(1500));
   }
 
   deleteUser(id): Observable<any>{
