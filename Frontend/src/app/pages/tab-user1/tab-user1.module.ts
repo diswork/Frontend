@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabUser1Page } from './tab-user1.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalCvPage } from '../modal-cv/modal-cv.page';
+import { ModalCvPageModule } from '../modal-cv/modal-cv.module';
 
 const routes: Routes = [
   {
@@ -21,7 +23,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalCvPageModule
+  ],
+  entryComponents : [
+    ModalCvPage
   ],
   declarations: [TabUser1Page]
 })

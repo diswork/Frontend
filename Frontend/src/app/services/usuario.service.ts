@@ -174,6 +174,12 @@ export class UsuarioService {
     return this._http.put(this.url + 'cvRedactado',params,{headers:headers});
   }
 
+  getOfertasPorEmpresa(id) : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + `ofertasPorEmpresa/${id}`, {headers});
+  }
+
   //SERVICIOS PARA USUARIO DE TIPO EMPRESA
 
   async guardarEmpresa(empresas: Empresa) {
