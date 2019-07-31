@@ -12,6 +12,7 @@ import {delay} from 'rxjs/operators'
 import { Admin } from '../models/admin.model';
 import { Oferta } from '../models/oferta.model';
 import { CvRedactado } from '../models/cvRedactado.model';
+import { Categoria } from '../models/categoria.model';
 
 @Injectable({
   providedIn: 'root'
@@ -229,6 +230,21 @@ export class UsuarioService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
     return this._http.get(this.url + 'categorias', {headers})
+  }
+
+  addCategorie( categorie: Categoria) : Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    let params = JSON.stringify(categorie)
+
+    return this._http.post(this.url + 'categoria', params,{headers})
+
+  }
+
+  deleteCategorie(id) : Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    
+    return this._http.post(this.url  + `/categoria/${id}`,{headers})
+
   }
 
   getNiveles():Observable<any>{

@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabAdmin3Page } from './tab-admin3.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalCategoriasPage } from '../modal-categorias/modal-categorias.page';
+import { ModalCategoriasPageModule } from '../modal-categorias/modal-categorias.module';
 
 const routes: Routes = [
   {
@@ -16,12 +18,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  entryComponents:[
+    ModalCategoriasPage
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalCategoriasPageModule
   ],
   declarations: [TabAdmin3Page]
 })
