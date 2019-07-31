@@ -16,8 +16,9 @@
         <ion-card-title>PDF</ion-card-title>
       </ion-card-header>
       <ion-card-content><br>
-        <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img><br>
-        <ion-button  fill="outline" style="margin-top: 0px" (click)="enviar(dt.archivo)" expand="full" shape="round">Enviar</ion-button>
+        <ion-img style="width: 100px; height: 110px; margin: auto" src="assets/icono-pdf.png"></ion-img>
+        <ion-button  fill="outline" (click)="verPdf(dt.archivo)" expand="full" shape="round">View</ion-button>
+        <ion-button  fill="outline" style="margin-top: 0px" (click)="enviar(dt)" expand="full" shape="round">Enviar</ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
@@ -31,7 +32,7 @@
       </ion-card-header>
       <ion-card-content><br>
         <ion-img src="{{url + 'obtener-cv/' + dt.archivo}}"></ion-img><br>
-        <ion-button  fill="outline" style="margin-top: 0px" (click)="enviar(dt.archivo)" expand="full" shape="round">Enviar</ion-button>
+        <ion-button  fill="outline" style="margin-top: 0px" (click)="enviar(dt)" expand="full" shape="round">Enviar</ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>

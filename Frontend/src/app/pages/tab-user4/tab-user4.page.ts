@@ -22,4 +22,10 @@ export class TabUser4Page implements OnInit {
     this.lista.closeSlidingItems();
   }
 
+  doRefresh(event){
+    setTimeout(() => {
+            event.target.complete();
+    }, 2500);
+  }
+
 }

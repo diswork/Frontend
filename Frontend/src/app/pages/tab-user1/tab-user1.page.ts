@@ -17,6 +17,7 @@ public publicaciones;
 public dataUser : User;
 public status;
 public url;
+public mensaje = false;
 
   constructor(
     private menuCtrl : MenuController,
@@ -34,16 +35,15 @@ public url;
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     setTimeout(() => {
-      for (let i = 0; i < this.dataUser.empresas.length; i++) {
-        this._usuarioService.getOfertasPorEmpresa(this.dataUser.empresas[i]).subscribe(
+        this._usuarioService.getOfertasPorEmpresa().subscribe(
           response => {
+            
             if (response.ofertas) {
-
-              this.publicaciones.push(response.ofertas);
-              console.log(this.publicaciones)
-
-            } else {
-              console.log(response.ofertas)
+              
+              this.publicaciones = response.ofertas;
+             
+            } else if(response.message === 'no') {
+                this.mensaje = true;     
             }
           },
           error => {
@@ -52,13 +52,41 @@ public url;
               this.status = "no"
             }
           }
-        )
-      }
+        )      
     }, 1000)
   
   }
 
-  async opcionesCv(){
+
+  doRefresh(event){
+    this.publicaciones = [];
+    this.mensaje = false;
+    setTimeout(() => {
+      this._usuarioService.getOfertasPorEmpresa().subscribe(
+        response => {
+          
+          if (response.ofertas) {
+            this.publicaciones = response.ofertas;
+            event.target.complete();
+
+          } else if(response.message === 'no') {
+              this.mensaje = true;     
+              event.target.complete();
+
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = "no"
+          }
+        }
+      )     
+    }, 2500);
+  }
+
+  async opcionesCv(id){
+    console.log(id)
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
       buttons: [{
@@ -74,19 +102,37 @@ public url;
             animated : true
           });
           await modal.present();
+
+          const { data } = await modal.onDidDismiss();
+
+          if(data){
+            console.log(data)
+            this._usuarioService.enviarCv(id, data.archivo).subscribe(
+              response => {
+                if(response){
+                  console.log(response)
+                }
+              },
+              error => {
+                if(error){
+                  console.log(<any>error)
+                }
+              }
+            )
+            console.log('listo')
+          }
         }
       }, {
         text: 'Enviar Archivo',
         icon: 'copy',
         handler: () => {
-          this.modalCvArchivo();
+          this.modalCvArchivo(id);
         }
       }, {
         text: 'Enviar Redactado',
-        role: 'destructive',
         icon: 'create',
         handler: () => {
-          this.modalCvRedactado();
+          this.modalCvRedactado(id);
         }
       }, {
         text: 'Cancelar',
@@ -100,7 +146,7 @@ public url;
     await actionSheet.present();
   }
 
-  async modalCvArchivo(){
+  async modalCvArchivo(id){
     const modal = await this.modalCtrl.create({
       component : ModalCvPage,
       componentProps : {
@@ -112,10 +158,25 @@ public url;
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-
+    if(data){
+      console.log(data)
+      this._usuarioService.enviarCv(id, data.archivo).subscribe(
+        response => {
+          if(response){
+            console.log(response)
+          }
+        },
+        error => {
+          if(error){
+            console.log(<any>error)
+          }
+        }
+      )
+      console.log('listo')
+    }
   }
 
-  async modalCvRedactado(){
+  async modalCvRedactado(id){
     const modal = await this.modalCtrl.create({
       component : ModalCvPage,
       componentProps : {
@@ -127,7 +188,22 @@ public url;
     await modal.present();
 
     const { data } = await modal.onDidDismiss();
-
+    if(data){
+      console.log(data)
+      this._usuarioService.enviarCv(id, data.archivo).subscribe(
+        response => {
+          if(response){
+            console.log(response)
+          }
+        },
+        error => {
+          if(error){
+            console.log(<any>error)
+          }
+        }
+      )
+      console.log('listo')
+    }
   }
 
 }
