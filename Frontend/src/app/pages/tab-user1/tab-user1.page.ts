@@ -41,7 +41,7 @@ public mensaje = false;
             if (response.ofertas) {
               
               this.publicaciones = response.ofertas;
-             
+             console.log(this.publicaciones)
             } else if(response.message === 'no') {
                 this.mensaje = true;     
             }
@@ -67,6 +67,8 @@ public mensaje = false;
           
           if (response.ofertas) {
             this.publicaciones = response.ofertas;
+            console.log(this.publicaciones)
+
             event.target.complete();
 
           } else if(response.message === 'no') {
