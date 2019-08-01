@@ -6,6 +6,7 @@ import { UiServiceService } from '../../services/ui-service.service'
 import { Login } from '../../models/login.model';
 import { User } from 'src/app/models/user.model';
 import { Empresa } from 'src/app/models/empresa.model';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
 
 
 @Component({

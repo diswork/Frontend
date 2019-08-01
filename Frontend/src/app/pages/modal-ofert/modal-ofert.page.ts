@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController, ActionSheetController } from '@ionic/angular';
 import { ModalCvPage } from '../modal-cv/modal-cv.page';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { GLOBAL } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-modal-ofert',
@@ -16,10 +17,14 @@ export class ModalOfertPage implements OnInit {
   @Input() cvsRedactado;
   @Input() cvsPdf;
 
+  public url;
+
   constructor(
     private modalCtrl : ModalController,
     private actionSheetController: ActionSheetController,
-    private _usuarioService : UsuarioService) { }
+    private _usuarioService : UsuarioService) { 
+      this.url = GLOBAL.url;
+    }
 
   ngOnInit() {
   }

@@ -38,11 +38,13 @@ public dataOferta;
     setTimeout(() => {
         this._usuarioService.getOfertasPorEmpresa().subscribe(
           response => {
-            
-            if (response.ofertas) {
+            console.log(response.ofertas)
+            if(response.message === 'no') {
+              this.mensaje = true;     
+            }else if (response.ofertas.length === 0) {
+              this.mensaje = true;     
+            }else if (response.ofertas.length > 0) {
               this.publicaciones = response.ofertas;
-            } else if(response.message === 'no') {
-                this.mensaje = true;     
             }
           },
           error => {
@@ -63,15 +65,15 @@ public dataOferta;
     setTimeout(() => {
       this._usuarioService.getOfertasPorEmpresa().subscribe(
         response => {
-          
-          if (response.ofertas) {
+          if(response.message === 'no') {
+            this.mensaje = true;   
+            event.target.complete();
+          }else if (response.ofertas.length === 0) {
+            this.mensaje = true;     
+            event.target.complete();
+          }else if (response.ofertas.length > 0) {
             this.publicaciones = response.ofertas;
             event.target.complete();
-
-          } else if(response.message === 'no') {
-              this.mensaje = true;     
-              event.target.complete();
-
           }
         },
         error => {
@@ -85,6 +87,7 @@ public dataOferta;
   }
 
   async opcionesCv(id){
+    this.dataUser = this._usuarioService.getUserLog();
     console.log(id)
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',
