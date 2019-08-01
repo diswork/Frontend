@@ -346,4 +346,18 @@ export class UsuarioService {
   }
 
 
+  //SERVICIOS PARA OFERTAS
+
+  getOfertaById(id) : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + `ofertaById/${id}`, {headers})
+  }
+
+  getOfertas() : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'ofertas-seguidas-cn', {headers});
+  }
+
 }
