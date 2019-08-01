@@ -174,6 +174,19 @@ export class UsuarioService {
     return this._http.put(this.url + 'cvRedactado',params,{headers:headers});
   }
 
+  getOfertasPorEmpresa() : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + `ofertas-seguidas`, {headers});
+  }
+
+  enviarCv(id, archivo) : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+    let params = JSON.stringify(archivo);
+    
+    return this._http.put(this.url + `enviar-cv-img/${id}`, params, {headers});
+  }
+
   //SERVICIOS PARA USUARIO DE TIPO EMPRESA
 
   async guardarEmpresa(empresas: Empresa) {

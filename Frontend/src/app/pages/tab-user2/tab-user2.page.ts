@@ -27,7 +27,6 @@ export class TabUser2Page implements OnInit {
     this.url = GLOBAL.url;
     this.getEmpresas();
     this.dataUser = this._usuarioService.getUserLog();
-    console.log(this.dataUser.empresas)
   }
 
   ngOnInit() {
@@ -60,7 +59,6 @@ export class TabUser2Page implements OnInit {
     this._usuarioService.seguirEmpresa(id, this.empresaSeguir).subscribe(
       response => {
         this._usuarioService.registrarUser(response.usuario);
-        console.log(response.usuario)
         this.dataUser = response.usuario;
         this._usuarioService.guardarToken(response.token)
       },
@@ -77,7 +75,6 @@ export class TabUser2Page implements OnInit {
     this._usuarioService.dejarSeguirEmpresa(id, this.empresaSeguir).subscribe(
       response => {
         this._usuarioService.registrarUser(response.usuario);
-        console.log(response.usuario)
         this.dataUser = response.usuario;
         this._usuarioService.guardarToken(response.token)
       },
