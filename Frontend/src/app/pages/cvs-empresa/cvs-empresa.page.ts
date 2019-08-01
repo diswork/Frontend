@@ -17,36 +17,20 @@ import { ModalController } from '@ionic/angular';
 })
 export class CvsEmpresaPage implements OnInit {
 
-  @Input() idOferta;
+  @Input() oferta;
+  @Input() noHayData;
+  @Input() siHayData;
 
-  public curriculum : [];
-  public cvsPdf : [];
-  public cvsImg : [];
   public url;
   public empresa: Empresa;
-  public oferta: Oferta;
-  public noHayData : boolean = true;
-  public siHayData : boolean = false;
-  status: string;
 
   constructor(
-    private _uploadService : UploadService,
-    private _usuarioService : UsuarioService,
-    private _uiService : UiServiceService,
     private modalCtrl : ModalController,
   ) {
-    this._usuarioService.validaToken();    
       this.url = GLOBAL.url;
    }
 
   ngOnInit() {
-    this.getCV();
-    /*
-    if(this.oferta.curriculum.length > 0){
-      this.noHayData = false;
-      this.siHayData = true;
-      this.curriculum = this.oferta.curriculum;
-    }*/
   }
 
   salir(){
@@ -56,25 +40,6 @@ export class CvsEmpresaPage implements OnInit {
   }
 
   
-
-  getCV(){
-    this._usuarioService.getCVOferta(this.idOferta).subscribe(
-      response=>{
-        if(response.cvsEncontrados){
-          console.log(response.cvsEncontrados)
-          //this.partidos = response.cvsEncontrados;
-        }
-      },
-      error=>{
-        var errorMessage = <any>error; 
-        console.log(errorMessage); 
-        if(errorMessage != null){
-          this.status = 'ERROR'
-        }
-      }
-    )
-  }
-
   doRefresh(event){
     setTimeout(() =>{
       //this._usuarioService.getCVOferta(this.)

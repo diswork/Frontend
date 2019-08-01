@@ -5,6 +5,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { MenuController, ModalController } from '@ionic/angular';
 import { CVsPage } from '../cvs/cvs.page';
 import { CvsEmpresaPage } from '../cvs-empresa/cvs-empresa.page';
+import { GLOBAL } from 'src/app/services/global.service';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -22,24 +23,24 @@ export class TabEmpresa1Page implements OnInit {
   public oferta: Oferta;
   public idEmpresa;
 
-  public ofertas : [];
+  public ofertas: [];
   public publicaciones;
-  
 
-  constructor(private modalCtrl : ModalController, private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
+
+  constructor(private modalCtrl: ModalController, private _usuarioService: UsuarioService, private menuCtrl: MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
-    this.oferta = new Oferta('','', '', new Date(), '', '', '', '', [], '', true);
-    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);   
-    
+    this.oferta = new Oferta('', '', '', new Date(), '', '', '', '', [], '', true);
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+    this.url = GLOBAL.url;
   }
 
   ngOnInit() {
-    
+    this.empresa = this._usuarioService.getEmpresaLog();
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(true, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
-    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);     
-    
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+
   }
 
   readOfertasEmpresa(id) {
@@ -47,7 +48,6 @@ export class TabEmpresa1Page implements OnInit {
       response => {
         this.status = 'ok';
         this.ofertas = response.ofertas;
-        console.log(this.ofertas);
       },
       error => {
         var errorMessage = <any>error;
@@ -61,47 +61,67 @@ export class TabEmpresa1Page implements OnInit {
 
 
 
-  eliminarOferta(id){                     
+  eliminarOferta(id) {
     this._usuarioService.eliminarOferta(id).subscribe(
-      response=>{
-        if(!response.oferta){
+      response => {
+        if (!response.oferta) {
           this.status = 'ERROR'
-        
-        }else{
+
+        } else {
           this.status = 'SUCCESS'
-        
-        this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id); 
-    
-         
+
+          this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+
+
           console.log(response.Promesa)
         }
       },
-      error=>{
+      error => {
         var errorMessage = <any>error;
         console.log(errorMessage);
-        if(errorMessage != null){
+        if (errorMessage != null) {
           this.status = 'ERROR'
         }
       }
     )
   }
 
-  idO(id){
-    this.idOferta = id;
-    console.log(this.idOferta);
 
+
+  async verCvs(id) {
+
+    this._usuarioService.getOfertaById(id).subscribe(
+      async response => {
+        if(response.img.length == 0 && response.pdf.length == 0 && response.redactado.length == 0){
+          const modal = await this.modalCtrl.create({
+            component: CvsEmpresaPage,
+            componentProps: {
+              noHayData : true,
+              siHayData : false
+            },
+            animated: true
+          });
+          await modal.present();
+        }else if(response.oferta){
+          const modal = await this.modalCtrl.create({
+            component: CvsEmpresaPage,
+            componentProps: {
+              oferta: response.oferta,
+              noHayData : false,
+              siHayData : true
+            },
+            animated: true
+          });
+          await modal.present();
+        }
+      },
+      error => {
+        if(error){
+          console.log(<any>error);
+        }
+      }
+    )
+   
   }
-
-async cvs(){
-  const modal = await this.modalCtrl.create({
-    component: CvsEmpresaPage,
-    componentProps:{
-      idOferta: this.idOferta,
-    },
-    animated: true
-  });
-  await modal.present();
-}
-
 
 }
