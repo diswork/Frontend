@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
 import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-accessors/value-accessor';
 import { ModalCategoriasPage } from '../modal-categorias/modal-categorias.page';
+import { ModalNivelesAcademicosPage } from '../modal-niveles-academicos/modal-niveles-academicos.page';
+import { ModalGestionarAdministradoresPage } from '../modal-gestionar-administradores/modal-gestionar-administradores.page';
 
 @Component({
   selector: 'app-tab-admin3',
@@ -46,8 +48,23 @@ export class TabAdmin3Page implements OnInit {
       });
       await modal.present();
     }
+    else if(accion == 'academicLevel') {
+      const modal = await this.modalCtrl.create({
+      
+
+        component: ModalNivelesAcademicosPage,
+      });
+      await modal.present();
+    }else if(accion== 'user') {
+      const modal = await this.modalCtrl.create({
+      
+
+        component: ModalGestionarAdministradoresPage,
+      });
+      await modal.present();
+    }
   }
-}
+}//Llave principal
 
 interface Menu {
   icon: string,

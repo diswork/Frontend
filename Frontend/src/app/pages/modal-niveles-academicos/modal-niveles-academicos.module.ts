@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+
+
 import { IonicModule } from '@ionic/angular';
 
-import { ModalAddCategoriesPage } from './modal-add-categories.page';
+import { ModalNivelesAcademicosPage } from './modal-niveles-academicos.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+
 
 
 @NgModule({
@@ -11,7 +15,8 @@ import { ModalAddCategoriesPage } from './modal-add-categories.page';
     CommonModule,
     FormsModule,
     IonicModule,
+    PipesModule
   ],
-  declarations: [ModalAddCategoriesPage]
+  declarations: [ModalNivelesAcademicosPage]
 })
-export class ModalAddCategoriesPageModule {}
+export class ModalNivelesAcademicosPageModule {}

@@ -1,6 +1,5 @@
 <ion-header>
     <ion-toolbar>
-
         <ion-buttons slot='start'>
             <ion-button (click)='salir()' *ngIf='!editando'>
                 <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
@@ -10,24 +9,26 @@
         <ion-buttons slot='end'>
             <ion-button color='primary' *ngIf='!editando' (click)='activarEdicion()'>
                 <ion-icon name='add-circle'>
+
                 </ion-icon>
             </ion-button>
         </ion-buttons>
 
-        <ion-title>Categorias</ion-title>
-
+        <ion-title>Niveles Academicos</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+
     <ion-list *ngIf='!editando'>
         <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
     </ion-list>
 
-    <form (ngSubmit)='addCategoria()' *ngIf='editando'>
+    <form (ngSubmit)='addNivelAcademico()' *ngIf='editando'>
         <ion-item>
             <ion-label>Descripcion:</ion-label>
-            <ion-input name="descripcion" type="text" [(ngModel)]="newCategorie.descripcion" required clearInput></ion-input>
+            <ion-input name="descripcion" type="text" [(ngModel)]="newNivelAcademico.descripcion" required clearInput></ion-input>
         </ion-item>
 
         <ion-button type="submit" color="primary" shape="round">
@@ -38,23 +39,30 @@
         </ion-button>
     </form>
 
-    <ion-list *ngFor='let categoria of categorias | filtro:textoBuscar:"descripcion"' #cerrarLista>
+
+    <ion-list #cerrarLista *ngFor='let nivelAcademico of nivelesAcademicos | filtro:textoBuscar:"descripcion"'>
         <ion-item-sliding *ngIf='!editando'>
 
             <ion-item>
-                <ion-label text-capitalize>{{categoria.descripcion}}</ion-label>
+                <ion-label text-capitalize>{{nivelAcademico.descripcion}}</ion-label>
             </ion-item>
             <ion-item-options side="end">
 
                 <ion-item-option>
-                    <ion-icon slot="icon-only" name="build" (click)='openUpdateCategorie(categoria._id);'></ion-icon>
+                    <ion-icon slot="icon-only" name="build" (click)='openUpdateCategorie(nivelAcademico._id);'></ion-icon>
                 </ion-item-option>
 
-                <ion-item-option color='danger' (click)='openDeleteAlert(categoria._id);'>
+                <ion-item-option color='danger' (click)='openDeleteAlert(nivelAcademico._id);'>
                     <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-item-option>
 
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
+
+
+
+
+
+
 </ion-content>

@@ -33,8 +33,7 @@ const routes: Routes = [
   {
     path: 'tabs-admin/tabs-admin/tab-admin4',
     loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule'
-  },  { path: 'modal-update-categories', loadChildren: './pages/modal-update-categories/modal-update-categories.module#ModalUpdateCategoriesPageModule' }
-
+  }
 
 
 

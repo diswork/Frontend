@@ -1,9 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { ModalController, AlertController, IonList } from '@ionic/angular';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Categoria } from 'src/app/models/categoria.model';
-import { ModalAddCategoriesPage } from '../modal-add-categories/modal-add-categories.page';
-import { ModalUpdateCategoriesPage } from '../modal-update-categories/modal-update-categories.page';
 
 @Component({
   selector: 'app-modal-categorias',
@@ -13,13 +11,14 @@ import { ModalUpdateCategoriesPage } from '../modal-update-categories/modal-upda
 export class ModalCategoriasPage implements OnInit {
 
   @ViewChild('cerrarLista') lista: IonList;
+  @Input() idCategoria: String
 
   public status;
   public categorias: Categoria
   public newCategorie: Categoria
   public textoBuscar = '';
   public editando = false
-  
+
 
 
   constructor(private modalCtrl: ModalController, private categoriaService: UsuarioService, private alertCtrl: AlertController) {
@@ -30,7 +29,7 @@ export class ModalCategoriasPage implements OnInit {
     this.getCategorias()
   }
 
-  
+
 
   async openDeleteAlert(id) {
     var identificador = id
@@ -43,7 +42,7 @@ export class ModalCategoriasPage implements OnInit {
         handler: () => {
           this.deleteCategorie(identificador)
           this.lista.closeSlidingItems()
-          this.getCategorias();
+
         }
       },
       {
@@ -57,28 +56,31 @@ export class ModalCategoriasPage implements OnInit {
     alert.present();
   }
 
-  async openAddCategorie() {
+  // async openUpdateCategorie(id) {
+  //   //  this.idCategoria = id
 
-    const modal = await this.modalCtrl.create({
+  //   this.idCategoria = id
+
+  //   const modal = await this.modalCtrl.create({
+  //     component: ModalUpdateCategoriesPage,
+
+  //   });
 
 
-      component: ModalAddCategoriesPage,
-    });
-    await modal.present();
+  //   await modal.present();
+
+  // }
+
+  activarEdicion() {
+    this.editando = true
+    this.newCategorie.descripcion = ''
+
   }
 
-  async openUpdateCategorie() {
-    const modal = await this.modalCtrl.create({
-
-
-      component: ModalUpdateCategoriesPage,
-    });
-    await modal.present();
+  desactivarEdicion() {
+    this.editando = false
+    this.newCategorie.descripcion = ''
   }
-
-
-
-
 
   salir() {
     this.modalCtrl.dismiss();
@@ -104,15 +106,38 @@ export class ModalCategoriasPage implements OnInit {
     )
   }
 
+  getIdCategoria(id) {
+    id = this.categorias
+    console.log(id)
+  }
+
   deleteCategorie(id) {
     this.categoriaService.deleteCategorie(id).subscribe(
       response => {
-        if(response.equipo) {
+        if (response.equipo) {
+          this.getCategorias();
         }
       },
       error => {
-        if(error){
+        if (error) {
           console.log(<any>error);
+        }
+      }
+    )
+  }
+
+  addCategoria() {
+    this.categoriaService.addCategorie(this.newCategorie).subscribe(
+      response => {
+        if (response.categoria) {
+          this.editando = false
+          this.getCategorias();
+        }
+      },
+      error => {
+        if (error) {
+          console.log(<any>error);
+
         }
       }
     )

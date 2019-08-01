@@ -4,20 +4,18 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ModalCategoriasPage } from './modal-categorias.page';
+import { ModalGestionarAdministradoresPage } from './modal-gestionar-administradores.page';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 
-
 @NgModule({
-  entryComponents: [],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
     PipesModule
   ],
-  declarations: [ModalCategoriasPage]
+  declarations: [ModalGestionarAdministradoresPage]
 })
-export class ModalCategoriasPageModule { }
+export class ModalGestionarAdministradoresPageModule { }
