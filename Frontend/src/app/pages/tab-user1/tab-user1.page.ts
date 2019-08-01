@@ -85,6 +85,7 @@ public dataOferta;
   }
 
   async opcionesCv(id){
+    this.dataUser = this._usuarioService.getUserLog();
     console.log(id)
     const actionSheet = await this.actionSheetController.create({
       header: 'Opciones',

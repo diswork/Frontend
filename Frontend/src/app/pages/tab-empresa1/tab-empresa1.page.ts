@@ -37,7 +37,6 @@ export class TabEmpresa1Page implements OnInit {
       response => {
         this.status = 'ok';
         this.ofertas = response.ofertas;
-        console.log(this.ofertas);
       },
       error => {
         var errorMessage = <any>error;
