@@ -182,7 +182,6 @@ export class UsuarioService {
     return this._http.get(this.url + `ofertas-seguidas`, { headers });
   }
 
-<<<<<<< HEAD
   deleteEmpresa(id): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 
@@ -190,9 +189,6 @@ export class UsuarioService {
   }
 
   enviarCv(id, archivo) : Observable<any>{
-=======
-  enviarCv(id, archivo): Observable<any> {
->>>>>>> 16ec7fb623c7c9e3bab90d1af1036693900b813b
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
     let params = JSON.stringify(archivo);
 
