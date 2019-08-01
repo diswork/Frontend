@@ -113,7 +113,7 @@ export class CVsPage implements OnInit {
   }
 
   guardarRedactado(fCvRedactado : NgForm){
-
+    this.cvRedactado.titulo = 'redactado';
     if(fCvRedactado.invalid){
       this._uiService.alertarInformativa('Ingrese todo los campos');
     }else{

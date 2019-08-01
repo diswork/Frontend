@@ -221,8 +221,8 @@
               <ion-label>
                 <h2 style="margin-left: 8px">Telefono</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput
-                [(ngModel)]="cvRedactado.telefono"></ion-input>
+              <ion-input placeholder="Ingrese su telefono" name="telefono" type="number"  required clearInput
+                [(ngModel)]="cvRedactado.telefono" maxlength="8"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
