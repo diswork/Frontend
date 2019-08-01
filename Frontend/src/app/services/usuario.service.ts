@@ -256,8 +256,15 @@ export class UsuarioService {
   deleteCategorie(id) : Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
     
-    return this._http.post(this.url  + `/categoria/${id}`,{headers})
+    return this._http.delete(this.url  + `/categoria/${id}`,{headers})
 
+  }
+
+  updateCategorie(id, categoria: Categoria) : Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+    let params = JSON.stringify(categoria)
+
+    return this._http.put(this.url + `/categoria/${categoria.id}`,params,{headers:headers}).pipe(delay(500));
   }
 
   getNiveles():Observable<any>{

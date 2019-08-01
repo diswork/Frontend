@@ -11,13 +11,13 @@
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-list>
+<ion-content view-cached='false'>
+    <ion-list *ngIf='!editando'>
         <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
     </ion-list>
 
-    <ion-list *ngFor='let categoria of categorias'>
-        <ion-item-sliding>
+    <ion-list *ngFor='let categoria of categorias' #cerrarLista>
+        <ion-item-sliding *ngIf='!editando'>
 
             <ion-item>
                 <ion-label text-capitalize>{{categoria.descripcion}}</ion-label>
@@ -25,16 +25,18 @@
             <ion-item-options side="end">
 
                 <ion-item-option>
-                    <ion-icon slot="icon-only" name="build"></ion-icon>
+                    <ion-icon slot="icon-only" name="build" (click)='openUpdateCategorie()'></ion-icon>
                 </ion-item-option>
 
-                <ion-item-option color='danger'>
+                <ion-item-option color='danger' (click)='openDeleteAlert(categoria._id);'>
                     <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-item-option>
 
             </ion-item-options>
         </ion-item-sliding>
     </ion-list>
+
+
 
     <ion-fab vertical="bottom" horizontal="end">
         <ion-fab-button (click)='openAddCategorie()'>
