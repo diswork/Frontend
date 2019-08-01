@@ -77,6 +77,21 @@ export class TabAdmin2Page implements OnInit {
     );
   }
 
+  deleteEmpresa(id){
+    this._usuarioService.deleteEmpresa(id).subscribe(
+      response => {
+        console.log(response.empresa);
+        this.getEmpresas();
+      },
+      error=>{
+        if(error){
+          console.log(<any>error);
+          this.status = 'error';
+        }
+      }
+    )
+  }
+
 
   buscar(event){
     this.textoBuscar = event.detail.value;
