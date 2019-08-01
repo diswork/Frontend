@@ -11,6 +11,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class TabEmpresa1Page implements OnInit {
 
+  
   public url: string;
   public status: string;
 
@@ -19,17 +20,23 @@ export class TabEmpresa1Page implements OnInit {
   public idEmpresa;
 
   public ofertas : [];
+  public publicaciones;
+  
 
   constructor(private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);   
+    
   }
 
   ngOnInit() {
+    
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(true, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);     
+    
   }
 
   readOfertasEmpresa(id) {
@@ -44,6 +51,33 @@ export class TabEmpresa1Page implements OnInit {
         console.log(errorMessage);
         if (errorMessage != null) {
           this.status = 'Error';
+        }
+      }
+    )
+  }
+
+
+
+  eliminarOferta(id){                     
+    this._usuarioService.eliminarOferta(id).subscribe(
+      response=>{
+        if(!response.oferta){
+          this.status = 'ERROR'
+        
+        }else{
+          this.status = 'SUCCESS'
+        
+        this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id); 
+    
+         
+          console.log(response.Promesa)
+        }
+      },
+      error=>{
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if(errorMessage != null){
+          this.status = 'ERROR'
         }
       }
     )

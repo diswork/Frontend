@@ -180,6 +180,14 @@ export class UsuarioService {
     return this._http.get(this.url + `ofertas-seguidas`, {headers});
   }
 
+  eliminarOferta(id): Observable<any>{
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/json') 
+
+    return this._http.delete(this.url+'eliminar-oferta/'+id,{headers: headers})
+  }
+
+
   enviarCv(id, archivo) : Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
     let params = JSON.stringify(archivo);
@@ -223,6 +231,19 @@ export class UsuarioService {
 
      return this._http.get(this.url + 'empresas', {headers}).pipe(delay(2000));
    }
+
+   getEmpresa(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + `empresa/${id}`, {headers:headers});
+  }
+
+   editarEmpresa(empresa : Empresa) : Observable<any>{
+    let params = JSON.stringify(empresa);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.put(this.url + `/editar-empresa/${empresa._id}`,params,{headers:headers}).pipe(delay(500));
+  }
 
    addPropuesta(oferta : Oferta) : Observable<any>{
      let params = JSON.stringify(oferta);

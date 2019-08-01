@@ -26,6 +26,7 @@ export class TabEmpresa4Page implements OnInit {
   public imageData : any;
   public btnCamara : boolean = false;
   public tempImages : string[] = [];
+  public ofertas : [];
 
   constructor(
       public _usuarioService: UsuarioService,
@@ -34,6 +35,8 @@ export class TabEmpresa4Page implements OnInit {
       private _uploadService : UploadService) {
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
+        
+    
   }
 
   
@@ -43,14 +46,21 @@ export class TabEmpresa4Page implements OnInit {
     this.menuCtrl.enable(false, "tercerMenu");
     this.getCategorias();
     this.getNivelesAcademicos();
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id); 
   }
 
   addOferta(){
     this._usuarioService.addPropuesta(this.oferta).subscribe(
       response => {
-        if(response.oferta){
-          console.log(response.oferta._id)
+        if(!response.oferta){
+          this.status = 'ERROR'
+          console.log(response.oferta._id);
+           
+          
+        }else{
+          this.status = 'SUCCESS'
           this._uploadService.subirImagenOferta(this.imageData,response.oferta._id)
+          this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
         }
       },
       error => {
@@ -121,5 +131,23 @@ export class TabEmpresa4Page implements OnInit {
      });
   }
 
+
+
+  readOfertasEmpresa(id) {
+    this._usuarioService.readOfertaEmpresa(id).subscribe(
+      response => {
+        this.status = 'ok';
+        this.ofertas = response.ofertas;
+        console.log(this.ofertas);
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'Error';
+        }
+      }
+    )
+  }
 
 }

@@ -7,6 +7,9 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabEmpresa3Page } from './tab-empresa3.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalEmpresaPage } from '../modal-empresa/modal-empresa.page';
+import { ModalEmpresaPageModule } from '../modal-empresa/modal-empresa.module';
+
 
 const routes: Routes = [
   {
@@ -21,7 +24,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalEmpresaPageModule
+  ],
+  entryComponents: [
+    ModalEmpresaPage
   ],
   declarations: [TabEmpresa3Page]
 })
