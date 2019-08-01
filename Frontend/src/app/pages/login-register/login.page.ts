@@ -16,8 +16,6 @@ import { MenuComponent } from 'src/app/components/menu/menu.component';
 })
 export class LoginPage implements OnInit {
 
-  @ViewChild(MenuComponent) menu : MenuComponent
-
   public loginUser: Login;
   public status;
   public habilitarDireccion = true;
