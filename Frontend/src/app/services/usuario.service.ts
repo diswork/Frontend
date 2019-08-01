@@ -252,6 +252,14 @@ export class UsuarioService {
     return this._http.post(this.url + 'oferta', params, { headers });
   }
 
+  editPropuesta(oferta: Oferta, idOferta): Observable<any>{
+    let params = JSON.stringify(oferta);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.put(this.url + `oferta/${idOferta}`, params, {headers});
+  }
+
+
   // SERVICIOS PARA CATEGORIAS
   getCategorias(): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);

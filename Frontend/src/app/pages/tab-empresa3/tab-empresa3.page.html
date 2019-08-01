@@ -9,19 +9,12 @@
             </ion-col>
         </ion-row>
     </ion-list>
+
     <ion-row  *ngIf="listo" class="top-20">
         <ion-col size="12" text-center>
 
             <img *ngIf="!empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"  src="assets/avatars/av-6.png" class="img-avatar" >            
             <img *ngIf="empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"  src="{{url + 'obtener-imagen-empresa/'+empresa.image}}" class="img-avatar" >            
-        </ion-col>
-    </ion-row>
-   
-    <ion-row class="top-20">
-        <ion-col size="12" text-center>
-            <ion-label>
-                <h1 autocapitalize>{{empresa.nombre}}</h1>
-            </ion-label>
         </ion-col>
     </ion-row>
 

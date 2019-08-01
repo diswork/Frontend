@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../models/empresa.model';
 import { Oferta } from '../../models/oferta.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -21,12 +21,12 @@ export class TabEmpresa1Page implements OnInit {
 
   public ofertas: [];
   public publicaciones;
+  mensaje: boolean;
 
 
-  constructor(private _usuarioService: UsuarioService, private menuCtrl: MenuController) {
+  constructor(private _usuarioService: UsuarioService, private menuCtrl: MenuController, public navCtrl: NavController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
-    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
 
   }
 
@@ -36,7 +36,36 @@ export class TabEmpresa1Page implements OnInit {
     this.menuCtrl.enable(true, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+  }
 
+  
+  doRefresh(event) {
+    this.publicaciones = [];
+    this.mensaje = false;
+
+    setTimeout(() => {
+      this._usuarioService.readOfertaEmpresa(this._usuarioService.getEmpresaLog()._id).subscribe(
+        response => {
+          if (response.ofertas) {
+            this.publicaciones = response.ofertas;
+            event.target.complete();
+          } else if (response.message === 'no') {
+            this.mensaje = true;
+            event.target.complete();
+          }
+        },
+        error => {
+          if (error) {
+            console.log(error as any);
+            this.status = 'Error';
+          }
+        }
+      )
+    }, 2500);
+  }
+
+  irPagina() {
+    this.navCtrl.navigateForward('TabEmpresa4Page');
   }
 
   readOfertasEmpresa(id) {
@@ -75,6 +104,25 @@ export class TabEmpresa1Page implements OnInit {
         console.log(errorMessage);
         if (errorMessage != null) {
           this.status = 'ERROR';
+        }
+      }
+    )
+  }
+
+  editarOferta(id) {
+    this._usuarioService.editPropuesta(this.oferta, id).subscribe(
+      response => {
+        if (response.oferta) {
+          this.status = 'Ok';
+          this.ofertas = response.push(this.oferta);
+        }
+      },
+      error => {
+        // tslint:disable-next-line: prefer-const
+        let errorMessage = error as any;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'Error';
         }
       }
     )

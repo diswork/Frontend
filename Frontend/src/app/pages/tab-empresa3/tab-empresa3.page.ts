@@ -35,7 +35,7 @@ export class TabEmpresa3Page implements OnInit {
   public empresaActualizado = false;
   public listo = true;
 
-  public filesToUpload: Array<File>
+  public filesToUpload: Array<File>;
 
   loading: any;
 
@@ -46,7 +46,6 @@ export class TabEmpresa3Page implements OnInit {
     this.empresa = this._usuarioService.getEmpresaLog();
   }
 
-  
   habilito() {
     this.habilitarEdicion = true;
   }
