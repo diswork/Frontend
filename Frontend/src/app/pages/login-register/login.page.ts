@@ -33,13 +33,14 @@ export class LoginPage implements OnInit {
     private uiService: UiServiceService,
     private menuCtrl: MenuController) {
     this.loginUser = new Login("", "", true)
-    this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
+    this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], [], [], "", "")
     this.empresa = new Empresa("", "", "", "", "empresa", "", "", "")
     this.rol = "user"
     this.carga = false;
     this.cargaLista = false;
     this.formulario = true;
   }
+
 
   ngOnInit() {
     this.slides.lockSwipes(true);
@@ -53,13 +54,10 @@ export class LoginPage implements OnInit {
     this.slides.lockSwipes(false);
     this.slides.slideTo(0);
     this.slides.lockSwipes(true);
-    this.user = new User("", "", "", "", "user", "", "", "", "", new Date(), [], [], [], "", "")
-    this.empresa = new Empresa("", "", "", "", "empresa", "", "", "")
-    this.loginUser = new Login("", "", true)
   }
 
-  mostrarRegistro(fLogin : NgForm) {
-    fLogin.reset()
+  mostrarRegistro(fLogin: NgForm) {
+    fLogin.reset();
     this.slides.lockSwipes(false);
     this.slides.slideTo(1);
     this.slides.lockSwipes(true);
@@ -70,46 +68,46 @@ export class LoginPage implements OnInit {
     console.log(fLogin.valid);
 
     if (fLogin.valid) {
-      setTimeout(()=>{
+      setTimeout(() => {
         this.formulario = false;
         this.carga = true;
         this.usuarioService.login(this.loginUser).subscribe(
           response => {
             this.status = 'Ok';
-              if (response.token) {
-                this.usuarioService.guardarToken(response.token);
-              }
-              if (response.empresa) {
-                this.usuarioService.guardarEmpresa(response.empresa);
-                this.menuCtrl.enable(true, "segundoMenu");
-                this.menuCtrl.enable(false, "primerMenu");
-                this.menuCtrl.enable(false, "tercerMenu");                       
-                setTimeout(()=>{ 
-                  this.carga = false;
-                  this.cargaLista = true;   
-                  this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
-                },1000);
-              } else if (response.user) {
-                this.usuarioService.guardarUser(response.user);
-                this.menuCtrl.enable(true, "primerMenu");
-                this.menuCtrl.enable(false, "segundoMenu");
-                this.menuCtrl.enable(false, "tercerMenu");
-                setTimeout(()=>{ 
-                  this.carga = false;
-                  this.cargaLista = true;
-                  this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
-                },1000);
-              } else if (response.admin) {
-                this.usuarioService.guardarAdmin(response.admin);
-                this.menuCtrl.enable(false, "primerMenu");
-                this.menuCtrl.enable(false, "segundoMenu");
-                this.menuCtrl.enable(true, "tercerMenu");                
-                setTimeout(()=>{ 
-                  this.carga = false;
-                  this.cargaLista = true;
-                  this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
-                },1000);
-              }        
+            if (response.token) {
+              this.usuarioService.guardarToken(response.token);
+            }
+            if (response.empresa) {
+              this.usuarioService.guardarEmpresa(response.empresa);
+              this.menuCtrl.enable(true, "segundoMenu");
+              this.menuCtrl.enable(false, "primerMenu");
+              this.menuCtrl.enable(false, "tercerMenu");
+              setTimeout(() => {
+                this.carga = false;
+                this.cargaLista = true;
+                this.navCtrl.navigateRoot('tabs-empresa/tabs-empresa/tab-empresa1', { animated: true })
+              }, 1000);
+            } else if (response.user) {
+              this.usuarioService.guardarUser(response.user);
+              this.menuCtrl.enable(true, "primerMenu");
+              this.menuCtrl.enable(false, "segundoMenu");
+              this.menuCtrl.enable(false, "tercerMenu");
+              setTimeout(() => {
+                this.carga = false;
+                this.cargaLista = true;
+                this.navCtrl.navigateRoot('tabs-user/tabs-user/tab-user1', { animated: true })
+              }, 1000);
+            } else if (response.admin) {
+              this.usuarioService.guardarAdmin(response.admin);
+              this.menuCtrl.enable(false, "primerMenu");
+              this.menuCtrl.enable(false, "segundoMenu");
+              this.menuCtrl.enable(true, "tercerMenu");
+              setTimeout(() => {
+                this.carga = false;
+                this.cargaLista = true;
+                this.navCtrl.navigateRoot('tabs-admin/tabs-admin/tab-admin1', { animated: true })
+              }, 1000);
+            }
           },
           error => {
             this.formulario = true;
@@ -118,16 +116,16 @@ export class LoginPage implements OnInit {
               console.log(<any>error);
               this.status = 'error';
               this.usuarioService.limpiarStorage();
-              if(error.error.message === "El usuario no existe"){
+              if (error.error.message === 'El usuario no existe') {
                 this.uiService.alertarInformativa('El usuario no existe.<br>Cree una cuenta.');
-              }else if(error.error.message === 'El email o la contraseña son incorrectos'){
+              } else if (error.error.message === 'El email o la contraseña son incorrectos') {
                 this.uiService.alertarInformativa('El correo y la contraseña no son correctos.');
               }
             }
           }
         )
-      },1000)      
-    }else if(fLogin.invalid){
+      }, 1000)
+    } else if (fLogin.invalid) {
       this.uiService.alertarInformativa('Ingrese todos los campos.')
     }
   }
@@ -151,9 +149,9 @@ export class LoginPage implements OnInit {
         console.log(this.user)
 
         this.usuarioService.registrarUser(this.user).subscribe(
-          response => {           
-              console.log('Usuario guardado');
-              this.mostrarLogin(fRegistro);          
+          response => {
+            console.log('Usuario guardado');
+            this.mostrarLogin(fRegistro);
           },
           error => {
             if (error) {
