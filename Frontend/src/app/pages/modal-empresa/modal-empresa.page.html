@@ -1,7 +1,7 @@
 <ion-header no-border>
     <ion-toolbar>
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/tabs-user/tabs-user/tab-user3" (click)="salir()"></ion-back-button>
+        <ion-back-button defaultHref="/tabs-empresa/tabs-empresa/tab-empresa3" (click)="salir()"></ion-back-button>
       </ion-buttons>
       <ion-title>{{nombre}}</ion-title>
       <ion-buttons *ngIf="editar" slot="end">
@@ -13,7 +13,7 @@
   <ion-content>
       
       <img *ngIf="!image"src="assets/avatars/av-6.png" class="img-avatar" >            
-      <img *ngIf="image" src="{{url + 'obtener-imagen-usuario/'+image}}" class="img-avatar" >            
+      <img *ngIf="image" src="{{url + 'obtener-imagen-empresa/'+image}}" class="img-avatar" >            
   
       <ion-fab *ngIf="editar" vertical="top" horizontal="start">
         <ion-row>
@@ -41,4 +41,3 @@
         </ion-row>
       </ion-fab>
   </ion-content>
-  

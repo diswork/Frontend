@@ -1,7 +1,7 @@
 <app-header titulo="diswork" menuEmpresa="true" menuAdmin="false" menuUser="false"></app-header>
 
-<ion-content>
-
+<ion-content class="animated fadeIn">
+    
     <ion-list *ngIf="!listo">
         <ion-row>
             <ion-col size="12" text-center>
@@ -9,16 +9,14 @@
             </ion-col>
         </ion-row>
     </ion-list>
-
-    <ion-row *ngIf="listo" class="top-20">
+    <ion-row  *ngIf="listo" class="top-20">
         <ion-col size="12" text-center>
-            <img *ngIf="!empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"
-                src="assets/avatars/av-6.png" class="img-avatar">
-            <img *ngIf="empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"
-                src="{{url + 'obtener-imagen-empresa/' + empresa.image}}" class="img-avatar">
+
+            <img *ngIf="!empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"  src="assets/avatars/av-6.png" class="img-avatar" >            
+            <img *ngIf="empresa.image" style="border-radius: 100%" (click)="opcionesMenuImagen()"  src="{{url + 'obtener-imagen-empresa/'+empresa.image}}" class="img-avatar" >            
         </ion-col>
     </ion-row>
-
+   
     <ion-row class="top-20">
         <ion-col size="12" text-center>
             <ion-label>
@@ -44,56 +42,54 @@
                             </ion-col>
                         </ion-row>
                     </ion-list>
-
-                    <!-- Los que son solo para ver datos -->
+                    
+                    <!-- Los que son solo para ver datos--> 
                     <ion-list *ngIf="!habilitarEdicion && !empresaActualizado">
-
                         <ion-item>
                             <ion-label>Nombre: {{empresa.nombre}}</ion-label>
                         </ion-item>
+                    <ion-item>
+                        <ion-label>Email: {{empresa.email}}</ion-label>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>Email: {{empresa.email}}</ion-label>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label>Rol: {{empresa.rol}}</ion-label>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>Rol: {{empresa.rol}}</ion-label>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label>direccion: {{empresa.direccion}}</ion-label>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>direccion: {{empresa.direccion}}</ion-label>
-                        </ion-item>
-
-                        <ion-item>
-                            <ion-label>Telefono: {{empresa.telefono}}</ion-label>
-                        </ion-item>
-
-                    </ion-list>
+                    <ion-item>
+                        <ion-label>Telefono: {{empresa.telefono}}</ion-label>
+                    </ion-item>
+                </ion-list>
+                   
 
                     <!-- Los que se van a editar -->
                     <ion-list *ngIf="habilitarEdicion">
-                        <ion-item>
-                            <ion-label>Nombre:</ion-label>
-                            <ion-input name="nombre" type="text" [(ngModel)]="empresa.nombre" clearInput></ion-input>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label>Nombre:</ion-label>
+                        <ion-input name="nombre" type="text" [(ngModel)]="empresa.nombre" clearInput></ion-input>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>Email</ion-label>
-                            <ion-input name="email" type="text" [(ngModel)]="empresa.email" clearInput></ion-input>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label >Email</ion-label>
+                        <ion-input name="email" type="text" [(ngModel)]="empresa.email" clearInput></ion-input>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>Direccion</ion-label>
-                            <ion-input name="direccion" type="text" [(ngModel)]="empresa.direccion" clearInput>
-                            </ion-input>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label >Direccion</ion-label>
+                        <ion-input name="direccion" type="text" [(ngModel)]="empresa.direccion" clearInput></ion-input>
+                    </ion-item>
 
-                        <ion-item>
-                            <ion-label>Telefono</ion-label>
-                            <ion-input name="telefono" [(ngModel)]="empresa.telefono" clearInput></ion-input>
-                        </ion-item>
+                    <ion-item>
+                        <ion-label >Telefono</ion-label>
+                        <ion-input name="telefono" [(ngModel)]="empresa.telefono" clearInput></ion-input>
+                    </ion-item>
+                </ion-list>
 
-                    </ion-list>
+           
             </ion-col>
         </ion-row>
 

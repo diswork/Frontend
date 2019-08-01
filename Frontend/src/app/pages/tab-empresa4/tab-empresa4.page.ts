@@ -8,7 +8,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { UploadService } from 'src/app/services/upload.service';
 import { UiServiceService } from '../../services/ui-service.service';
 
-declare var window : any;
+declare var window: any;
 
 @Component({
   templateUrl: './tab-empresa4.page.html',
@@ -21,17 +21,18 @@ export class TabEmpresa4Page implements OnInit {
   public oferta: Oferta;
   public empresa: Empresa;
   public categorias: [];
-  public nivelesAcademicos : [];
+  public nivelesAcademicos: [];
   public imageData: any;
   public btnCamara: boolean = false;
   public tempImages: string[] = [];
+  public ofertas: [];
 
   constructor(
-      public _usuarioService: UsuarioService,
-      public uiService: UiServiceService,
-      private menuCtrl: MenuController,
-      private camera: Camera,
-      private _uploadService: UploadService) {
+    public _usuarioService: UsuarioService,
+    public uiService: UiServiceService,
+    private menuCtrl: MenuController,
+    private camera: Camera,
+    private _uploadService: UploadService) {
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
   }
@@ -42,9 +43,10 @@ export class TabEmpresa4Page implements OnInit {
     this.menuCtrl.enable(false, "tercerMenu");
     this.getCategorias();
     this.getNivelesAcademicos();
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
   }
 
-  addOferta(formAddPropuesta: NgForm){
+  addOferta(formAddPropuesta: NgForm) {
     console.log(formAddPropuesta.invalid);
 
     if (formAddPropuesta.invalid) {
@@ -53,16 +55,17 @@ export class TabEmpresa4Page implements OnInit {
 
       this._usuarioService.addPropuesta(this.oferta).subscribe(
         response => {
-          if (response.oferta){
+          if (response.oferta) {
             console.log(response.oferta._id)
-            this._uploadService.subirImagenOferta(this.imageData,response.oferta._id);
+            this._uploadService.subirImagenOferta(this.imageData, response.oferta._id);
             formAddPropuesta.reset();
+            this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
           }
         },
-      error => {
-        if(error){
-          console.log(<any>error);
-          this.status = 'error';
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = 'error';
           }
         }
       );
@@ -70,14 +73,14 @@ export class TabEmpresa4Page implements OnInit {
     }
   }
 
-  getCategorias(){
+  getCategorias() {
     this._usuarioService.getCategorias().subscribe(
       response => {
         this.categorias = response.categorias;
         console.log(this.categorias)
       },
       error => {
-        if(error){
+        if (error) {
           console.log(<any>error);
           this.status = 'error';
         }
@@ -85,13 +88,13 @@ export class TabEmpresa4Page implements OnInit {
     )
   }
 
-  getNivelesAcademicos(){
+  getNivelesAcademicos() {
     this._usuarioService.getNiveles().subscribe(
       response => {
         this.nivelesAcademicos = response.nivelAcademico;
       },
       error => {
-        if(error){
+        if (error) {
           console.log(<any>error);
           this.status = 'error';
         }
@@ -99,7 +102,7 @@ export class TabEmpresa4Page implements OnInit {
     )
   }
 
-  escogerFoto(){
+  escogerFoto() {
     const options: CameraOptions = {
       quality: 60,
       destinationType: this.camera.DestinationType.FILE_URI,
@@ -109,24 +112,39 @@ export class TabEmpresa4Page implements OnInit {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
     };
 
-    this.procesarImagen( options );
+    this.procesarImagen(options);
   }
 
-  procesarImagen(options : CameraOptions){
-    this.camera.getPicture(options).then( ( imageData ) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64 (DATA_URL):
+  procesarImagen(options: CameraOptions) {
+    this.camera.getPicture(options).then((imageData) => {
 
-      const img = window.Ionic.WebView.convertFileSrc( imageData );
+      const img = window.Ionic.WebView.convertFileSrc(imageData);
 
       this.imageData = imageData;
-      this.tempImages.push( img );
+      this.tempImages.push(img);
       console.log(this.tempImages);
       this.btnCamara = true;
 
-     }, (err) => {
+    }, (err) => {
       // Handle error
-     });
+    });
+  }
+
+  readOfertasEmpresa(id) {
+    this._usuarioService.readOfertaEmpresa(id).subscribe(
+      response => {
+        this.status = 'ok';
+        this.ofertas = response.ofertas;
+        console.log(this.ofertas);
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'Error';
+        }
+      }
+    )
   }
 
 }

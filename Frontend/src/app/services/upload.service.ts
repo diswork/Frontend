@@ -125,27 +125,30 @@ export class UploadService {
   }
 
   subirImagenEmpresa(img: string, id): boolean {
-    const options = {
+    const options: FileUploadOptions = {
       fileKey: 'image',
       headers: {
-        Authorization: this._usuarioService.getToken()
+        'Authorization': this._usuarioService.getToken()
       }
     };
 
     let editada = false;
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, `/subir-imagen-empresa/${id}`, options).then(async data => {
-      let dt = JSON.stringify(data.response);
-      let token = dt.split('\\"');
-      console.log('token: ' + token[3]);
-      await this._usuarioService.guardarToken(token[3]);
-      editada = true;
-    }).catch(err => {
-      console.log('Error en carga', err);
-    });
+    fileTransfer.upload(img, this.url + `/subir-imagen-empresa/${id}`, options)
+      .then(async data => {
+        let dt = JSON.stringify(data.response);
+        let token = dt.split('\\\"');
+        console.log('token: ' + token[3]);
+        await this._usuarioService.guardarToken(token[3]);
+        editada = true;
+      }).catch(err => {
+        console.log('Error en carga', err);
+      });
     if (editada) {
       return true;
     }
+
   }
+
 }

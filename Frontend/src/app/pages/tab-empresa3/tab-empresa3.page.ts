@@ -1,11 +1,11 @@
-import { Component, OnInit } from "@angular/core";
-import { Empresa } from "src/app/models/empresa.model";
-import { UsuarioService } from "../../services/usuario.service";
-import { NgForm } from "@angular/forms";
-import { UiServiceService } from "../../services/ui-service.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Empresa } from 'src/app/models/empresa.model';
+import { UsuarioService } from '../../services/usuario.service';
+import { NgForm } from '@angular/forms';
+import { UiServiceService } from '../../services/ui-service.service';
 import { MenuController, ActionSheetController, ModalController, LoadingController } from '@ionic/angular';
-import { GLOBAL } from "../../services/global.service";
-import { UploadService } from '../../services/upload.service';
+import { UploadService } from 'src/app/services/upload.service';
+import { GLOBAL } from '../../services/global.service';
 import { ModalEmpresaPage } from '../modal-empresa/modal-empresa.page';
 
 @Component({
@@ -46,6 +46,7 @@ export class TabEmpresa3Page implements OnInit {
     this.empresa = this._usuarioService.getEmpresaLog();
   }
 
+  
   habilito() {
     this.habilitarEdicion = true;
   }
@@ -75,6 +76,7 @@ export class TabEmpresa3Page implements OnInit {
       }
     );
   }
+
   fileChangeEvent(fileInput: any) {
     this.filesToUpload = <Array<File>>fileInput.target.files;
   }
@@ -124,6 +126,7 @@ export class TabEmpresa3Page implements OnInit {
     await actionSheet.present();
   }
 
+
   async editarFoto() {
     const modal = await this.modalCtrl.create({
       component: ModalEmpresaPage,
@@ -152,10 +155,10 @@ export class TabEmpresa3Page implements OnInit {
         error => {
           if (error) {
             console.log(<any>error);
-            this.status = 'error en editar foto';
+            this.status = 'error';
           }
         }
-      )
+      );
     }
   }
 }

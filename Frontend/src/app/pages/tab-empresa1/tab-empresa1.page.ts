@@ -11,6 +11,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class TabEmpresa1Page implements OnInit {
 
+
   public url: string;
   public status: string;
 
@@ -18,20 +19,24 @@ export class TabEmpresa1Page implements OnInit {
   public oferta: Oferta;
   public idEmpresa;
 
-  public ofertas : [];
+  public ofertas: [];
+  public publicaciones;
 
-  constructor(private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
+
+  constructor(private _usuarioService: UsuarioService, private menuCtrl: MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+
   }
 
   ngOnInit() {
-    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
 
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(true, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+
   }
 
   readOfertasEmpresa(id) {
@@ -51,21 +56,28 @@ export class TabEmpresa1Page implements OnInit {
     )
   }
 
-  doRefresh(event) {
-    setTimeout(() => {
-    let empresaId = this.empresa._id;
-    this._usuarioService.readOfertaEmpresa(empresaId).subscribe(
-        response => {
-          this.ofertas = response.ofertas;
-          event.target.complete();
-        },
-        error => {
-          if (error) {
-            console.log(<any>error);
-          }
+  eliminarOferta(id) {
+    this._usuarioService.eliminarOferta(id).subscribe(
+      response => {
+        if (!response.oferta) {
+          this.status = 'ERROR';
+
+        } else {
+          this.status = 'SUCCESS';
+          this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+
+
+          console.log(response.Promesa)
         }
-      )
-    }, 2000);
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'ERROR';
+        }
+      }
+    )
   }
 
 }
