@@ -25,7 +25,10 @@
             <ion-label>Lugar de estudio: {{institucion}}</ion-label>
         </ion-item>
         <ion-item>
-            <ion-label>Fecha de Nacimiento: {{fechaNacimiento}}</ion-label>
+            <ion-label><b>Fecha de Nacimiento:</b></ion-label>
+            <ion-datetime readonly 
+                displayFormat="DD MMM YYYY" name = "fecha" [ngModel]="fechaNacimiento"
+                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
         </ion-item>
     </ion-list>
 

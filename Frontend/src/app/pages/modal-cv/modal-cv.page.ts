@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, ToastController } from '@ionic/angular';
 import { UploadService } from 'src/app/services/upload.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { GLOBAL } from 'src/app/services/global.service';
@@ -22,6 +22,7 @@ export class ModalCvPage {
 
   public url;
   public imageData;
+  public envio = false;
 
   constructor(private modalCtrl : ModalController,
       private _uploadService : UploadService, 
@@ -30,24 +31,38 @@ export class ModalCvPage {
       private fileOpener : FileOpener,
       private ft : FileTransfer,
       private platform : Platform,
-      private file : File)
+      private file : File,
+      public toastController: ToastController)
   { 
     this.url = GLOBAL.url;
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Cv enviado.',
+      duration: 1000,
+      position : "bottom",
+      animated : true,
+      color : 'primary'
+    });
+    toast.present();
+  }
+
+
   
   salir(){
-    this.modalCtrl.dismiss({
-      actualizar : false
-    });
+    this.modalCtrl.dismiss();
   }
 
   enviar(dt){
+    this.envio = true;
     setTimeout(() => {
       this.modalCtrl.dismiss({
-          archivo : dt
+        archivo : dt
       });
-    })    
+      this.envio = false;
+      this.presentToast();
+    },1500)    
   }
 
   verPdf(archivo){

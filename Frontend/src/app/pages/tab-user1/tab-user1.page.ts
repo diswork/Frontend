@@ -18,6 +18,7 @@ public dataUser : User;
 public status;
 public url;
 public mensaje = false;
+public dataOferta;
 
   constructor(
     private menuCtrl : MenuController,
@@ -39,9 +40,7 @@ public mensaje = false;
           response => {
             
             if (response.ofertas) {
-              
               this.publicaciones = response.ofertas;
-             
             } else if(response.message === 'no') {
                 this.mensaje = true;     
             }
@@ -111,6 +110,26 @@ public mensaje = false;
               response => {
                 if(response){
                   console.log(response)
+                  if (response) {
+                    console.log(response)
+                    this._usuarioService.getOfertasPorEmpresa().subscribe(
+                      response => {
+                        
+                        if (response.ofertas) {
+                          this.publicaciones = response.ofertas;
+                          
+                        } else if(response.message === 'no') {
+                            this.mensaje = true;                   
+                        }
+                      },
+                      error => {
+                        if (error) {
+                          console.log(<any>error);
+                          this.status = "no"
+                        }
+                      }
+                    ) 
+                  }
                 }
               },
               error => {
@@ -164,6 +183,26 @@ public mensaje = false;
         response => {
           if(response){
             console.log(response)
+            if (response) {
+              console.log(response)
+              this._usuarioService.getOfertasPorEmpresa().subscribe(
+                response => {
+                  
+                  if (response.ofertas) {
+                    this.publicaciones = response.ofertas;
+                    
+                  } else if(response.message === 'no') {
+                      this.mensaje = true;                   
+                  }
+                },
+                error => {
+                  if (error) {
+                    console.log(<any>error);
+                    this.status = "no"
+                  }
+                }
+              ) 
+            }
           }
         },
         error => {
@@ -192,9 +231,27 @@ public mensaje = false;
       console.log(data)
       this._usuarioService.enviarCv(id, data.archivo).subscribe(
         response => {
-          if(response){
+          if (response) {
             console.log(response)
+            this._usuarioService.getOfertasPorEmpresa().subscribe(
+              response => {
+                
+                if (response.ofertas) {
+                  this.publicaciones = response.ofertas;
+                  
+                } else if(response.message === 'no') {
+                    this.mensaje = true;                   
+                }
+              },
+              error => {
+                if (error) {
+                  console.log(<any>error);
+                  this.status = "no"
+                }
+              }
+            ) 
           }
+          
         },
         error => {
           if(error){
@@ -203,6 +260,23 @@ public mensaje = false;
         }
       )
       console.log('listo')
+    }
+  }
+
+  verificar(data) {
+
+    if (!this.dataOferta) {
+      if (JSON.stringify(data).includes(JSON.stringify(this.dataUser._id))) {
+        return true
+      } else {
+        return false
+      }
+    } else {
+      if (JSON.stringify(data).includes(JSON.stringify(this.dataUser._id))) {
+        return true
+      } else {
+        return false
+      }
     }
   }
 

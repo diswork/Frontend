@@ -12,7 +12,7 @@ import { User } from 'src/app/models/user.model';
 })
 export class TabUser2Page implements OnInit {
 
-  public empresas : [];
+  public empresas;
   public status;
   public textoBuscar = '';
   public dataUser : User;

@@ -21,10 +21,8 @@
                     </ion-label>
                 </ion-col>
             </ion-item>
-            <ion-card-content>
-                <ion-skeleton-text width="100%"></ion-skeleton-text>
-                <ion-skeleton-text width="100%"></ion-skeleton-text>
-                <ion-skeleton-text width="100%"></ion-skeleton-text>
+            <ion-card-content><br><br><br><br><br>
+                <ion-skeleton-text width="30%"></ion-skeleton-text>
             </ion-card-content>    
         </ion-card>
     </div>
@@ -37,24 +35,28 @@
             </ion-thumbnail>
             <ion-col>
                 <ion-label text-capitalize>
-                    {{dt.titulo}}
+                    <b>{{dt.empresa.nombre}}</b>
                 </ion-label>
-                <ion-label displayFormat="DD MMMM YYYY">{{dt.fechaPublicacion}}</ion-label>
+                <ion-datetime style="color: gray; margin-left: -15px; font-size: 14px; margin-top: -5px" readonly 
+                displayFormat="DD MMM YYYY - HH:mm" [ngModel]="dt.fechaPublicacion"
+                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
             </ion-col>
         </ion-item>
         <ion-card-content>
-            <ion-textarea readonly>
+            <label style="color: black"><b>{{dt.titulo}}</b></label><br>
+            <ion-textarea readonly style="color: black">
                 {{dt.descripcion}}
             </ion-textarea>
-            <ion-button color="danger" shape="round" (click)="opcionesCv(dt._id)" slot="end"> 
-                CV
-            </ion-button>
+            <label><b>Categoría: </b>{{dt.categoria.descripcion}}</label><br>
+            <label><b>Nivel Académico: </b>{{dt.nivelAcademico.descripcion}}</label><br>
+            <ion-button style="width: 100px; height: 30px; font-size: 12px" *ngIf="!verificar(dt)" color="danger" shape="round" (click)="opcionesCv(dt._id)" slot="end">CV</ion-button>
+            <ion-button style="width: 100px; height: 30px; font-size: 12px" *ngIf="verificar(dt)" color="danger" shape="round" (click)="opcionesCv(dt._id)" slot="end">CV enviado</ion-button>
         </ion-card-content>    
     </ion-card>
     <div *ngIf="mensaje">
         <ion-row>
             <ion-col text-center>
-                    <br><ion-label>No hay publicaciones.</ion-label>
+                    <br><ion-label style="color : gray">No hay publicaciones.</ion-label>
             </ion-col>
             <ion-row>
                 <ion-col>
