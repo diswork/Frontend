@@ -363,6 +363,7 @@ export class UsuarioService {
   }
 
 
+  //SERVICIOS PARA OFERTAS
 
   getOfertas() : Observable<any>{
     let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);

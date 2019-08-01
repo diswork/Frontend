@@ -9,17 +9,10 @@ import { MenuController } from '@ionic/angular';
 })
 export class MenuComponent{
 
-  @Input() nameUser;
 
   constructor(private usuarioService : UsuarioService,
               private menuCtrl : MenuController) { 
-                // this.nameUser = this.usuarioService.getUserLog().nickName;             
               }
-
-  traerData(){
-    this.nameUser = this.usuarioService.getUserLog().nickName;
-    console.log(this.nameUser)
-  }
 
   cerrarCesion(){
     this.usuarioService.limpiarStorage();
