@@ -203,8 +203,21 @@ export class UsuarioService {
       this.validaToken()
     }
 
+    
+
     return { ...this.empresa }
   }
+
+
+  getAdminLog() {
+
+    if(!this.admin._id){
+      this.validaToken()
+    }
+
+    return { ...this.admin }
+  }
+
 
   registrarEmpresa(empresa: Empresa): Observable<any> {
     let params = JSON.stringify(empresa);
@@ -232,13 +245,6 @@ export class UsuarioService {
     return this._http.get(this.url + `empresa/${id}`, { headers });
   }
 
-  addPropuesta(oferta: Oferta): Observable<any> {
-    let params = JSON.stringify(oferta);
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
-
-    return this._http.post(this.url + 'oferta', params, { headers });
-  }
-
   //SERVICIOS PARA NIVEL ACADEMICO
   getNivelesAcademicos(): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
@@ -257,7 +263,11 @@ export class UsuarioService {
 
     return this._http.delete(this.url + `/nivel-academico/${id}`, { headers })
   }
-
+   addPropuesta(oferta : Oferta) : Observable<any>{
+     let params = JSON.stringify(oferta);
+     let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);
+     return this._http.post(this.url+ 'oferta',params,{headers});
+}
 
   //SERVICIOS PARA CATEGORIAS
   getCategorias(): Observable<any> {
@@ -309,13 +319,13 @@ export class UsuarioService {
 
   }
 
-  getAdminLog() {
 
-    if (!this.admin._id) {
-      this.validaToken()
-    }
+  //SERVICIOS PARA OFERTAS
 
-    return { ...this.admin }
+  getOfertaById(id) : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + `ofertaById/${id}`, {headers})
   }
 
   crearAdmin(admin: Admin): Observable<any> {
@@ -345,5 +355,12 @@ export class UsuarioService {
 
   }
 
+
+
+  getOfertas() : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type','application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + 'ofertas-seguidas-cn', {headers});
+  }
 
 }
