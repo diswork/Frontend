@@ -2,42 +2,25 @@
 
 
 <ion-content class="animated fadeIn">
-        <ion-list #lista>
-            <ion-item-sliding id="item100">
-                <ion-item routerLink="/tabs-user">
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+            <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
+        <ion-list *ngIf="notificaciones" #lista>
+            <ion-item-sliding *ngFor="let dt of notificaciones" id="item100">
+                <ion-item (click)="verOferta(dt)">
                     <ion-thumbnail style="margin-right: 10px">
-                        <ion-img src="/assets/avatars/av-1.png"></ion-img>
+                        <ion-img *ngIf="!dt.empresa.image" src="/assets/avatars/av-2.png"></ion-img>
+                        <ion-img *ngIf="dt.empresa.image" src="{{url + 'obtener-imagen-empresa/'+ dt.empresa.image}}"></ion-img>
                     </ion-thumbnail>
                     <ion-label>
-                        <h2>Name User</h2>
-                        <p>Titulo del trabajo</p>
-                        <p>Categoria y Nivel Academico</p>
+                        <h2><b>{{dt.empresa.nombre}}</b></h2>
+                        <p>{{dt.titulo}}</p>
+                        <p>{{dt.categoria.descripcion}}</p>
                     </ion-label>
                     <ion-note slot="end">
-                        10:45 AM
-                    </ion-note>
-                </ion-item>
-                <ion-item-options side="end">
-                    <ion-item-option color="danger" (click)="cerrar()">
-                        <ion-icon slot="icon-only" name="trash"></ion-icon>
-                    </ion-item-option>
-                    <ion-item-option (click)="cerrar()">
-                        <ion-icon slot="icon-only" name="bookmark"></ion-icon>
-                    </ion-item-option>
-                </ion-item-options>
-            </ion-item-sliding>
-            <ion-item-sliding id="item100">
-                <ion-item  routerLink="/tabs-user">
-                    <ion-thumbnail style="margin-right: 10px">
-                        <ion-img src="/assets/avatars/av-2.png"></ion-img>
-                    </ion-thumbnail>
-                    <ion-label>
-                        <h2>Name User</h2>
-                        <p>Titulo del trabajo</p>
-                        <p>Categoria y Nivel Academico</p>
-                    </ion-label>
-                    <ion-note slot="end">
-                        10:45 AM
+                        <ion-datetime style="color: gray; font-size: 12px; margin-top: -15px" readonly 
+                displayFormat="DD MMM - HH:mm a" [ngModel]="dt.fechaPublicacion"
+                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
                     </ion-note>
                 </ion-item>
                 <ion-item-options side="end">
@@ -50,4 +33,16 @@
                 </ion-item-options>
             </ion-item-sliding>
         </ion-list>
+        <div *ngIf="mensaje">
+            <ion-row>
+                <ion-col text-center>
+                        <br><ion-label>No hay publicaciones.</ion-label>
+                </ion-col>
+                <ion-row>
+                    <ion-col>
+                        <img class="marca-de-agua" src="/assets/diswork-logo2.png">
+                    </ion-col>
+                </ion-row>
+            </ion-row>
+        </div>
 </ion-content>

@@ -1,21 +1,68 @@
 <app-header titulo="diswork" menuAdmin="false" menuEmpresa="false" menuUser="true"></app-header>
 
-<ion-content class="animated fadeIn">
-    <ion-list>
-        <ion-item *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+<ion-content class="animated fadeIn" >
+
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <div *ngIf="publicaciones.length == 0 && !mensaje">
+        <ion-card *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+            <ion-item>
+                <ion-thumbnail slot="start">
+                    <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-col>
+                    <ion-label>
+                        <ion-skeleton-text width="65%"></ion-skeleton-text>
+                    </ion-label>
+                    <ion-label>
+                        <ion-skeleton-text width="35%"></ion-skeleton-text>
+                    </ion-label>
+                </ion-col>
+            </ion-item>
+            <ion-card-content><br><br><br><br><br>
+                <ion-skeleton-text width="30%"></ion-skeleton-text>
+            </ion-card-content>    
+        </ion-card>
+    </div>
+    
+    <ion-card style="margin-left: 0px;margin-right:0px" *ngFor="let dt of publicaciones" class="animated">
+        <ion-item>
             <ion-thumbnail slot="start">
-                <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
+                    <ion-img *ngIf="!dt.empresa.image" src="/assets/avatars/av-8.png"></ion-img>
+                    <ion-img *ngIf="dt.empresa.image" src="{{url + 'obtener-imagen-empresa/' + dt.empresa.image}}"></ion-img>
             </ion-thumbnail>
             <ion-col>
-                <ion-label>
-                    <ion-skeleton-text width="65%"></ion-skeleton-text>
+                <ion-label text-capitalize>
+                    <b>{{dt.empresa.nombre}}</b>
                 </ion-label>
-                <ion-label>
-                    <ion-skeleton-text width="35%"></ion-skeleton-text>
-                </ion-label>
+                <ion-datetime style="color: gray; margin-left: -15px; font-size: 14px; margin-top: -5px" readonly 
+                displayFormat="DD MMM YYYY - HH:mm" [ngModel]="dt.fechaPublicacion"
+                monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
             </ion-col>
-            <ion-skeleton-text width="25%"></ion-skeleton-text>
         </ion-item>
-    </ion-list>
-
-</ion-content>
+        <ion-card-content>
+            <label style="color: black"><b>{{dt.titulo}}</b></label><br>
+            <ion-textarea readonly style="color: black">
+                {{dt.descripcion}}
+            </ion-textarea>
+            <label><b>Categoría: </b>{{dt.categoria.descripcion}}</label><br>
+            <label><b>Nivel Académico: </b>{{dt.nivelAcademico.descripcion}}</label><br>
+            <ion-button style="width: 100px; height: 30px; font-size: 12px" *ngIf="!verificar(dt)" color="danger" shape="round" (click)="opcionesCv(dt._id)" slot="end">CV</ion-button>
+            <ion-button style="width: 100px; height: 30px; font-size: 12px" *ngIf="verificar(dt)" color="danger" shape="round" (click)="opcionesCv(dt._id)" slot="end">CV enviado</ion-button>
+        </ion-card-content>    
+    </ion-card>
+    <div *ngIf="mensaje">
+        <ion-row>
+            <ion-col text-center>
+                    <br><ion-label style="color : gray">No hay publicaciones.</ion-label>
+            </ion-col>
+            <ion-row>
+                <ion-col>
+                    <img class="marca-de-agua" src="/assets/diswork-logo2.png">
+                </ion-col>
+            </ion-row>
+        </ion-row>
+    </div>
+</ion-content>  
