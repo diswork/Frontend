@@ -18,7 +18,7 @@
                             <p>{{empresa.email}}</p>
                         </ion-label>
                         <ion-button color="danger" slot="end" (click)="getEmpresa(empresa._id)">Ver</ion-button>
-                        <ion-button color="danger" slot="end">Eliminar</ion-button>
+                        <ion-button color="danger" slot="end" (click)="deleteEmpresa(empresa._id)">Eliminar</ion-button>
                     </ion-item>
                 </ion-list>
 
