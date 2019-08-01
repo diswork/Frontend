@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Empresa } from '../../models/empresa.model';
 import { Oferta } from '../../models/oferta.model';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
+import { CVsPage } from '../cvs/cvs.page';
+import { CvsEmpresaPage } from '../cvs-empresa/cvs-empresa.page';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -11,9 +13,10 @@ import { MenuController } from '@ionic/angular';
 })
 export class TabEmpresa1Page implements OnInit {
 
-  
+  ofer: Oferta;
   public url: string;
   public status: string;
+  public idOferta: string;
 
   public empresa: Empresa;
   public oferta: Oferta;
@@ -23,9 +26,9 @@ export class TabEmpresa1Page implements OnInit {
   public publicaciones;
   
 
-  constructor(private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
+  constructor(private modalCtrl : ModalController, private _usuarioService : UsuarioService,private menuCtrl : MenuController) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
-    this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
+    this.oferta = new Oferta('','', '', new Date(), '', '', '', '', [], '', true);
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);   
     
   }
@@ -82,5 +85,23 @@ export class TabEmpresa1Page implements OnInit {
       }
     )
   }
+
+  idO(id){
+    this.idOferta = id;
+    console.log(this.idOferta);
+
+  }
+
+async cvs(){
+  const modal = await this.modalCtrl.create({
+    component: CvsEmpresaPage,
+    componentProps:{
+      idOferta: this.idOferta,
+    },
+    animated: true
+  });
+  await modal.present();
+}
+
 
 }

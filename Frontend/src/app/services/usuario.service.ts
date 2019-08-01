@@ -226,6 +226,12 @@ export class UsuarioService {
      return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, {headers:headers});
    }
 
+   getCVOferta(id): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+
+    return this._http.get(this.url + `cvs-oferta/${id}`,{headers:headers});
+  }
+
    getEmpresas(): Observable<any>{
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
 

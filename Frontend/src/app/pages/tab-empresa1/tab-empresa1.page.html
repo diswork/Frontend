@@ -55,6 +55,9 @@
 
                     <ion-card-content>
                         <p>{{dt.descripcion}}</p>
+                        <ion-button color="danger" shape="round" slot="end" (click)="idO(dt._id); cvs()"> 
+                            Ver CVS
+                        </ion-button>
                     </ion-card-content>
 
 
@@ -78,7 +81,7 @@
 
 
 
-
+                     
 
                 </ion-card>
             </ion-col>

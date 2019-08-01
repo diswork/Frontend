@@ -33,7 +33,7 @@ export class TabEmpresa4Page implements OnInit {
       private menuCtrl : MenuController,  
       private camera : Camera,
       private _uploadService : UploadService) {
-    this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
+    this.oferta = new Oferta('','', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
         
     
