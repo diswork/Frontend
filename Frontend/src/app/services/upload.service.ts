@@ -25,15 +25,15 @@ export class UploadService {
 
   makeFileRequest(url: string, params: Array<string>, files: Array<File>, name: string, token: string) {
     return new Promise(function (resolve, reject) {
-      var formData: any = new FormData(); //para traer el tipo de dato al abrir la ventana
-      var xhr = new XMLHttpRequest; //peticion por medio de http
+      var formData: any = new FormData(); // para traer el tipo de dato al abrir la ventana
+      var xhr = new XMLHttpRequest; // peticion por medio de http
 
       for (var i = 0; i < files.length; i++) {
         formData.append(name, files[i], files[i].name);
       }
 
       xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4) { //stado que dice que si envio los archivos
+        if (xhr.readyState == 4) { // stado que dice que si envio los archivos
           if (xhr.status == 200) {
             resolve(JSON.parse(xhr.response));
           } else {
@@ -43,9 +43,9 @@ export class UploadService {
         console.log(token)
 
 
-        xhr.open('POST', url, true); //tipo, url, asincrono
-        xhr.setRequestHeader('Authorization', token);//
-        xhr.send(formData);//enviamos los datos ya parseados
+        xhr.open('POST', url, true); // tipo, url, asincrono
+        xhr.setRequestHeader('Authorization', token);
+        xhr.send(formData); // enviamos los datos ya parseados
       })
   }
 
@@ -59,8 +59,8 @@ export class UploadService {
 
     const fileTransfer: FileTransferObject = this.fileTransfer.create();
 
-    fileTransfer.upload(img, this.url + '/subir-cv',options)
-      .then( async data => {
+    fileTransfer.upload(img, this.url + '/subir-cv', options)
+      .then(async data => {
         let dt = JSON.stringify(data.response);
         let token = dt.split('\\\"')
         console.log('token: ' + token[3])
@@ -142,6 +142,4 @@ export class UploadService {
 
   }
 
-
 }
-
