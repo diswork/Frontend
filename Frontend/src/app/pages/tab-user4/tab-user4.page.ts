@@ -71,6 +71,7 @@ export class TabUser4Page implements OnInit {
   }
 
   async verOferta(dt){
+    this.dataUser = this._usuarioService.getUserLog();
     const modal = await this.modalCtrl.create({
       component : ModalOfertPage,
       componentProps : {
