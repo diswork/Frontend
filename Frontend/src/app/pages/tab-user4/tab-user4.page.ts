@@ -35,7 +35,6 @@ export class TabUser4Page implements OnInit {
       response => {
         if(response.ofertas){
           this.notificaciones = response.ofertas;
-          console.log(this.notificaciones)
         }else if(response.message === 'no') {
           this.mensaje = true;     
         }

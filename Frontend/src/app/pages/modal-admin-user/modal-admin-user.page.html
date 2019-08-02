@@ -1,35 +1,38 @@
-<ion-header>
+<ion-header no-border>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs-admin/tabs-admin/tab-admin1"
                         (click)="regresar()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{nombre}}</ion-title>
+    <ion-title text-capitalize>{{nombre}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-        <ion-img *ngIf="!image" style="border-radius: 100%" src="/assets/avatars/av-1.png" class="img-avatar" ></ion-img>
-        <ion-img *ngIf="image" style="border-radius: 100%" src="{{url + 'obtener-imagen-usuario/'+image}}" class="img-avatar" ></ion-img>
+    <ion-row class="top-20">
+        <ion-col size="12" text-center>
+            <img *ngIf="!image" style="border-radius: 100%" src="/assets/avatars/av-1.png" class="img-avatar">
+            <img *ngIf="image" style="border-radius: 100%" src="{{url + 'obtener-imagen-usuario/'+image}}" class="img-avatar">   
+        </ion-col>
+    </ion-row>
     <ion-list>
         <ion-item>
-            <ion-label>Email: {{email}}</ion-label>
+            <ion-label><b>Email:</b> {{email}}</ion-label>
         </ion-item>
         <ion-item>
-            <ion-label>Telefono: {{telefono}}</ion-label>
+            <ion-label><b>Telefono:</b> {{telefono}}</ion-label>
         </ion-item>
         <ion-item>
-            <ion-label>Departamento: {{departamento}}</ion-label>
+            <ion-label><b>Departamento:</b> {{departamento}}</ion-label>
         </ion-item>
         <ion-item>
-            <ion-label>Lugar de estudio: {{institucion}}</ion-label>
+            <ion-label><b>Lugar de estudio:</b> {{institucion}}</ion-label>
         </ion-item>
         <ion-item>
             <ion-label><b>Fecha de Nacimiento:</b></ion-label>
-            <ion-datetime readonly 
-                displayFormat="DD MMM YYYY" name = "fecha" [ngModel]="fechaNacimiento"
+            <ion-datetime readonly displayFormat="DD MMM YYYY" name="fecha" [ngModel]="fechaNacimiento"
                 monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
         </ion-item>
-    </ion-list>
+    </ion-list><br>
 
 </ion-content>
