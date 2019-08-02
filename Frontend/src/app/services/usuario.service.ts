@@ -259,6 +259,11 @@ export class UsuarioService {
     return this._http.put(this.url + `oferta/${idOferta}`, params, {headers});
   }
 
+  buscarPropuesta(idOferta): Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.get(this.url + `ofertaById/${idOferta}`, {headers});
+  }
 
   // SERVICIOS PARA CATEGORIAS
   getCategorias(): Observable<any> {

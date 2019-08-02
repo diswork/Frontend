@@ -147,4 +147,8 @@ export class TabEmpresa4Page implements OnInit {
     )
   }
 
+  listOferta(id) {
+    
+  }
+
 }

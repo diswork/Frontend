@@ -1,6 +1,6 @@
 <app-header titulo="diswork" menuEmpresa="true" menuAdmin="false" menuUser="false"></app-header>
 
-<ion-content>
+<ion-row>
   <form (ngSubmit)="addOferta(formAddPropuesta)" #formAddPropuesta="ngForm">
     <ion-row>
       <ion-col>
@@ -18,7 +18,7 @@
               required>
             </ion-textarea>
           </ion-item>
-          
+
           <ion-item>
             <ion-label>Categoría de empleos:</ion-label>
             <ion-select name="categoria" [(ngModel)]="oferta.categoria" placeholder="Select One" interface="popover">
@@ -32,8 +32,6 @@
               </ion-select-option>
             </ion-select>
           </ion-item>
-
-
 
           <ion-item>
             <ion-label position="stacked">Tarjeta</ion-label>
@@ -65,6 +63,65 @@
       </ion-col>
     </ion-row>
 
+    <form (ngSubmit)="addOferta(formAddPropuesta)" #formAddPropuesta="ngForm">
+      <ion-row>
+        <ion-col>
+          <ion-list>
+
+            <ion-item>
+              <ion-label position="stacked">Titulo</ion-label>
+              <ion-input name="titulo" type="text" placeholder="Ingrese un titulo" clearInput
+                [(ngModel)]="oferta.titulo" required></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Descripcion</ion-label>
+              <ion-textarea name="descripcion" [(ngModel)]="oferta.descripcion" rows="6"
+                placeholder="Describa el empleo" required>
+              </ion-textarea>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Categoría de empleos:</ion-label>
+              <ion-select name="categoria" [(ngModel)]="oferta.categoria" placeholder="Select One" interface="popover">
+                <ion-select-option *ngFor="let dt of categorias" value="{{dt._id}}">{{dt.descripcion}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Nivel Academico:</ion-label>
+              <ion-select name="level" [(ngModel)]="oferta.nivelAcademico" placeholder="Select One" interface="popover">
+                <ion-select-option *ngFor="let dt of nivelesAcademicos" value="{{dt._id}}">{{dt.descripcion}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-row>
+                <ion-label position="stacked">Imagen</ion-label>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-button disabled="{{btnCamara}}" (click)="escogerFoto()" expand="full" shape="round">
+                    <ion-icon slot="start" name="images"></ion-icon>GALERÍA
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+              <ion-row>
+                <ion-col *ngFor="let image of tempImages">
+                  <ion-card>
+                    <ion-img [src]="image | imageSanitizer"></ion-img>
+                  </ion-card>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+
+          </ion-list>
+        </ion-col>
+      </ion-row>
+    </form>
+
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="primary" shape="round">
@@ -73,4 +130,4 @@
       </ion-col>
     </ion-row>
   </form>
-</ion-content>
+</ion-row>
