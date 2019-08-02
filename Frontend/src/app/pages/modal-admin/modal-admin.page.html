@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs-admin/tabs-admin/tab-admin4" (click)="salir()"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{nombre}}</ion-title>
+    <ion-title text-capitalize>{{nombre}}</ion-title>
     <ion-buttons *ngIf="editar" slot="end">
         <ion-button><ion-icon slot="end" name="create"></ion-icon></ion-button>
       </ion-buttons>
