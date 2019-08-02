@@ -57,7 +57,9 @@ export class ModalEditarOfertaPage implements OnInit {
   
   
   salir(){
-    this.modalCtrl.dismiss();
+    this.modalCtrl.dismiss({
+      editar : false
+    });
   }
 
   EditarOferta(formEditarPropuesta){
@@ -65,6 +67,7 @@ export class ModalEditarOfertaPage implements OnInit {
       this.uiService.alertarInformativa('Ingrese todos los cambios')
     }else{
       this.modalCtrl.dismiss({  
+          editar : true,
           datos : this.data,
           id : this.data._id        
       });

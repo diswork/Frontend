@@ -171,7 +171,7 @@ export class TabEmpresa1Page implements OnInit {
 
     const { data } = await modal.onDidDismiss();
 
-    if(data.datos){
+    if(data.editar){
       this._usuarioService.editPropuesta(data.datos).subscribe(
         response => {
           if(response.oferta){
