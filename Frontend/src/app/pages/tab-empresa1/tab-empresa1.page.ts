@@ -6,6 +6,7 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { CVsPage } from '../cvs/cvs.page';
 import { CvsEmpresaPage } from '../cvs-empresa/cvs-empresa.page';
 import { GLOBAL } from 'src/app/services/global.service';
+import { ModalEditarOfertaPage } from '../modal-editar-oferta/modal-editar-oferta.page';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -25,9 +26,11 @@ export class TabEmpresa1Page implements OnInit {
 
   public ofertas: [];
   public publicaciones;
+  public mensaje = false;
 
-
-  constructor(private modalCtrl: ModalController, private _usuarioService: UsuarioService, private menuCtrl: MenuController) {
+  constructor(private modalCtrl: ModalController, 
+      private _usuarioService: UsuarioService, 
+      private menuCtrl: MenuController,) {
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
     this.oferta = new Oferta('', '', '', new Date(), '', '', '', '', [], '', true);
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
@@ -46,8 +49,13 @@ export class TabEmpresa1Page implements OnInit {
   readOfertasEmpresa(id) {
     this._usuarioService.readOfertaEmpresa(id).subscribe(
       response => {
-        this.status = 'ok';
-        this.ofertas = response.ofertas;
+        if(response.message == 'No exisen ofertas de esta empresa'){
+          this.ofertas = [];
+          this.mensaje = true;
+        }else if(response.ofertas){
+          this.status = 'ok';
+          this.ofertas = response.ofertas;
+        }
       },
       error => {
         var errorMessage = <any>error;
@@ -72,8 +80,6 @@ export class TabEmpresa1Page implements OnInit {
 
           this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
 
-
-          console.log(response.Promesa)
         }
       },
       error => {
@@ -122,6 +128,64 @@ export class TabEmpresa1Page implements OnInit {
       }
     )
    
+  }
+
+  doRefresh(event){
+    this.ofertas = [];
+    this.mensaje = false;
+    setTimeout(() => {
+      this._usuarioService.readOfertaEmpresa(this._usuarioService.getEmpresaLog()._id).subscribe(
+        response => {
+          if(response.message == 'No exisen ofertas de esta empresa'){
+            this.mensaje = true;
+            this.ofertas = []
+            event.target.complete();
+          }else if(response.ofertas){
+            this.status = 'ok';
+            this.ofertas = response.ofertas;
+            event.target.complete();
+          }
+        },
+        error => {
+          var errorMessage = <any>error;
+          console.log(errorMessage);
+          if (errorMessage != null) {
+            this.status = 'Error';
+          }
+        }
+      )   
+    }, 2500);
+  }
+
+  async editarOferta(datas){
+    console.log(datas)
+    const modal = await this.modalCtrl.create({
+      component: ModalEditarOfertaPage,
+      componentProps: {
+        data : datas,
+        nombre : this.empresa.nombre
+      },
+      animated: true
+    });
+    await modal.present();
+
+    const { data } = await modal.onDidDismiss();
+
+    if(data.datos){
+      this._usuarioService.editPropuesta(data.datos).subscribe(
+        response => {
+          if(response.oferta){
+            this.readOfertasEmpresa(this.empresa._id);
+          }
+
+        },
+        error => {
+          if(error){
+            console.log(<any>error)
+          }
+        }
+      )
+    }
   }
 
 }

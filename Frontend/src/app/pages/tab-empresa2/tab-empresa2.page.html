@@ -3,7 +3,40 @@
 
 <ion-content>
 
-
+    <ion-list>
+        <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
     
-
+        <ion-item *ngFor="let usuario of usuarios | filtro:textoBuscar:'nickName'" no-border>
+            <ion-thumbnail style="margin-right: 10px">
+                <ion-img *ngIf="!usuario.image" style="border-radius: 100%" src="/assets/avatars/av-1.png"
+                    class="img-avatar"></ion-img>
+                <ion-img *ngIf="usuario.image" style="border-radius: 100%"
+                    src="{{url + 'obtener-imagen-usuario/'+usuario.image}}" class="img-avatar"></ion-img>
+    
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{usuario.nickName}}</h2>
+                <p>{{usuario.email}}</p>
+            </ion-label>
+            <ion-button color="danger" slot="end" (click)="getUsuario(usuario._id)">Ver</ion-button>
+            <ion-button color="danger" slot="end" (click)="deleteUser(usuario._id)">Eliminar</ion-button>
+        </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!usuarios">
+        <ion-item *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+            <ion-thumbnail slot="start">
+                <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
+            </ion-thumbnail>
+            <ion-col>
+                <ion-label>
+                    <ion-skeleton-text width="65%"></ion-skeleton-text>
+                </ion-label>
+                <ion-label>
+                    <ion-skeleton-text width="35%"></ion-skeleton-text>
+                </ion-label>
+            </ion-col>
+            <ion-skeleton-text width="25%"></ion-skeleton-text>
+        </ion-item>
+    </ion-list>
+    
 </ion-content>

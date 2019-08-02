@@ -9,6 +9,8 @@ import { TabEmpresa1Page } from './tab-empresa1.page';
 import { ComponentsModule } from '../../components/components.module';
 import { CvsEmpresaPage } from '../cvs-empresa/cvs-empresa.page';
 import { CvsEmpresaPageModule } from '../cvs-empresa/cvs-empresa.module';
+import { ModalEditarOfertaPageModule } from '../modal-editar-oferta/modal-editar-oferta.module';
+import { ModalEditarOfertaPage } from '../modal-editar-oferta/modal-editar-oferta.page';
 
 const routes: Routes = [
   {
@@ -24,10 +26,12 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ComponentsModule,
-    CvsEmpresaPageModule
+    CvsEmpresaPageModule,
+    ModalEditarOfertaPageModule
   ],
   entryComponents: [
-    CvsEmpresaPage
+    CvsEmpresaPage,
+    ModalEditarOfertaPage
   ],
   declarations: [TabEmpresa1Page]
 })

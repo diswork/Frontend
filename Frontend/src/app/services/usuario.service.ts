@@ -252,6 +252,12 @@ export class UsuarioService {
     return this._http.get(this.url + `empresa/${id}`, { headers });
   }
 
+  getUsuariosPorEmpresa() : Observable<any>{
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.get(this.url + 'followers', {headers})
+  }
+
   //SERVICIOS PARA NIVEL ACADEMICO
   getNivelesAcademicos(): Observable<any> {
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
@@ -384,5 +390,13 @@ export class UsuarioService {
 
     return this._http.get(this.url + 'ofertas-seguidas-cn', {headers});
   }
+
+  editPropuesta(oferta: Oferta): Observable<any> {
+    let params = JSON.stringify(oferta);
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
+
+    return this._http.put(this.url + `oferta/${oferta._id}`, params, { headers });
+  }
+
 
 }
