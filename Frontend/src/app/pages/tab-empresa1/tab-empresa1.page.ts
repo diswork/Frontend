@@ -6,6 +6,8 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { CVsPage } from '../cvs/cvs.page';
 import { CvsEmpresaPage } from '../cvs-empresa/cvs-empresa.page';
 import { GLOBAL } from 'src/app/services/global.service';
+import { ModalEditOfertaPage } from '../modal-edit-oferta/modal-edit-oferta.page';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-tab-empresa1',
@@ -107,10 +109,29 @@ export class TabEmpresa1Page implements OnInit {
           this.status = 'ERROR';
         }
       }
-    )
+    );
   }
 
-  Oferta(id){
+  async abrirModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalEditOfertaPage,
+      componentProps: {
+        titulo: this.oferta.titulo,
+        descripcion: this.oferta.descripcion,
+        fechaPublicacion: this.oferta.fechaPublicacion,
+        categoria: this.oferta.categoria,
+        nivelAcademico: this.oferta.nivelAcademico,
+        imagen: this.oferta.imagen
+      }
+    });
+    await modal.present();
+
+    const {data} = await modal.onDidDismiss();
+
+    console.log('Retorno del modal', data);
+  }
+
+  Oferta(id) {
     this._usuarioService.buscarPropuesta(id).subscribe(
       response => {
         this.status = 'Ok';

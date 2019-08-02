@@ -6,7 +6,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './pages/login-register/login.module#LoginPageModule' },
   { 
-    path: 'tabs-user', 
+    path: 'tabs-user',
     loadChildren: './pages/tabs-user/tabs-user.module#TabsUserPageModule',
     canLoad : [UsuarioGuard]
   },
@@ -31,6 +31,7 @@ const routes: Routes = [
     canLoad : [UsuarioGuard]
   },
   { path: 'tabs-admin/tabs-admin/tab-admin4', loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule' },
+
 ];
 
 @NgModule({

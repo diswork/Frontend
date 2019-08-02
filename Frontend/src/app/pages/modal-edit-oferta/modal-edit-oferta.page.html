@@ -1,11 +1,16 @@
-<app-header titulo="diswork" menuEmpresa="true" menuAdmin="false" menuUser="false"></app-header>
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-title text-capitalize>Editar Propuesta de Trabajo</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-row>
-  <form (ngSubmit)="addOferta(formAddPropuesta)" #formAddPropuesta="ngForm">
+<ion-content>
+
+  <form (ngSubmit)="editPropuesta(formEditPropuesta)" #formEditPropuesta="ngForm">
     <ion-row>
       <ion-col>
-
         <ion-list>
+
           <ion-item>
             <ion-label position="stacked">Titulo</ion-label>
             <ion-input name="titulo" type="text" placeholder="Ingrese un titulo" clearInput [(ngModel)]="oferta.titulo"
@@ -22,33 +27,18 @@
           <ion-item>
             <ion-label>Categoría de empleos:</ion-label>
             <ion-select name="categoria" [(ngModel)]="oferta.categoria" placeholder="Select One" interface="popover">
-              <ion-select-option *ngFor="let dt of categorias" value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+              <ion-select-option *ngFor="let dt of categorias" value="{{dt._id}}">{{dt.descripcion}}
+              </ion-select-option>
             </ion-select>
           </ion-item>
-
           <ion-item>
             <ion-label>Nivel Academico:</ion-label>
             <ion-select name="level" [(ngModel)]="oferta.nivelAcademico" placeholder="Select One" interface="popover">
               <ion-select-option *ngFor="let dt of nivelesAcademicos" value="{{dt._id}}">{{dt.descripcion}}
               </ion-select-option>
             </ion-select>
-        </ion-item>
-
-        <ion-item>
-          <ion-label>Nivel Academico:</ion-label>
-          <ion-select  name="level" [(ngModel)]="oferta.nivelAcademico"
-              placeholder="Select One" interface="popover">
-              <ion-select-option *ngFor="let dt of nivelesAcademicos" value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
-          </ion-select>
-      </ion-item>
-
-         
-
-          <ion-item>
-            <ion-label position="stacked">Tarjeta</ion-label>
-            <ion-input name="tarjeta" type="text" placeholder="Ingrese su # de tarjeta" clearInput
-              [(ngModel)]="oferta.tarjeta" required></ion-input>
           </ion-item>
+
           <ion-item>
             <ion-row>
               <ion-label position="stacked">Imagen</ion-label>
@@ -75,11 +65,11 @@
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="primary" shape="round">
-          Crear oferta de trabajo
-        </ion-button>
-      </ion-col>
-    </ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" shape="round">
+            Editar oferta de trabajo
+          </ion-button>
+        </ion-col>
+      </ion-row>
   </form>
-</ion-row>
+</ion-content>

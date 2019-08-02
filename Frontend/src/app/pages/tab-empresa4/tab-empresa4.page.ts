@@ -29,8 +29,9 @@ export class TabEmpresa4Page implements OnInit {
 
   constructor(
       public _usuarioService: UsuarioService,
-      private menuCtrl : MenuController,  
-      private camera : Camera,
+      private uiService: UiServiceService,
+      private menuCtrl: MenuController,
+      private camera: Camera,
       private _uploadService : UploadService) {
     this.oferta = new Oferta('','', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
@@ -63,7 +64,7 @@ export class TabEmpresa4Page implements OnInit {
         },
         error => {
           if (error) {
-            console.log(<any>error);
+            console.log(error as any);
             this.status = 'error';
           }
         }

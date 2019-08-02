@@ -223,14 +223,14 @@ export class UsuarioService {
     return this._http.get(this.url + `/ofertasPorEmpresa/${id}`, { headers: headers });
   }
 
-   getCVOferta(id): Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+  getCVOferta(id): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
 
-    return this._http.get(this.url + `cvs-oferta/${id}`,{headers:headers});
+    return this._http.get(this.url + `cvs-oferta/${id}`, { headers: headers });
   }
 
-   getEmpresas(): Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
+  getEmpresas(): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
 
     return this._http.get(this.url + 'empresas', { headers }).pipe(delay(2000));
   }
@@ -258,17 +258,17 @@ export class UsuarioService {
     return this._http.post(this.url + 'oferta', params, { headers });
   }
 
-  editPropuesta(oferta: Oferta, idOferta): Observable<any>{
+  editPropuesta(oferta: Oferta, idOferta): Observable<any> {
     let params = JSON.stringify(oferta);
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
 
-    return this._http.put(this.url + `oferta/${idOferta}`, params, {headers});
+    return this._http.put(this.url + `oferta/${idOferta}`, params, { headers });
   }
 
-  buscarPropuesta(idOferta): Observable<any>{
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+  buscarPropuesta(idOferta): Observable<any> {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
 
-    return this._http.get(this.url + `ofertaById/${idOferta}`, {headers});
+    return this._http.get(this.url + `ofertaById/${idOferta}`, { headers });
   }
 
   // SERVICIOS PARA CATEGORIAS
@@ -279,7 +279,7 @@ export class UsuarioService {
   }
 
   getNiveles(): Observable<any> {
-    this.cargarToken()
+    this.cargarToken();
 
     let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
 
