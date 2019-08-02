@@ -31,14 +31,6 @@ const routes: Routes = [
     canLoad : [UsuarioGuard]
   },
   { path: 'tabs-admin/tabs-admin/tab-admin4', loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule' },
-  { path: 'modal-empresa', loadChildren: './pages/modal-empresa/modal-empresa.module#ModalEmpresaPageModule' },
-
-
-
-
-
-
-
 ];
 
 @NgModule({

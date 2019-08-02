@@ -144,10 +144,10 @@ export class TabEmpresa3Page implements OnInit {
       this.listo = false;
       this._usuarioService.getEmpresa(this.empresa._id).subscribe(
         response => {
-          if (response.empresas) {
+          if (response.empresa) {
             this.status = 'Ok';
             console.log('Listo');
-            this.empresa.image = response.empresas.image;
+            this.empresa.image = response.empresa.image;
             this.listo = true;
           }
         },

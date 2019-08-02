@@ -1,5 +1,6 @@
 export class Oferta {
     constructor(
+        public _id: String,
         public titulo: String,
         public descripcion: String,
         public fechaPublicacion: Date,

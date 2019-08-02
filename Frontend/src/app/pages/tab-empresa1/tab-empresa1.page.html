@@ -1,58 +1,64 @@
 <app-header titulo="diswork" menuEmpresa="true" menuAdmin="false" menuUser="false"></app-header>
 
-<ion-content class="animated fadeIn">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+<ion-content>
+   
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col *ngFor="let dt of ofertas; let i = index" size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
+                <ion-card>
+                    <ion-item>
+                        <ion-thumbnail slot="start">
+                                <ion-img *ngIf="!empresa.image" src="/assets/avatars/av-8.png"></ion-img>
+                                <ion-img *ngIf="empresa.image" src="{{url + 'obtener-imagen-empresa/' + empresa.image}}"></ion-img>
+                        </ion-thumbnail>
+                        <ion-col>
+                            <ion-label text-capitalize>
+                                <b>{{empresa.nombre}}</b>
+                            </ion-label>
+                            <ion-datetime style="color: gray; margin-left: -15px; font-size: 14px; margin-top: -5px" readonly 
+                            displayFormat="DD MMM YYYY - HH:mm" [ngModel]="dt.fechaPublicacion"
+                            monthShortNames="Ene, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dec"></ion-datetime>
+                        </ion-col>
+                    </ion-item>
+                    <ion-img *ngIf="dt.imagen" [src]="dt.imagen"></ion-img>
 
-  <ion-grid fixed>
-    <ion-row>
-      <ion-col *ngFor="let dt of ofertas; let i = index" size="12" size-lg="3" size-md="4" size-sm="6" size-xs="12">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <span class="text-primary">{{i + 1}}. </span>
-              <span class="noticia-source-name">{{dt.titulo}}</span>
-            </ion-card-title>
-            <ion-card-subtitle>{{dt.fechaPublicacion}}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-img *ngIf="dt.imagen" [src]="dt.imagen"></ion-img>
-    
-          <!-- <img *ngIf="dt.imagen" style="border-radius: 100%"  src="{{url + 'obtener-imagen-oferta/'+oferta.imagen}}" class="img-avatar" >
-                  
-          <ion-img *ngIf="!dt.empresa.image" src="/assets/avatars/av-8.png"></ion-img> -->
-          
+                    <ion-card-content>
+                        <label style="color: black"><b>{{dt.titulo}}</b></label><br>
+                        <ion-textarea readonly style="color: black">
+                            {{dt.descripcion}}
+                        </ion-textarea>
+                        <label><b>Categoría: </b>{{dt.categoria.descripcion}}</label><br>
+                        <label><b>Nivel Académico: </b>{{dt.nivelAcademico.descripcion}}</label><br>
+                        <ion-button style="width: 100px; height: 30px; font-size: 12px" color="danger" shape="round" (click)="verCvs(dt._id)" slot="end">Ver CVS</ion-button>
 
-          <ion-card-content>
-            <p>{{dt.descripcion}}</p>
-          </ion-card-content>
+                    </ion-card-content>
 
 
-          <ion-fab size="small" vertical="start" horizontal="end" slot="fixed">
+                    <ion-fab size="small" vertical="start" horizontal="end" slot="fixed">
+                        <ion-fab-button size="small"> 
+                          <ion-icon name="more" size="small"></ion-icon>
+                        </ion-fab-button>
+                        <ion-fab-list side="top">
+                          <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                        <ion-fab-list side="bottom">
+                          <ion-fab-button ><ion-icon name="md-create"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                        <ion-fab-list side="start">
+                          <ion-fab-button (click)="eliminarOferta(dt._id)" color="danger"><ion-icon name="trash"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                        <ion-fab-list side="end">
+                          <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
+                        </ion-fab-list>
+                      </ion-fab>
 
-            <ion-fab-button size="small">
-              <ion-icon name="more" size="small"></ion-icon>
-            </ion-fab-button>
 
-            <ion-fab-list side="bottom">
-              <ion-fab-button (click)="Oferta(dt._id)" [routerLink]="'/tab-empresa4'">
-                  <ion-icon name="ios-create"></ion-icon>
-              </ion-fab-button>
-            </ion-fab-list>
-            
-            <ion-fab-list side="start">
-              <ion-fab-button (click)="eliminarOferta(dt._id)" color="danger">
-                <ion-icon name="trash"></ion-icon>
-              </ion-fab-button>
-            </ion-fab-list>
-            
-          </ion-fab>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
 
-  <!-- Editar propuesta -->
-  
+                     
+
+                </ion-card>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 
 </ion-content>

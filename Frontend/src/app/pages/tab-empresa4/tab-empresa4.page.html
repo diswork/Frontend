@@ -25,13 +25,24 @@
               <ion-select-option *ngFor="let dt of categorias" value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
+          
           <ion-item>
             <ion-label>Nivel Academico:</ion-label>
             <ion-select name="level" [(ngModel)]="oferta.nivelAcademico" placeholder="Select One" interface="popover">
               <ion-select-option *ngFor="let dt of nivelesAcademicos" value="{{dt._id}}">{{dt.descripcion}}
               </ion-select-option>
             </ion-select>
-          </ion-item>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Nivel Academico:</ion-label>
+          <ion-select  name="level" [(ngModel)]="oferta.nivelAcademico"
+              placeholder="Select One" interface="popover">
+              <ion-select-option *ngFor="let dt of nivelesAcademicos" value="{{dt._id}}">{{dt.descripcion}}</ion-select-option>
+          </ion-select>
+      </ion-item>
+
+         
 
           <ion-item>
             <ion-label position="stacked">Tarjeta</ion-label>
