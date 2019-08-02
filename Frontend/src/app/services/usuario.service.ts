@@ -132,8 +132,8 @@ export class UsuarioService {
 
   seguirEmpresa(id, empresa: Empresa): Observable<any> {
     // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-    ;
-    let params = JSON.stringify(empresa)
+    
+    let params = JSON.stringify(empresa);
     const headers = new HttpHeaders({
       'Authorization': this.token
     });
@@ -142,8 +142,8 @@ export class UsuarioService {
 
   dejarSeguirEmpresa(id, empresa: Empresa): Observable<any> {
     // let headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization',this.token);
-    ;
-    let params = JSON.stringify(empresa)
+    
+    let params = JSON.stringify(empresa);
     const headers = new HttpHeaders({
       'Authorization': this.token
     });
