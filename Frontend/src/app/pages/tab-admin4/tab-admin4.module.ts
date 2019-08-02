@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabAdmin4Page } from './tab-admin4.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalAdminPage } from '../modal-admin/modal-admin.page';
+import { ModalAdminPageModule } from '../modal-admin/modal-admin.module';
 
 const routes: Routes = [
   {
@@ -21,7 +23,11 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalAdminPageModule
+  ],
+  entryComponents: [
+    ModalAdminPage
   ],
   declarations: [TabAdmin4Page]
 })

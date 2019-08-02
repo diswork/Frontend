@@ -1,0 +1,32 @@
+<ion-header no-border>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/tabs-admin/tabs-admin/tab-admin2"
+                          (click)="regresar()"></ion-back-button>
+      </ion-buttons>
+      <ion-title text-capitalize>{{nombre}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-row class="top-20">
+        <ion-col size="12" text-center>
+            <img *ngIf="!image" style="border-radius: 100%" src="/assets/avatars/av-1.png" class="img-avatar">
+            <img *ngIf="image" style="border-radius: 100%" src="{{url + 'obtener-imagen-empresa/'+image}}" class="img-avatar">
+        </ion-col>
+    </ion-row>
+          
+    <ion-list>
+        <ion-item>
+            <ion-label><b>Email:</b> {{email}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label><b>Direccion:</b> {{direccion}}</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-label><b>Telefono:</b> {{telefono}}</ion-label>
+        </ion-item>          
+    </ion-list><br>
+  
+  </ion-content>
+  

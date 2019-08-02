@@ -8,6 +8,8 @@ import { IonicModule } from '@ionic/angular';
 import { TabAdmin2Page } from './tab-admin2.page';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ModalAdminEmpresaPageModule } from '../modal-admin-empresa/modal-admin-empresa.module';
+import { ModalAdminEmpresaPage } from '../modal-admin-empresa/modal-admin-empresa.page';
 
 const routes: Routes = [
   {
@@ -23,7 +25,11 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     ComponentsModule,
-    PipesModule
+    PipesModule,
+    ModalAdminEmpresaPageModule
+  ],
+  entryComponents: [
+    ModalAdminEmpresaPage
   ],
   declarations: [TabAdmin2Page]
 })
