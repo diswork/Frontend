@@ -1,0 +1,42 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs-user/tabs-user/tab-user4" (click)="salir()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{nombre}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+    <ion-thumbnail slot="start">
+      <ion-img *ngIf="!datos.empresa.image" src="/assets/avatars/av-8.png"></ion-img>
+      <ion-img *ngIf="datos.empresa.image" src="{{url + 'obtener-imagen-empresa/' + datos.empresa.image}}"></ion-img>
+    </ion-thumbnail>  
+    <ion-label>
+      <h2 text-capitalize><b>{{datos.empresa.nombre}}</b></h2>
+      <p text-capitalize>{{datos.empresa.direccion}}</p>
+    </ion-label>
+  </ion-item>
+  <ion-list style="margin-left: 0px; margin-right: 0px">
+    <ion-item>
+      <label><b>Trabajo:</b> {{datos.titulo}}</label>
+    </ion-item>
+    <ion-item>
+      <ion-textarea readonly><b>Descripción:</b> {{datos.descripcion}}</ion-textarea>
+    </ion-item>
+    <ion-item>
+      <label><b>Categoría:</b> {{datos.categoria.descripcion}}</label>
+    </ion-item>
+    <ion-item>
+      <label><b>Nivel Académico:</b> {{datos.nivelAcademico.descripcion}}</label>
+    </ion-item>
+    <ion-item>
+      <label><b>Email:</b> {{datos.empresa.email}}</label>
+    </ion-item><br>
+    <ion-button  fill="outline" style="margin-top: 0px; width: 160px; margin : auto" (click)="opcionesCv(datos._id)" color="danger" expand="full" shape="round">Enviar CV</ion-button>
+
+  </ion-list>
+
+</ion-content>

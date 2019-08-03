@@ -3,20 +3,62 @@
 
 <ion-content>
 
+        <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+                <ion-refresher-content></ion-refresher-content>
+            </ion-refresher>
+
 
             <ion-list>
                     <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
 
                     <ion-item *ngFor="let empresa of empresas | filtro:textoBuscar:'nombre'" no-border>
                         <ion-thumbnail style="margin-right: 10px">
-                            <ion-img src="/assets/avatars/av-1.png"></ion-img>
+                                <ion-img *ngIf="!empresa.image" style="border-radius: 100%" src="/assets/avatars/av-1.png" class="img-avatar" ></ion-img>
+                                <ion-img *ngIf="empresa.image" style="border-radius: 100%" src="{{url + 'obtener-imagen-empresa/'+empresa.image}}" class="img-avatar" ></ion-img>
+                            <!-- <ion-img src="/assets/avatars/av-1.png"></ion-img> -->
                         </ion-thumbnail>
                         <ion-label>
                             <h2>{{empresa.nombre}}</h2>
                             <p>{{empresa.email}}</p>
                         </ion-label>
-                        <ion-button color="danger" slot="end">Eliminar</ion-button>
+                        <ion-button color="danger" slot="end" (click)="getEmpresa(empresa._id)">Ver</ion-button>
+                        <ion-button color="danger" slot="end" (click)="deleteEmpresa(empresa._id)">Eliminar</ion-button>
                     </ion-item>
                 </ion-list>
+
+                <div *ngIf="empresas.length == 0 && !mensaje">
+
+                <ion-list>
+                        <ion-item *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+                            <ion-thumbnail slot="start">
+                                <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
+                            </ion-thumbnail>
+                            <ion-col>
+                                <ion-label>
+                                    <ion-skeleton-text width="65%"></ion-skeleton-text>
+                                </ion-label>
+                                <ion-label>
+                                    <ion-skeleton-text width="35%"></ion-skeleton-text>
+                                </ion-label>
+                            </ion-col>
+                            <ion-skeleton-text width="25%"></ion-skeleton-text>
+                        </ion-item>
+                    </ion-list>
+                </div>
+
+                    <div *ngIf="mensaje">
+                            <ion-row>
+                                <ion-col text-center>
+                                        <br><ion-label style="color : gray">No existen empresas.</ion-label>
+                                </ion-col>
+                                <ion-row>
+                                    <ion-col>
+                                        <img class="marca-de-agua" src="/assets/diswork-logo2.png">
+                                    </ion-col>
+                                </ion-row>
+                            </ion-row>
+                        </div>
+                    
+
 
 </ion-content>

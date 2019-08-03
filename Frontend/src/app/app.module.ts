@@ -16,7 +16,9 @@ import { PipesModule } from './pipes/pipes.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-
+import { File } from '@ionic-native/file/ngx';
+import { DocumentViewer } from '@ionic-native/document-viewer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 
 
 @NgModule({
@@ -36,6 +38,9 @@ import { FileTransfer } from '@ionic-native/file-transfer/ngx';
     SplashScreen,
     Camera,
     FileTransfer,
+    File,
+    DocumentViewer,
+    FileOpener,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

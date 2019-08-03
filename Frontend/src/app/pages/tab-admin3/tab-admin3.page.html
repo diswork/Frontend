@@ -2,5 +2,12 @@
 
 
 <ion-content>
+    <ion-list>
+        <ion-item detail *ngFor='let menus of menus' (click)='openModal(menus.action)'>
+            <ion-icon slot='start' [name]='menus.icon'> </ion-icon>
+            <ion-label>{{menus.name}}</ion-label>
+        </ion-item>
+
+    </ion-list>
 
 </ion-content>

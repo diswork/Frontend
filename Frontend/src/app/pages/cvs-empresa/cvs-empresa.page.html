@@ -1,0 +1,94 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs-empresa/tabs-empresa/tab-empresa1" (click)="salir()"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Cvs-Oferta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+
+<ion-content>
+  <div  *ngIf="noHayData">
+    <ion-row>
+      <ion-col>
+        <img class="marca-de-agua" src="/assets/diswork-logo2.png">
+      </ion-col>
+    </ion-row>
+    <ion-label class="center" color="medium">
+      <h1>No tiene ningún CV.</h1>
+    </ion-label>
+  </div>
+
+  <!-- CONTENIDO DE CVS -->
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+  <div *ngIf="siHayData">    
+    <ion-list>
+      <ion-card mode="md"  *ngFor="let dt of oferta.cvsPdf">     
+        <ion-card-header  color="danger">
+            <ion-card-title>PDF</ion-card-title>
+        </ion-card-header>  
+        <ion-card-content>
+          <ion-img style="width: 100px; height: 110px; margin: auto" src="assets/icono-pdf.png"></ion-img>
+          <ion-button  fill="outline" expand="full" shape="round">View</ion-button>
+
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div *ngIf="siHayData">
+    <ion-list>
+      <ion-card mode="md" *ngFor="let dt of oferta.cvsImg">  
+        <ion-card-header  color="danger">
+            <ion-card-title>Imagen</ion-card-title>
+        </ion-card-header> 
+        <ion-card-content>
+          <ion-img src="{{url + 'obtener-cv/' + dt.archivo}}"></ion-img>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+  <!-- style="font-weight:bold;" -->
+  <div *ngIf="siHayData">
+    <ion-list>
+      <ion-card mode="md" *ngFor="let dt of oferta.cvsRedactado">   
+        <ion-card-header  color="danger">
+            <ion-card-title>Redactado</ion-card-title>  
+        </ion-card-header> 
+        <ion-card-content>          
+            <ion-list>
+              <ion-item>
+                <ion-label>Nombre: {{dt.archivo[0].nombre}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Edad: {{dt.archivo[0].edad}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Correo: {{dt.archivo[0].correo}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>Telefono: {{dt.archivo[0].telefono}}</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Estudio: {{dt.archivo[0].estudio}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Habilidades: {{dt.archivo[0].habilidad}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Referencias Personales: {{dt.archivo[0].refPersonal}}</ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-textarea readonly>Referencias Empresariales: {{dt.archivo[0].refEmpresarial}}</ion-textarea>
+              </ion-item>
+            </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+</ion-content>

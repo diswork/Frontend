@@ -7,6 +7,11 @@ import { IonicModule } from '@ionic/angular';
 
 import { TabEmpresa2Page } from './tab-empresa2.page';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ModalAdminUserPageModule } from '../modal-admin-user/modal-admin-user.module';
+import { ModalAdminUserPage } from '../modal-admin-user/modal-admin-user.page';
+import { PipesModule } from 'src/app/pipes/pipes.module';
+import { ModalEmpresaUserPageModule } from '../modal-empresa-user/modal-empresa-user.module';
+import { ModalEmpresaUserPage } from '../modal-empresa-user/modal-empresa-user.page';
 
 const routes: Routes = [
   {
@@ -21,7 +26,12 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    ComponentsModule,
+    ModalEmpresaUserPageModule,
+    PipesModule
+  ],
+  entryComponents : [
+    ModalEmpresaUserPage
   ],
   declarations: [TabEmpresa2Page]
 })

@@ -73,7 +73,6 @@ export class CVsPage implements OnInit {
       this._usuarioService.getUser(this.usuario._id).subscribe(
         response => {
           this.usuario = response.user;
-          console.log(this.usuario)
           this.cvsRedactado = this.usuario.cvsRedactado;
           this.cvsImg = this.usuario.cvsImg;
           this.cvsPdf = this.usuario.cvsPdf;
@@ -114,7 +113,7 @@ export class CVsPage implements OnInit {
   }
 
   guardarRedactado(fCvRedactado : NgForm){
-
+    this.cvRedactado.titulo = 'redactado';
     if(fCvRedactado.invalid){
       this._uiService.alertarInformativa('Ingrese todo los campos');
     }else{
@@ -210,8 +209,6 @@ export class CVsPage implements OnInit {
     this.tempImages = [];  
     this.noHayData = false;
     this.siHayData = true;
-    console.log(this.usuario)
-    console.log(this.usuario.cvsImg)
     this.cvsImg = this.usuario.cvsImg;
     console.log("guardarFoto()") 
   }
@@ -238,7 +235,6 @@ export class CVsPage implements OnInit {
   guardarArchivo(){
     this._uploadService.makeFileRequest(this.url + "subir-cv",['Titulo'],this.fileToUpload,'cv',this._usuarioService.getToken())
       .then((result: any)=>{
-        console.log(result);
         this._usuarioService.guardarToken(result.token);
       }  
     )

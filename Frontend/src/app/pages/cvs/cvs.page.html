@@ -31,7 +31,9 @@
             <ion-card-title>PDF</ion-card-title>
         </ion-card-header>  
         <ion-card-content>
-          <ion-img src="{{url + 'obtener-cv/' + dt}}"></ion-img>
+          <ion-img style="width: 100px; height: 110px; margin: auto" src="assets/icono-pdf.png"></ion-img>
+          <ion-button  fill="outline" expand="full" shape="round">View</ion-button>
+
         </ion-card-content>
       </ion-card>
     </ion-list>
@@ -219,8 +221,8 @@
               <ion-label>
                 <h2 style="margin-left: 8px">Telefono</h2>
               </ion-label>
-              <ion-input placeholder="Ingrese su telefono" name="telefono" type="text" required clearInput
-                [(ngModel)]="cvRedactado.telefono"></ion-input>
+              <ion-input placeholder="Ingrese su telefono" name="telefono" type="number"  required clearInput
+                [(ngModel)]="cvRedactado.telefono" maxlength="8"></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>
