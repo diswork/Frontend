@@ -15,7 +15,8 @@ import { GLOBAL } from '../../services/global.service';
 export class TabAdmin1Page implements OnInit {
 
   usuario: User;
-  public usuarios: User;
+  public usuarios;
+  public mensaje = false;
   public status;
   public dataUser;
   public textoBuscar = '';
@@ -30,7 +31,9 @@ export class TabAdmin1Page implements OnInit {
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(true, "tercerMenu");
-    this.getUsuarios();
+    this.usuarios = [];
+    this.mensaje = true;    
+    // this.getUsuarios();
     // this.dataUser = this._usuarioService.getUserLog();
   }
 
@@ -98,6 +101,34 @@ export class TabAdmin1Page implements OnInit {
       }
     )
   }
+
+  doRefresh(event){
+    this.usuarios = [];
+    this.mensaje = false;
+    setTimeout(() => {
+      this._usuarioService.getUsers().subscribe(
+        response => {
+          if(response.message === 'no') {
+            this.mensaje = true;
+            event.target.complete();
+          } else if (response.usuarios.length === 0) {
+            this.mensaje = true;
+            event.target.complete();
+          } else if (response.usuarios.length > 0) {
+            this.usuarios = response.usuarios;
+            event.target.complete();
+          }
+        },
+        error => {
+          if (error) {
+            console.log(<any>error);
+            this.status = "no"
+          }
+        }
+      )
+    }, 2500);
+  }
+
   buscar(event){
     this.textoBuscar = event.detail.value;
   }

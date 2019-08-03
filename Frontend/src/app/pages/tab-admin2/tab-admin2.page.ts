@@ -12,8 +12,9 @@ import { GLOBAL } from 'src/app/services/global.service';
 })
 export class TabAdmin2Page implements OnInit {
 
-  public empresas: Empresa;
+  public empresas;
   public empresa: Empresa;
+  public mensaje = false;
   public status;
   public textoBuscar = '';
   public url;
@@ -27,7 +28,9 @@ export class TabAdmin2Page implements OnInit {
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(true, "tercerMenu");
-    this.getEmpresas();
+    this.empresas = [];
+    this.mensaje = true;
+    // this.getEmpresas();
   }
   async abrirModal() {
     const modal = await this.modalCtrl.create({
@@ -59,6 +62,33 @@ export class TabAdmin2Page implements OnInit {
         }
       }
     );
+}
+
+doRefresh(event){
+  this.empresas = [];
+  this.mensaje = false;
+  setTimeout(() => {
+    this._usuarioService.getEmpresas().subscribe(
+      response => {
+        if(response.message === 'no') {
+          this.mensaje = true;
+          event.target.complete();
+        } else if (response.empresas.length === 0) {
+          this.mensaje = true;
+          event.target.complete();
+        } else if (response.empresas.length > 0) {
+          this.empresas = response.empresas;
+          event.target.complete();
+        }
+      },
+      error => {
+        if (error) {
+          console.log(<any>error);
+          this.status = "no"
+        }
+      }
+    )
+  }, 2500);
 }
   
   getEmpresas() {
