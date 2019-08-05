@@ -30,14 +30,7 @@ const routes: Routes = [
     loadChildren: './pages/tabs-admin/tabs-admin.module#TabsAdminPageModule',
     canLoad: [UsuarioGuard]
   },
-  {
-    path: 'tabs-admin/tabs-admin/tab-admin4',
-    loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule'
-  }
-
-
-
-
+  { path: 'tabs-admin/tabs-admin/tab-admin4', loadChildren: './pages/tab-admin4/tab-admin4.module#TabAdmin4PageModule' },
 
 ];
 

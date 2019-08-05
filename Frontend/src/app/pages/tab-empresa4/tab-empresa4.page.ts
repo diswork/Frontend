@@ -6,6 +6,7 @@ import { Empresa } from '../../models/empresa.model';
 import { UsuarioService } from '../../services/usuario.service';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { UploadService } from 'src/app/services/upload.service';
+import { UiServiceService } from 'src/app/services/ui-service.service';
 
 declare var window : any;
 
@@ -26,14 +27,19 @@ export class TabEmpresa4Page implements OnInit {
   public imageData : any;
   public btnCamara : boolean = false;
   public tempImages : string[] = [];
+  public ofertas : [];
+  public ofertaAgregada = true;
 
   constructor(
       public _usuarioService: UsuarioService,
       private menuCtrl : MenuController,  
       private camera : Camera,
-      private _uploadService : UploadService) {
-    this.oferta = new Oferta('', '', new Date(), '', '', '', '', [], '', true);
+      private _uploadService : UploadService,
+      private uiService: UiServiceService,) {
+    this.oferta = new Oferta('','', '', new Date(), '', '', '', '', [], '', true);
     this.empresa = new Empresa('', '', '', '', 'empresa', '', '', '');
+        
+    
   }
 
   
@@ -43,24 +49,45 @@ export class TabEmpresa4Page implements OnInit {
     this.menuCtrl.enable(false, "tercerMenu");
     this.getCategorias();
     this.getNivelesAcademicos();
+    this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id); 
   }
 
-  addOferta(){
-    this._usuarioService.addPropuesta(this.oferta).subscribe(
-      response => {
-        if(response.oferta){
-          console.log(response.oferta._id)
-          this._uploadService.subirImagenOferta(this.imageData,response.oferta._id)
+  addOferta(formAddPropuesta){
+
+    if(!formAddPropuesta.valid){
+      this.uiService.alertarInformativa('Ingrese todos los campos.')
+    }else{
+      this.ofertaAgregada = false;
+      this._usuarioService.addPropuesta(this.oferta).subscribe(
+        response => {
+          if(!response.oferta){
+            this.status = 'ERROR'
+            console.log(response.oferta._id);
+             
+            
+          }else{
+            setTimeout(()=>{
+
+              this.status = 'SUCCESS'
+              this._uploadService.subirImagenOferta(this.imageData,response.oferta._id)
+              this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+              formAddPropuesta.reset();
+              this.ofertaAgregada = true;
+              this.uiService.alertarInformativa('Oferta Agregada.')
+
+            },1000)
+
+          }
+        },
+        error => {
+          if(error){
+            console.log(<any>error);
+            this.status = 'error';
+          }
         }
-      },
-      error => {
-        if(error){
-          console.log(<any>error);
-          this.status = 'error';
-        }
-      }
-    )
-    this.btnCamara = false;
+      )
+      this.btnCamara = false;
+    }    
   }
 
   getCategorias(){
@@ -121,5 +148,23 @@ export class TabEmpresa4Page implements OnInit {
      });
   }
 
+
+
+  readOfertasEmpresa(id) {
+    this._usuarioService.readOfertaEmpresa(id).subscribe(
+      response => {
+        this.status = 'ok';
+        this.ofertas = response.ofertas;
+        console.log(this.ofertas);
+      },
+      error => {
+        var errorMessage = <any>error;
+        console.log(errorMessage);
+        if (errorMessage != null) {
+          this.status = 'Error';
+        }
+      }
+    )
+  }
 
 }

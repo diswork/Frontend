@@ -26,10 +26,10 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     ComponentsModule,
     PipesModule,
-    ModalAdminUserPageModule
+    ModalAdminUserPageModule,
   ],
   entryComponents: [
-    ModalAdminUserPage
+    ModalAdminUserPage,
   ],
   declarations: [TabAdmin1Page]
 })
