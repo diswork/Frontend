@@ -4,6 +4,8 @@ import { ValueAccessor } from '@ionic/angular/dist/directives/control-value-acce
 import { ModalCategoriasPage } from '../modal-categorias/modal-categorias.page';
 import { ModalNivelesAcademicosPage } from '../modal-niveles-academicos/modal-niveles-academicos.page';
 import { ModalGestionarAdministradoresPage } from '../modal-gestionar-administradores/modal-gestionar-administradores.page';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Categoria } from 'src/app/models/categoria.model';
 
 @Component({
   selector: 'app-tab-admin3',
@@ -13,7 +15,10 @@ import { ModalGestionarAdministradoresPage } from '../modal-gestionar-administra
 export class TabAdmin3Page implements OnInit {
 
 
-  constructor(private menuCtrl: MenuController, private modalCtrl: ModalController) { }
+  constructor(private menuCtrl: MenuController, private modalCtrl: ModalController, private categoriaService: UsuarioService) { }
+
+  public categorias: Categoria
+  public status;
 
   ngOnInit() {
     this.menuCtrl.enable(false, "primerMenu");
@@ -40,30 +45,36 @@ export class TabAdmin3Page implements OnInit {
   ]
 
   async openModal(accion) {
-    if(accion == 'categories') {
+    if (accion == 'categories') {
       const modal = await this.modalCtrl.create({
-      
 
         component: ModalCategoriasPage,
+
       });
+  
       await modal.present();
     }
-    else if(accion == 'academicLevel') {
+    else if (accion == 'academicLevel') {
       const modal = await this.modalCtrl.create({
-      
 
         component: ModalNivelesAcademicosPage,
+
       });
+    
       await modal.present();
-    }else if(accion== 'user') {
+
+    } else if (accion == 'user') {
       const modal = await this.modalCtrl.create({
-      
 
         component: ModalGestionarAdministradoresPage,
+
       });
+    
       await modal.present();
     }
+
   }
+
 }//Llave principal
 
 interface Menu {

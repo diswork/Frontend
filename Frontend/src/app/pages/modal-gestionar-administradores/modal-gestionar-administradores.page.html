@@ -26,31 +26,45 @@
     <form (ngSubmit)='addAdmin()' *ngIf='editando'>
 
         <ion-item>
-            <ion-label>NickName:</ion-label>
-            <ion-input name="NickName:" type="text" [(ngModel)]="newAdmin.nickName" required clearInput></ion-input>
+            <ion-label>Nickname</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-input name="NickName:" placeholder='usuario' type="text" [(ngModel)]="newAdmin.nickName" required clearInput></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label>Email:</ion-label>
-            <ion-input name="Email:" type="text" [(ngModel)]="newAdmin.email" required clearInput></ion-input>
+            <ion-label>Email</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-input name="Email:" placeholder='usuario@ejemplo.com' type="text" [(ngModel)]="newAdmin.email" required clearInput></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label>Password:</ion-label>
-            <ion-input name="Password:" type="password" [(ngModel)]="newAdmin.password" required clearInput></ion-input>
+            <ion-label>Password</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-input name="Password:" placeholder='Password' type="password" [(ngModel)]="newAdmin.password" required clearInput></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label>Telefono:</ion-label>
-            <ion-input name="NickName:" type="text" [(ngModel)]="newAdmin.telefono" required clearInput></ion-input>
+            <ion-label>Telefono</ion-label>
+        </ion-item>
+        <ion-item>
+            <ion-input name="NickName:" placeholder='00000000' type="text" [(ngModel)]="newAdmin.telefono" required clearInput></ion-input>
         </ion-item>
 
-        <ion-button type="submit" color="primary" shape="round">
-            Guardar
-        </ion-button>
-        <ion-button color="danger" shape="round" (click)='desactivarEdicion()'>
-            Cancelar
-        </ion-button>
+        <ion-row>
+            <ion-col text-center>
+                <ion-button type="submit" color="primary" shape="round">
+                    Guardar
+                </ion-button>
+                <ion-button color="danger" shape="round" (click)='desactivarEdicion()'>
+                    Cancelar
+                </ion-button>
+            </ion-col>
+        </ion-row>
+
+
     </form>
 
 

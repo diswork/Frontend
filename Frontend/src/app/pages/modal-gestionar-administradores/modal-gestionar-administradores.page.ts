@@ -52,7 +52,7 @@ export class ModalGestionarAdministradoresPage implements OnInit {
   async openDeleteAlert(id) {
     var identificador = id
     const alert = await this.alertCtrl.create({
-      header: 'Eliminar Categoria',
+      header: 'Eliminar Administrador',
       buttons: [{
         text: 'Si',
         role: 'Si',
@@ -71,6 +71,9 @@ export class ModalGestionarAdministradoresPage implements OnInit {
       }
       ]
     });
+    alert.onDidDismiss().then(() => {
+      this.getAdmins();
+    })
     alert.present();
   }
 
