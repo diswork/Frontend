@@ -22,6 +22,7 @@ export class ModalNivelesAcademicosPage implements OnInit {
   public identificador;
   public descripcion;
   public mensaje = false;
+  public datosObtenidos;
 
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private _nivelAcademicoService: UsuarioService) {
     this.newNivelAcademico = new NivelAcademico('');
@@ -29,6 +30,7 @@ export class ModalNivelesAcademicosPage implements OnInit {
 
   ngOnInit() {
     this.getNivelesAcademicos();
+    this.datosObtenidos = []
   }
 
   buscar(event) {
@@ -125,6 +127,7 @@ export class ModalNivelesAcademicosPage implements OnInit {
       response => {
         if (response.nivelAcademico) {
           this.nivelesAcademicos = response.nivelAcademico
+          this.datosObtenidos = response.nivelAcademico
           if (response.nivelAcademico == 0) {
             this.mensaje = true
           } else {

@@ -96,6 +96,24 @@
         </ion-item-sliding>
     </ion-list>
 
+    <div *ngIf="datosObtenidos.length == 0 && !mensaje">
+        <ion-list>
+            <ion-item *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
+                <ion-thumbnail slot="start">
+                    <ion-skeleton-text style="border-radius: 100%"></ion-skeleton-text>
+                </ion-thumbnail>
+                <ion-col>
+                    <ion-label>
+                        <ion-skeleton-text width="65%"></ion-skeleton-text>
+                    </ion-label>
+                    <ion-label>
+                        <ion-skeleton-text width="35%"></ion-skeleton-text>
+                    </ion-label>
+                </ion-col>
+                <ion-skeleton-text width="25%"></ion-skeleton-text>
+            </ion-item>
+        </ion-list>
+    </div>
 
     <div *ngIf="mensaje && !editando">
         <ion-row>

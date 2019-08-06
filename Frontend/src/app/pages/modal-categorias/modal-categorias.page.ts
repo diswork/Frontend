@@ -18,6 +18,7 @@ export class ModalCategoriasPage implements OnInit {
   public textoBuscar = '';
   public editando = false
   public mensaje = false;
+  public datosObtenidos;
 
 
   public datos: Categoria[];
@@ -35,6 +36,7 @@ export class ModalCategoriasPage implements OnInit {
   ngOnInit() {
     this.getCategorias();
     this.mensaje = false;
+    this.datosObtenidos = []
   }
 
 
@@ -104,6 +106,7 @@ export class ModalCategoriasPage implements OnInit {
       response => {
         if (response.categorias) {
           this.categorias = response.categorias
+          this.datosObtenidos = response.categorias
           if(response.categorias == 0) {
             this.mensaje = true
           }else{

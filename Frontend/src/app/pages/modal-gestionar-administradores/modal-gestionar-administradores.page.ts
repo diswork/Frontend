@@ -19,12 +19,13 @@ export class ModalGestionarAdministradoresPage implements OnInit {
   public textoBuscar = ''
   public url;
   public mensaje = false;
+  public datosObtenidos;
 
 
   constructor(private modalCtrl: ModalController, private _adminService: UsuarioService, private alertCtrl: AlertController) {
     this.newAdmin = new Admin('', '', '', '', '', '', '')
     this.url = GLOBAL.url;
-
+    this.datosObtenidos = []
   }
 
   ngOnInit() {
@@ -84,6 +85,7 @@ export class ModalGestionarAdministradoresPage implements OnInit {
       response => {
         if (response.admins) {
           this.admins = response.admins
+          this.datosObtenidos = response.admins
         }
       },
       error => {
