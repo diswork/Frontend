@@ -17,6 +17,12 @@ export class ModalNivelesAcademicosPage implements OnInit {
   public nivelesAcademicos: NivelAcademico
   public newNivelAcademico: NivelAcademico
   public textoBuscar = ''
+  public status;
+  public actualizando = false
+  public identificador;
+  public descripcion;
+  public mensaje = false;
+  public datosObtenidos;
 
   constructor(private alertCtrl: AlertController, private modalCtrl: ModalController, private _nivelAcademicoService: UsuarioService) {
     this.newNivelAcademico = new NivelAcademico('');
@@ -24,14 +30,26 @@ export class ModalNivelesAcademicosPage implements OnInit {
 
   ngOnInit() {
     this.getNivelesAcademicos();
+    this.datosObtenidos = []
   }
 
-  buscar(event){
+  buscar(event) {
     this.textoBuscar = event.detail.value;
   }
 
   salir() {
     this.modalCtrl.dismiss();
+  }
+
+  activarActualizando(id, getdescripcion) {
+    this.actualizando = true;
+    this.identificador = id;
+    this.descripcion = getdescripcion;
+    this.newNivelAcademico.descripcion = ''
+  }
+
+  desactivarActualizando() {
+    this.actualizando = false;
   }
 
   activarEdicion() {
@@ -56,7 +74,7 @@ export class ModalNivelesAcademicosPage implements OnInit {
         handler: () => {
           this.deleteNivelAcademico(identificador)
           this.lista.closeSlidingItems()
-          
+
         }
       },
       {
@@ -67,6 +85,9 @@ export class ModalNivelesAcademicosPage implements OnInit {
       }
       ]
     });
+    alert.onDidDismiss().then(() => {
+      this.getNivelesAcademicos();
+    })
     alert.present();
   }
 
@@ -90,13 +111,12 @@ export class ModalNivelesAcademicosPage implements OnInit {
     this._nivelAcademicoService.deleteNivelAcademico(id).subscribe(
       response => {
         if (response.equipo) {
-          this.getNivelesAcademicos();
+          this.status = 'Ok'
         }
       },
       error => {
-        if(error) {
-          console.log(<any> error);
-          
+        if (error) {
+          console.log(<any>error);
         }
       }
     )
@@ -107,11 +127,35 @@ export class ModalNivelesAcademicosPage implements OnInit {
       response => {
         if (response.nivelAcademico) {
           this.nivelesAcademicos = response.nivelAcademico
+          this.datosObtenidos = response.nivelAcademico
+          if (response.nivelAcademico == 0) {
+            this.mensaje = true
+          } else {
+            this.mensaje = false
+          }
         }
       },
       error => {
         if (error) {
           console.log(<any>error);
+        }
+      }
+    )
+  }
+
+  updateNivelAcademico() {
+    this._nivelAcademicoService.updateNivelAcademico(this.identificador, this.newNivelAcademico).subscribe(
+      response => {
+        if (response.nivelAcademico) {
+          this.status = 'ok'
+          this.actualizando = false;
+          this.getNivelesAcademicos()
+        }
+      },
+      error => {
+        if (error) {
+          console.log(<any>error);
+
         }
       }
     )

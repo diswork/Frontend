@@ -116,6 +116,33 @@ export class UploadService {
 
   }
 
+  subirImagenAdmin(img : string,id) : boolean{
+    const options: FileUploadOptions = {
+        fileKey : 'image',
+        headers : {
+          'Authorization': this._usuarioService.getToken()
+        }
+    };
+
+    let editada = false;
+    const fileTransfer : FileTransferObject = this.fileTransfer.create();
+
+    fileTransfer.upload(img, this.url + `/subir-imagen-admin/${id}`, options)
+      .then( async data => {
+        let dt = JSON.stringify(data.response);
+        let token = dt.split('\\\"')
+        console.log('token: ' + token[3])
+        await this._usuarioService.guardarToken(token[3]);
+        editada = true;
+      }).catch(err => {
+        console.log('Error en carga', err);
+      });
+      if(editada){
+        return true
+      }
+
+  }
+
   subirImagenEmpresa(img: string, id): boolean {
     const options: FileUploadOptions = {
       fileKey: 'image',

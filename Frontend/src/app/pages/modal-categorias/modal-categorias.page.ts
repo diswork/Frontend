@@ -11,13 +11,21 @@ import { Categoria } from 'src/app/models/categoria.model';
 export class ModalCategoriasPage implements OnInit {
 
   @ViewChild('cerrarLista') lista: IonList;
-  @Input() idCategoria: String
 
   public status;
-  public categorias: Categoria
+  public categorias: Categoria[]
   public newCategorie: Categoria
   public textoBuscar = '';
   public editando = false
+  public mensaje = false;
+  public datosObtenidos;
+
+
+  public datos: Categoria[];
+
+  public actualizando = false;
+  public valor;
+  public idCategoria;
 
 
 
@@ -26,7 +34,9 @@ export class ModalCategoriasPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getCategorias()
+    this.getCategorias();
+    this.mensaje = false;
+    this.datosObtenidos = []
   }
 
 
@@ -42,7 +52,6 @@ export class ModalCategoriasPage implements OnInit {
         handler: () => {
           this.deleteCategorie(identificador)
           this.lista.closeSlidingItems()
-
         }
       },
       {
@@ -53,23 +62,25 @@ export class ModalCategoriasPage implements OnInit {
       }
       ]
     });
+    alert.onDidDismiss().then(() => {
+      this.getCategorias();
+    })
     alert.present();
   }
 
-  // async openUpdateCategorie(id) {
-  //   //  this.idCategoria = id
+  activarActualizar(recibir, identificador) {
+    this.actualizando = true;
+    this.valor = recibir
+    this.idCategoria = identificador
+    this.newCategorie.descripcion = ''
 
-  //   this.idCategoria = id
+  }
 
-  //   const modal = await this.modalCtrl.create({
-  //     component: ModalUpdateCategoriesPage,
+  desactivarActualizar() {
+    this.actualizando = false;
 
-  //   });
+  }
 
-
-  //   await modal.present();
-
-  // }
 
   activarEdicion() {
     this.editando = true
@@ -95,6 +106,12 @@ export class ModalCategoriasPage implements OnInit {
       response => {
         if (response.categorias) {
           this.categorias = response.categorias
+          this.datosObtenidos = response.categorias
+          if(response.categorias == 0) {
+            this.mensaje = true
+          }else{
+            this.mensaje = false
+          }
         }
       },
       error => {
@@ -106,16 +123,12 @@ export class ModalCategoriasPage implements OnInit {
     )
   }
 
-  getIdCategoria(id) {
-    id = this.categorias
-    console.log(id)
-  }
 
   deleteCategorie(id) {
     this.categoriaService.deleteCategorie(id).subscribe(
       response => {
         if (response.equipo) {
-          this.getCategorias();
+          this.status = 'Ok'
         }
       },
       error => {
@@ -143,9 +156,20 @@ export class ModalCategoriasPage implements OnInit {
     )
   }
 
-  updateCategorie() {
-    this.editando = true;
+  updateCategoria() {
+    this.categoriaService.updateCategorie(this.idCategoria, this.newCategorie).subscribe(
+      response => {
+        if (response.categoria) {
+          this.actualizando = false;
+          this.getCategorias();
+        }
+      },
+      error => {
+        if (error) {
+          this.status = 'Error'
+        }
+      }
+    )
   }
-
 
 }

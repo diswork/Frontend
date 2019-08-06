@@ -18,12 +18,14 @@ export class ModalGestionarAdministradoresPage implements OnInit {
   public editando = false
   public textoBuscar = ''
   public url;
+  public mensaje = false;
+  public datosObtenidos;
 
 
   constructor(private modalCtrl: ModalController, private _adminService: UsuarioService, private alertCtrl: AlertController) {
     this.newAdmin = new Admin('', '', '', '', '', '', '')
     this.url = GLOBAL.url;
-
+    this.datosObtenidos = []
   }
 
   ngOnInit() {
@@ -52,7 +54,7 @@ export class ModalGestionarAdministradoresPage implements OnInit {
   async openDeleteAlert(id) {
     var identificador = id
     const alert = await this.alertCtrl.create({
-      header: 'Eliminar Categoria',
+      header: 'Eliminar Administrador',
       buttons: [{
         text: 'Si',
         role: 'Si',
@@ -71,6 +73,9 @@ export class ModalGestionarAdministradoresPage implements OnInit {
       }
       ]
     });
+    alert.onDidDismiss().then(() => {
+      this.getAdmins();
+    })
     alert.present();
   }
 
@@ -80,6 +85,7 @@ export class ModalGestionarAdministradoresPage implements OnInit {
       response => {
         if (response.admins) {
           this.admins = response.admins
+          this.datosObtenidos = response.admins
         }
       },
       error => {
@@ -97,6 +103,11 @@ export class ModalGestionarAdministradoresPage implements OnInit {
         if (response.admin) {
           this.editando = false;
           this.getAdmins();
+          if(response.admin == 0) {
+            this.mensaje = true
+          }else {
+            this.mensaje = false
+          }
         }
       },
       error => {

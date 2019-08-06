@@ -78,7 +78,7 @@ export class ModalAdminPage implements OnInit {
   }
 
   async guardarCambios(){
-    await this._uploadService.subirImagenUsuario(this.imageData, this._usuarioService.getAdminLog()._id)
+    await this._uploadService.subirImagenAdmin(this.imageData, this._usuarioService.getAdminLog()._id)
 
       this.modalCtrl.dismiss({
         actualizar : true
