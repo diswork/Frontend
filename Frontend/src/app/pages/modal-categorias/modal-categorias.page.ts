@@ -13,10 +13,14 @@ export class ModalCategoriasPage implements OnInit {
   @ViewChild('cerrarLista') lista: IonList;
 
   public status;
-  public categorias: Categoria
+  public categorias: Categoria[]
   public newCategorie: Categoria
   public textoBuscar = '';
   public editando = false
+  public mensaje = false;
+
+
+  public datos: Categoria[];
 
   public actualizando = false;
   public valor;
@@ -29,7 +33,8 @@ export class ModalCategoriasPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getCategorias()
+    this.getCategorias();
+    this.mensaje = false;
   }
 
 
@@ -99,6 +104,11 @@ export class ModalCategoriasPage implements OnInit {
       response => {
         if (response.categorias) {
           this.categorias = response.categorias
+          if(response.categorias == 0) {
+            this.mensaje = true
+          }else{
+            this.mensaje = false
+          }
         }
       },
       error => {
@@ -158,7 +168,5 @@ export class ModalCategoriasPage implements OnInit {
       }
     )
   }
-
-
 
 }

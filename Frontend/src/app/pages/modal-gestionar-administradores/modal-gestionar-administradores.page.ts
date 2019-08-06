@@ -18,6 +18,7 @@ export class ModalGestionarAdministradoresPage implements OnInit {
   public editando = false
   public textoBuscar = ''
   public url;
+  public mensaje = false;
 
 
   constructor(private modalCtrl: ModalController, private _adminService: UsuarioService, private alertCtrl: AlertController) {
@@ -100,6 +101,11 @@ export class ModalGestionarAdministradoresPage implements OnInit {
         if (response.admin) {
           this.editando = false;
           this.getAdmins();
+          if(response.admin == 0) {
+            this.mensaje = true
+          }else {
+            this.mensaje = false
+          }
         }
       },
       error => {
