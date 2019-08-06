@@ -27,6 +27,7 @@ export class TabEmpresa1Page implements OnInit {
   public ofertas: [];
   public publicaciones;
   public mensaje = false;
+  public datosObtenidos;
 
   constructor(private modalCtrl: ModalController, 
       private _usuarioService: UsuarioService, 
@@ -43,6 +44,7 @@ export class TabEmpresa1Page implements OnInit {
     this.menuCtrl.enable(true, "segundoMenu");
     this.menuCtrl.enable(false, "tercerMenu");
     this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
+    this.datosObtenidos = [];
 
   }
 
@@ -55,6 +57,7 @@ export class TabEmpresa1Page implements OnInit {
         }else if(response.ofertas){
           this.status = 'ok';
           this.ofertas = response.ofertas;
+          this.datosObtenidos = response.ofertas;
         }
       },
       error => {
@@ -73,10 +76,10 @@ export class TabEmpresa1Page implements OnInit {
     this._usuarioService.eliminarOferta(id).subscribe(
       response => {
         if (!response.oferta) {
-          this.status = 'ERROR'
+          this.status = 'ERROR';
 
         } else {
-          this.status = 'SUCCESS'
+          this.status = 'SUCCESS';
 
           this.readOfertasEmpresa(this._usuarioService.getEmpresaLog()._id);
 
@@ -86,7 +89,7 @@ export class TabEmpresa1Page implements OnInit {
         var errorMessage = <any>error;
         console.log(errorMessage);
         if (errorMessage != null) {
-          this.status = 'ERROR'
+          this.status = 'ERROR';
         }
       }
     )

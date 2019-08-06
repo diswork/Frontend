@@ -4,7 +4,7 @@
 <ion-content>
 
     <ion-list>
-        <ion-searchbar animated mode="ios" placeholder="Searh" (ionChange)="buscar($event)"></ion-searchbar>
+        <ion-searchbar animated mode="ios" placeholder="Search" (ionChange)="buscar($event)"></ion-searchbar>
     
         <ion-item *ngFor="let usuario of usuarios | filtro:textoBuscar:'nickName'" no-border>
             <ion-thumbnail style="margin-right: 10px">
@@ -19,9 +19,9 @@
                 <p>{{usuario.email}}</p>
             </ion-label>
             <ion-button color="danger" slot="end" (click)="getUsuario(usuario._id)">Ver</ion-button>
-            <ion-button color="danger" slot="end" (click)="deleteUser(usuario._id)">Eliminar</ion-button>
         </ion-item>
     </ion-list>
+
     <ion-list *ngIf="!usuarios">
         <ion-item *ngFor="let dt of [1,1,1,1,1,1]" class="animated flash slow infinite">
             <ion-thumbnail slot="start">
