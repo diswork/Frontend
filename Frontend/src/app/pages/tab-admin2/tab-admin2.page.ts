@@ -12,7 +12,7 @@ import { GLOBAL } from 'src/app/services/global.service';
 })
 export class TabAdmin2Page implements OnInit {
 
-  public empresas;
+  public empresas = [];
   public empresa: Empresa;
   public mensaje = false;
   public status;
@@ -28,9 +28,8 @@ export class TabAdmin2Page implements OnInit {
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
     this.menuCtrl.enable(true, "tercerMenu");
-    this.empresas = [];
-    this.mensaje = true;
-    // this.getEmpresas();
+    this.empresas = [];    
+    this.getEmpresas();
   }
   async abrirModal() {
     const modal = await this.modalCtrl.create({
@@ -96,7 +95,7 @@ doRefresh(event){
       response => {
         console.log(response.empresas);
         this.empresas = response.empresas;
-        // this.usuarios.push( ...response.usuarios );
+        // this.empresas.push( ...response.empresas );
       },
       error => {
         if (error) {

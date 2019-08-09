@@ -15,7 +15,7 @@ import { GLOBAL } from '../../services/global.service';
 export class TabAdmin1Page implements OnInit {
 
   usuario: User;
-  public usuarios;
+  public usuarios = [];
   public mensaje = false;
   public status;
   public dataUser;
@@ -30,10 +30,8 @@ export class TabAdmin1Page implements OnInit {
   ngOnInit() {
     this.menuCtrl.enable(false, "primerMenu");
     this.menuCtrl.enable(false, "segundoMenu");
-    this.menuCtrl.enable(true, "tercerMenu");
-    this.usuarios = [];
-    this.mensaje = true;    
-    // this.getUsuarios();
+    this.menuCtrl.enable(true, "tercerMenu");   
+    this.getUsuarios();
     // this.dataUser = this._usuarioService.getUserLog();
   }
 
